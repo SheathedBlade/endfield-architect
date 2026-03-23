@@ -1,0 +1,1736 @@
+[
+  {
+    "id": "refine_origocrust",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "originium_ore", "amount": 1 }],
+    "outputs": [{ "itemId": "origocrust", "amount": 1 }]
+  },
+  {
+    "id": "refine_amethyst_fiber",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "amethyst_ore", "amount": 1 }],
+    "outputs": [{ "itemId": "amethyst_fiber", "amount": 1 }]
+  },
+  {
+    "id": "refine_ferrium",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "ferrium_ore", "amount": 1 }],
+    "outputs": [{ "itemId": "ferrium", "amount": 1 }]
+  },
+  {
+    "id": "refine_carbon",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "buckflower", "amount": 1 }],
+    "outputs": [{ "itemId": "carbon", "amount": 1 }]
+  },
+  {
+    "id": "refine_carbon_from_citrome",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "citrome", "amount": 1 }],
+    "outputs": [{ "itemId": "carbon", "amount": 1 }]
+  },
+  {
+    "id": "refine_carbon_from_sandleaf",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "sandleaf", "amount": 1 }],
+    "outputs": [{ "itemId": "carbon", "amount": 1 }]
+  },
+  {
+    "id": "refine_carbon_from_jincao",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "jincao", "amount": 1 }],
+    "outputs": [{ "itemId": "carbon", "amount": 2 }]
+  },
+  {
+    "id": "refine_carbon_from_yazhen",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "yazhen", "amount": 1 }],
+    "outputs": [{ "itemId": "carbon", "amount": 2 }]
+  },
+  {
+    "id": "refine_stabilized_carbon",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "dense_carbon_powder", "amount": 1 }],
+    "outputs": [{ "itemId": "stabilized_carbon", "amount": 1 }]
+  },
+  {
+    "id": "refine_packed_origocrust",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "dense_origocrust_powder", "amount": 1 }],
+    "outputs": [{ "itemId": "packed_origocrust", "amount": 1 }]
+  },
+  {
+    "id": "refine_cryston_fiber",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "cryston_powder", "amount": 1 }],
+    "outputs": [{ "itemId": "cryston_fiber", "amount": 1 }]
+  },
+  {
+    "id": "refine_steel",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "dense_ferrium_powder", "amount": 1 }],
+    "outputs": [{ "itemId": "steel", "amount": 1 }]
+  },
+  {
+    "id": "refine_fluid_cuprium",
+    "facilityId": "refining_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_ore", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "cuprium", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ]
+  },
+
+  {
+    "id": "shred_originium_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "originium_ore", "amount": 1 }],
+    "outputs": [{ "itemId": "originium_powder", "amount": 1 }]
+  },
+  {
+    "id": "shred_amethyst_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "amethyst_ore", "amount": 1 }],
+    "outputs": [{ "itemId": "amethyst_powder", "amount": 1 }]
+  },
+  {
+    "id": "shred_carbon_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "carbon", "amount": 1 }],
+    "outputs": [{ "itemId": "carbon_powder", "amount": 2 }]
+  },
+  {
+    "id": "shred_origocrust_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "origocrust", "amount": 1 }],
+    "outputs": [{ "itemId": "origocrust_powder", "amount": 1 }]
+  },
+  {
+    "id": "shred_buckflower_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "buckflower", "amount": 1 }],
+    "outputs": [{ "itemId": "buckflower_powder", "amount": 2 }]
+  },
+  {
+    "id": "shred_aketine_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "aketine", "amount": 1 }],
+    "outputs": [{ "itemId": "aketine_powder", "amount": 2 }]
+  },
+  {
+    "id": "shred_ferrium_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "ferrium", "amount": 1 }],
+    "outputs": [{ "itemId": "ferrium_powder", "amount": 1 }]
+  },
+  {
+    "id": "shred_sandleaf_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "sandleaf", "amount": 1 }],
+    "outputs": [{ "itemId": "sandleaf_powder", "amount": 3 }]
+  },
+  {
+    "id": "shred_citrome_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "citrome", "amount": 1 }],
+    "outputs": [{ "itemId": "citrome_powder", "amount": 2 }]
+  },
+  {
+    "id": "shred_jincao_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "jincao", "amount": 1 }],
+    "outputs": [{ "itemId": "jincao_powder", "amount": 2 }]
+  },
+  {
+    "id": "shred_yazhen_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "yazhen", "amount": 1 }],
+    "outputs": [{ "itemId": "yazhen_powder", "amount": 2 }]
+  },
+  {
+    "id": "shred_cuprium_powder",
+    "facilityId": "shredding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cuprium", "amount": 1 }],
+    "outputs": [{ "itemId": "cuprium_powder", "amount": 1 }]
+  },
+
+  {
+    "id": "mould_amethyst_bottle",
+    "facilityId": "moulding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "amethyst_fiber", "amount": 2 }],
+    "outputs": [{ "itemId": "amethyst_bottle", "amount": 1 }]
+  },
+  {
+    "id": "mould_ferrium_bottle",
+    "facilityId": "moulding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "ferrium", "amount": 2 }],
+    "outputs": [{ "itemId": "ferrium_bottle", "amount": 1 }]
+  },
+  {
+    "id": "mould_cryston_bottle",
+    "facilityId": "moulding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "cryston_fiber", "amount": 2 }],
+    "outputs": [{ "itemId": "cryston_bottle", "amount": 1 }]
+  },
+  {
+    "id": "mould_steel_bottle",
+    "facilityId": "moulding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "steel", "amount": 2 }],
+    "outputs": [{ "itemId": "steel_bottle", "amount": 1 }]
+  },
+  {
+    "id": "mould_cuprium_bottle",
+    "facilityId": "moulding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cuprium", "amount": 2 }],
+    "outputs": [{ "itemId": "cuprium_bottle", "amount": 1 }]
+  },
+
+  {
+    "id": "fit_amethyst_part",
+    "facilityId": "fitting_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "amethyst_fiber", "amount": 1 }],
+    "outputs": [{ "itemId": "amethyst_part", "amount": 1 }]
+  },
+  {
+    "id": "fit_ferrium_part",
+    "facilityId": "fitting_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "ferrium", "amount": 1 }],
+    "outputs": [{ "itemId": "ferrium_part", "amount": 1 }]
+  },
+  {
+    "id": "fit_cryston_part",
+    "facilityId": "fitting_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "cryston_fiber", "amount": 1 }],
+    "outputs": [{ "itemId": "cryston_part", "amount": 1 }]
+  },
+  {
+    "id": "fit_steel_part",
+    "facilityId": "fitting_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "steel", "amount": 1 }],
+    "outputs": [{ "itemId": "steel_part", "amount": 1 }]
+  },
+  {
+    "id": "fit_cuprium_part",
+    "facilityId": "fitting_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cuprium", "amount": 1 }],
+    "outputs": [{ "itemId": "cuprium_part", "amount": 1 }]
+  },
+
+  {
+    "id": "plant_buckflower",
+    "facilityId": "planting_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "buckflower_seed", "amount": 1 }],
+    "outputs": [{ "itemId": "buckflower", "amount": 1 }]
+  },
+  {
+    "id": "plant_citrome",
+    "facilityId": "planting_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "citrome_seed", "amount": 1 }],
+    "outputs": [{ "itemId": "citrome", "amount": 1 }]
+  },
+  {
+    "id": "plant_sandleaf",
+    "facilityId": "planting_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "sandleaf_seed", "amount": 1 }],
+    "outputs": [{ "itemId": "sandleaf", "amount": 1 }]
+  },
+  {
+    "id": "plant_aketine",
+    "facilityId": "planting_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "aketine_seed", "amount": 1 }],
+    "outputs": [{ "itemId": "aketine", "amount": 1 }]
+  },
+  {
+    "id": "plant_jincao",
+    "facilityId": "planting_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "jincao_seed", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "jincao", "amount": 2 }]
+  },
+  {
+    "id": "plant_yazhen",
+    "facilityId": "planting_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "yazhen_seed", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "yazhen", "amount": 2 }]
+  },
+
+  {
+    "id": "pick_buckflower_seed",
+    "facilityId": "seed_picking_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "buckflower", "amount": 1 }],
+    "outputs": [{ "itemId": "buckflower_seed", "amount": 2 }]
+  },
+  {
+    "id": "pick_citrome_seed",
+    "facilityId": "seed_picking_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "citrome", "amount": 1 }],
+    "outputs": [{ "itemId": "citrome_seed", "amount": 2 }]
+  },
+  {
+    "id": "pick_sandleaf_seed",
+    "facilityId": "seed_picking_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "sandleaf", "amount": 1 }],
+    "outputs": [{ "itemId": "sandleaf_seed", "amount": 2 }]
+  },
+  {
+    "id": "pick_aketine_seed",
+    "facilityId": "seed_picking_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "aketine", "amount": 1 }],
+    "outputs": [{ "itemId": "aketine_seed", "amount": 2 }]
+  },
+  {
+    "id": "pick_jincao_seed",
+    "facilityId": "seed_picking_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "jincao", "amount": 1 }],
+    "outputs": [{ "itemId": "jincao_seed", "amount": 1 }]
+  },
+  {
+    "id": "pick_yazhen_seed",
+    "facilityId": "seed_picking_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "yazhen", "amount": 1 }],
+    "outputs": [{ "itemId": "yazhen_seed", "amount": 1 }]
+  },
+
+  {
+    "id": "grind_ground_buckflower_powder",
+    "facilityId": "grinding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "buckflower_powder", "amount": 2 },
+      { "itemId": "sandleaf_powder", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "ground_buckflower_powder", "amount": 1 }]
+  },
+  {
+    "id": "grind_ground_citrome_powder",
+    "facilityId": "grinding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "citrome_powder", "amount": 2 },
+      { "itemId": "sandleaf_powder", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "ground_citrome_powder", "amount": 1 }]
+  },
+  {
+    "id": "grind_dense_carbon_powder",
+    "facilityId": "grinding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "carbon_powder", "amount": 2 },
+      { "itemId": "sandleaf_powder", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "dense_carbon_powder", "amount": 1 }]
+  },
+  {
+    "id": "grind_dense_originium_powder",
+    "facilityId": "grinding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "originium_powder", "amount": 2 },
+      { "itemId": "sandleaf_powder", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "dense_originium_powder", "amount": 1 }]
+  },
+  {
+    "id": "grind_dense_origocrust_powder",
+    "facilityId": "grinding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "origocrust_powder", "amount": 2 },
+      { "itemId": "sandleaf_powder", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "dense_origocrust_powder", "amount": 1 }]
+  },
+  {
+    "id": "grind_cryston_powder",
+    "facilityId": "grinding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "amethyst_powder", "amount": 2 },
+      { "itemId": "sandleaf_powder", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cryston_powder", "amount": 1 }]
+  },
+  {
+    "id": "grind_dense_ferrium_powder",
+    "facilityId": "grinding_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "ferrium_powder", "amount": 2 },
+      { "itemId": "sandleaf_powder", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "dense_ferrium_powder", "amount": 1 }]
+  },
+
+  {
+    "id": "gear_amethyst_component",
+    "facilityId": "gearing_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "origocrust", "amount": 5 },
+      { "itemId": "amethyst_fiber", "amount": 5 }
+    ],
+    "outputs": [{ "itemId": "amethyst_component", "amount": 1 }]
+  },
+  {
+    "id": "gear_ferrium_component",
+    "facilityId": "gearing_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "origocrust", "amount": 10 },
+      { "itemId": "ferrium", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "ferrium_component", "amount": 1 }]
+  },
+  {
+    "id": "gear_cryston_component",
+    "facilityId": "gearing_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "cryston_fiber", "amount": 10 },
+      { "itemId": "packed_origocrust", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "cryston_component", "amount": 1 }]
+  },
+  {
+    "id": "gear_xiranite_component",
+    "facilityId": "gearing_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "xiranite", "amount": 10 },
+      { "itemId": "packed_origocrust", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "xiranite_component", "amount": 1 }]
+  },
+  {
+    "id": "gear_cuprium_component",
+    "facilityId": "gearing_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "xiranite", "amount": 10 },
+      { "itemId": "cuprium_part", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "cuprium_component", "amount": 1 }]
+  },
+
+  {
+    "id": "fill_buck_capsule_c",
+    "facilityId": "filling_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "amethyst_bottle", "amount": 5 },
+      { "itemId": "buckflower_powder", "amount": 5 }
+    ],
+    "outputs": [{ "itemId": "buck_capsule_c", "amount": 1 }]
+  },
+  {
+    "id": "fill_buck_capsule_b",
+    "facilityId": "filling_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "ferrium_bottle", "amount": 10 },
+      { "itemId": "buckflower_powder", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "buck_capsule_b", "amount": 1 }]
+  },
+  {
+    "id": "fill_buck_capsule_a",
+    "facilityId": "filling_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "steel_bottle", "amount": 10 },
+      { "itemId": "ground_buckflower_powder", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "buck_capsule_a", "amount": 1 }]
+  },
+  {
+    "id": "fill_canned_citrome_c",
+    "facilityId": "filling_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "amethyst_bottle", "amount": 5 },
+      { "itemId": "citrome_powder", "amount": 5 }
+    ],
+    "outputs": [{ "itemId": "canned_citrome_c", "amount": 1 }]
+  },
+  {
+    "id": "fill_canned_citrome_b",
+    "facilityId": "filling_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "ferrium_bottle", "amount": 10 },
+      { "itemId": "citrome_powder", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "canned_citrome_b", "amount": 1 }]
+  },
+  {
+    "id": "fill_canned_citrome_a",
+    "facilityId": "filling_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "steel_bottle", "amount": 10 },
+      { "itemId": "ground_citrome_powder", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "canned_citrome_a", "amount": 1 }]
+  },
+
+  {
+    "id": "fill_amethyst_bottle_clean_water",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "amethyst_bottle_clean_water", "amount": 1 }]
+  },
+  {
+    "id": "fill_amethyst_bottle_jincao_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "amethyst_bottle_jincao_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_amethyst_bottle_yazhen_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "amethyst_bottle_yazhen_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_amethyst_bottle_liquid_xiranite",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "amethyst_bottle_liquid_xiranite", "amount": 1 }]
+  },
+  {
+    "id": "fill_amethyst_bottle_sewage",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "amethyst_bottle_sewage", "amount": 1 }]
+  },
+  {
+    "id": "fill_amethyst_bottle_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "amethyst_bottle_xircon_effluent", "amount": 1 }]
+  },
+  {
+    "id": "fill_amethyst_bottle_inert_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "amethyst_bottle_inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+
+  {
+    "id": "fill_ferrium_bottle_clean_water",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "ferrium_bottle_clean_water", "amount": 1 }]
+  },
+  {
+    "id": "fill_ferrium_bottle_jincao_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "ferrium_bottle_jincao_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_ferrium_bottle_yazhen_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "ferrium_bottle_yazhen_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_ferrium_bottle_liquid_xiranite",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "ferrium_bottle_liquid_xiranite", "amount": 1 }]
+  },
+  {
+    "id": "fill_ferrium_bottle_sewage",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "ferrium_bottle_sewage", "amount": 1 }]
+  },
+  {
+    "id": "fill_ferrium_bottle_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "ferrium_bottle_xircon_effluent", "amount": 1 }]
+  },
+  {
+    "id": "fill_ferrium_bottle_inert_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "ferrium_bottle_inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+
+  {
+    "id": "fill_cryston_bottle_clean_water",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cryston_bottle_clean_water", "amount": 1 }]
+  },
+  {
+    "id": "fill_cryston_bottle_jincao_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cryston_bottle_jincao_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_cryston_bottle_yazhen_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cryston_bottle_yazhen_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_cryston_bottle_liquid_xiranite",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cryston_bottle_liquid_xiranite", "amount": 1 }]
+  },
+  {
+    "id": "fill_cryston_bottle_sewage",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cryston_bottle_sewage", "amount": 1 }]
+  },
+  {
+    "id": "fill_cryston_bottle_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cryston_bottle_xircon_effluent", "amount": 1 }]
+  },
+  {
+    "id": "fill_cryston_bottle_inert_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "cryston_bottle_inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+
+  {
+    "id": "fill_steel_bottle_clean_water",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "steel_bottle_clean_water", "amount": 1 }]
+  },
+  {
+    "id": "fill_steel_bottle_jincao_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "steel_bottle_jincao_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_steel_bottle_yazhen_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "steel_bottle_yazhen_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_steel_bottle_liquid_xiranite",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "steel_bottle_liquid_xiranite", "amount": 1 }]
+  },
+  {
+    "id": "fill_steel_bottle_sewage",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "steel_bottle_sewage", "amount": 1 }]
+  },
+  {
+    "id": "fill_steel_bottle_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "steel_bottle_xircon_effluent", "amount": 1 }]
+  },
+  {
+    "id": "fill_steel_bottle_inert_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "steel_bottle_inert_xircon_effluent", "amount": 1 }]
+  },
+
+  {
+    "id": "fill_cuprium_bottle_clean_water",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cuprium_bottle_clean_water", "amount": 1 }]
+  },
+  {
+    "id": "fill_cuprium_bottle_jincao_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cuprium_bottle_jincao_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_cuprium_bottle_yazhen_solution",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cuprium_bottle_yazhen_solution", "amount": 1 }]
+  },
+  {
+    "id": "fill_cuprium_bottle_liquid_xiranite",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cuprium_bottle_liquid_xiranite", "amount": 1 }]
+  },
+  {
+    "id": "fill_cuprium_bottle_sewage",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cuprium_bottle_sewage", "amount": 1 }]
+  },
+  {
+    "id": "fill_cuprium_bottle_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "cuprium_bottle_xircon_effluent", "amount": 1 }]
+  },
+  {
+    "id": "fill_cuprium_bottle_inert_xircon_effluent",
+    "facilityId": "filling_unit",
+    "craftingTime": 2,
+    "fluidMode": true,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "cuprium_bottle_inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+
+  {
+    "id": "sep_ferrium_bottle_clean_water",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "ferrium_bottle_clean_water", "amount": 1 }],
+    "outputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_ferrium_bottle_jincao_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "ferrium_bottle_jincao_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_ferrium_bottle_yazhen_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "ferrium_bottle_yazhen_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_ferrium_bottle_liquid_xiranite",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "ferrium_bottle_liquid_xiranite", "amount": 1 }],
+    "outputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_ferrium_bottle_sewage",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "ferrium_bottle_sewage", "amount": 1 }],
+    "outputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_ferrium_bottle_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "ferrium_bottle_xircon_effluent", "amount": 1 }],
+    "outputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_ferrium_bottle_inert_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "ferrium_bottle_inert_xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "ferrium_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_amethyst_bottle_clean_water",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "amethyst_bottle_clean_water", "amount": 1 }],
+    "outputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_amethyst_bottle_jincao_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "amethyst_bottle_jincao_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_amethyst_bottle_yazhen_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "amethyst_bottle_yazhen_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_amethyst_bottle_liquid_xiranite",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "amethyst_bottle_liquid_xiranite", "amount": 1 }],
+    "outputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_amethyst_bottle_sewage",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "amethyst_bottle_sewage", "amount": 1 }],
+    "outputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_amethyst_bottle_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "amethyst_bottle_xircon_effluent", "amount": 1 }],
+    "outputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_amethyst_bottle_inert_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "amethyst_bottle_inert_xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "amethyst_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cryston_bottle_clean_water",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "cryston_bottle_clean_water", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cryston_bottle_jincao_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "cryston_bottle_jincao_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cryston_bottle_yazhen_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "cryston_bottle_yazhen_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cryston_bottle_liquid_xiranite",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "cryston_bottle_liquid_xiranite", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cryston_bottle_sewage",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cryston_bottle_sewage", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cryston_bottle_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cryston_bottle_xircon_effluent", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cryston_bottle_inert_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cryston_bottle_inert_xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "cryston_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_steel_bottle_clean_water",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "steel_bottle_clean_water", "amount": 1 }],
+    "outputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_steel_bottle_jincao_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "steel_bottle_jincao_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_steel_bottle_yazhen_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "steel_bottle_yazhen_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_steel_bottle_liquid_xiranite",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [{ "itemId": "steel_bottle_liquid_xiranite", "amount": 1 }],
+    "outputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_steel_bottle_sewage",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "steel_bottle_sewage", "amount": 1 }],
+    "outputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_steel_bottle_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "steel_bottle_xircon_effluent", "amount": 1 }],
+    "outputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_steel_bottle_inert_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "steel_bottle_inert_xircon_effluent", "amount": 1 }],
+    "outputs": [
+      { "itemId": "steel_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cuprium_bottle_clean_water",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cuprium_bottle_clean_water", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cuprium_bottle_jincao_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cuprium_bottle_jincao_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "jincao_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cuprium_bottle_yazhen_solution",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cuprium_bottle_yazhen_solution", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "yazhen_solution", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cuprium_bottle_liquid_xiranite",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cuprium_bottle_liquid_xiranite", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cuprium_bottle_sewage",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cuprium_bottle_sewage", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cuprium_bottle_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [{ "itemId": "cuprium_bottle_xircon_effluent", "amount": 1 }],
+    "outputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "xircon_effluent", "amount": 1 }
+    ]
+  },
+  {
+    "id": "sep_cuprium_bottle_inert_xircon_effluent",
+    "facilityId": "separating_unit",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_bottle_inert_xircon_effluent", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "cuprium_bottle", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+
+  {
+    "id": "pack_lc_valley_battery",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "originium_powder", "amount": 10 },
+      { "itemId": "amethyst_part", "amount": 5 }
+    ],
+    "outputs": [{ "itemId": "lc_valley_battery", "amount": 1 }]
+  },
+  {
+    "id": "pack_sc_valley_battery",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "originium_powder", "amount": 15 },
+      { "itemId": "ferrium_part", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "sc_valley_battery", "amount": 1 }]
+  },
+  {
+    "id": "pack_hc_valley_battery",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "dense_originium_powder", "amount": 15 },
+      { "itemId": "steel_part", "amount": 10 }
+    ],
+    "outputs": [{ "itemId": "hc_valley_battery", "amount": 1 }]
+  },
+  {
+    "id": "pack_lc_wuling_battery",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "xiranite", "amount": 5 },
+      { "itemId": "dense_originium_powder", "amount": 15 }
+    ],
+    "outputs": [{ "itemId": "lc_wuling_battery", "amount": 1 }]
+  },
+  {
+    "id": "pack_sc_wuling_battery",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "xircon", "amount": 5 },
+      { "itemId": "dense_originium_powder", "amount": 20 }
+    ],
+    "outputs": [{ "itemId": "sc_wuling_battery", "amount": 1 }]
+  },
+  {
+    "id": "pack_yazhen_syringe_c",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "ferrium_part", "amount": 10 },
+      { "itemId": "ferrium_bottle_yazhen_solution", "amount": 5 }
+    ],
+    "outputs": [{ "itemId": "yazhen_syringe_c", "amount": 1 }]
+  },
+  {
+    "id": "pack_yazhen_syringe_a",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_part", "amount": 10 },
+      { "itemId": "cuprium_bottle_yazhen_solution", "amount": 5 }
+    ],
+    "outputs": [{ "itemId": "yazhen_syringe_a", "amount": 1 }]
+  },
+  {
+    "id": "pack_jincao_drink",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "ferrium_part", "amount": 10 },
+      { "itemId": "ferrium_bottle_jincao_solution", "amount": 5 }
+    ],
+    "outputs": [{ "itemId": "jincao_drink", "amount": 1 }]
+  },
+  {
+    "id": "pack_jincao_tea",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "cuprium_part", "amount": 10 },
+      { "itemId": "cuprium_bottle_jincao_solution", "amount": 5 }
+    ],
+    "outputs": [{ "itemId": "jincao_tea", "amount": 1 }]
+  },
+  {
+    "id": "pack_industrial_explosive",
+    "facilityId": "packaging_unit",
+    "craftingTime": 10,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "amethyst_part", "amount": 5 },
+      { "itemId": "aketine_powder", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "industrial_explosive", "amount": 1 }]
+  },
+
+  {
+    "id": "react_jincao_solution",
+    "facilityId": "reactor_crucible",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "jincao_powder", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "jincao_solution", "amount": 1 }]
+  },
+  {
+    "id": "react_yazhen_solution",
+    "facilityId": "reactor_crucible",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "yazhen_powder", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "yazhen_solution", "amount": 1 }]
+  },
+  {
+    "id": "react_liquid_xiranite",
+    "facilityId": "reactor_crucible",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "xiranite", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "liquid_xiranite", "amount": 1 }]
+  },
+  {
+    "id": "react_xircon",
+    "facilityId": "reactor_crucible",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "xircon_effluent", "amount": 2 },
+      { "itemId": "ferrium_powder", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "xircon", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ]
+  },
+  {
+    "id": "react_xircon_effluent",
+    "facilityId": "reactor_crucible",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.1",
+    "inputs": [
+      { "itemId": "liquid_xiranite", "amount": 1 },
+      { "itemId": "sewage", "amount": 1 }
+    ],
+    "outputs": [
+      { "itemId": "xircon_effluent", "amount": 1 },
+      { "itemId": "inert_xircon_effluent", "amount": 1 }
+    ]
+  },
+
+  {
+    "id": "forge_xiranite",
+    "facilityId": "forge_of_the_sky",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "stabilized_carbon", "amount": 2 },
+      { "itemId": "clean_water", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "xiranite", "amount": 1 }]
+  },
+  {
+    "id": "forge_bumper_rich",
+    "facilityId": "forge_of_the_sky",
+    "craftingTime": 2,
+    "fluidMode": false,
+    "patch": "1.0",
+    "inputs": [
+      { "itemId": "burdo_muck", "amount": 1 },
+      { "itemId": "liquid_xiranite", "amount": 1 }
+    ],
+    "outputs": [{ "itemId": "bumper_rich", "amount": 1 }]
+  }
+]

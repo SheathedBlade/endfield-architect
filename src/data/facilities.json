@@ -1,0 +1,236 @@
+[
+  {
+    "id": "refining_unit",
+    "powerConsumption": 5,
+    "category": "production_1",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [3, 3],
+    "ports": {
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "inputPorts": 3,
+      "outputPorts": 3,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    },
+    "fluidMode": {
+      "additionalPipeInputs": 1,
+      "additionalPipeOutputs": 1,
+      "unlockedInPatch": "1.1",
+      "regions": ["wuling"]
+    }
+  },
+  {
+    "id": "shredding_unit",
+    "powerConsumption": 5,
+    "category": "production_1",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [3, 3],
+    "ports": {
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "inputPorts": 3,
+      "outputPorts": 3,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    }
+  },
+  {
+    "id": "moulding_unit",
+    "powerConsumption": 10,
+    "category": "production_1",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [3, 3],
+    "ports": {
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "inputPorts": 3,
+      "outputPorts": 3,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    }
+  },
+  {
+    "id": "fitting_unit",
+    "powerConsumption": 20,
+    "category": "production_1",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [3, 3],
+    "ports": {
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "inputPorts": 3,
+      "outputPorts": 3,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    }
+  },
+  {
+    "id": "planting_unit",
+    "powerConsumption": 20,
+    "category": "production_1",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [5, 5],
+    "ports": {
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "inputPorts": 5,
+      "outputPorts": 5,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    },
+    "fluidMode": {
+      "additionalPipeInputs": 1,
+      "additionalPipeOutputs": 0,
+      "unlockedInPatch": "1.1",
+      "regions": ["wuling"]
+    }
+  },
+  {
+    "id": "seed_picking_unit",
+    "powerConsumption": 10,
+    "category": "production_1",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [5, 5],
+    "ports": {
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "inputPorts": 5,
+      "outputPorts": 5,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    }
+  },
+  {
+    "id": "gearing_unit",
+    "powerConsumption": 10,
+    "category": "production_2",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [6, 4],
+    "ports": {
+      "inputSlots": 2,
+      "outputSlots": 1,
+      "inputPorts": 6,
+      "outputPorts": 6,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    }
+  },
+  {
+    "id": "filling_unit",
+    "powerConsumption": 20,
+    "category": "production_2",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [6, 4],
+    "ports": {
+      "inputSlots": 2,
+      "outputSlots": 1,
+      "inputPorts": 6,
+      "outputPorts": 6,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    },
+    "fluidMode": {
+      "additionalPipeInputs": 1,
+      "additionalPipeOutputs": 0,
+      "unlockedInPatch": "1.1",
+      "regions": ["wuling"]
+    }
+  },
+  {
+    "id": "packaging_unit",
+    "powerConsumption": 20,
+    "category": "production_2",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [6, 4],
+    "ports": {
+      "inputSlots": 2,
+      "outputSlots": 1,
+      "inputPorts": 6,
+      "outputPorts": 6,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    }
+  },
+  {
+    "id": "grinding_unit",
+    "powerConsumption": 50,
+    "category": "production_2",
+    "patch": "1.0",
+    "regions": "all",
+    "gridSize": [6, 4],
+    "ports": {
+      "inputSlots": 2,
+      "outputSlots": 1,
+      "inputPorts": 6,
+      "outputPorts": 6,
+      "pipeInputs": 0,
+      "pipeOutputs": 0
+    }
+  },
+  {
+    "id": "reactor_crucible",
+    "powerConsumption": 50,
+    "category": "production_2",
+    "patch": "1.0",
+    "regions": ["wuling"],
+    "gridSize": [5, 5],
+    "ports": {
+      "inputSlots": 5,
+      "outputSlots": 1,
+      "inputPorts": 2,
+      "outputPorts": 2,
+      "pipeInputs": 2,
+      "pipeOutputs": 2
+    },
+    "parallelRecipes": {
+      "default": 1,
+      "upgrades": [{ "patch": "1.0", "count": 2 }]
+    }
+  },
+  {
+    "id": "forge_of_the_sky",
+    "powerConsumption": 50,
+    "category": "production_2",
+    "patch": "1.0",
+    "regions": ["wuling"],
+    "gridSize": [5, 5],
+    "ports": {
+      "inputSlots": 2,
+      "outputSlots": 1,
+      "inputPorts": 5,
+      "outputPorts": 5,
+      "pipeInputs": 1,
+      "pipeOutputs": 0
+    },
+    "placementCap": {
+      "default": 2,
+      "upgrades": [{ "patch": "1.1", "cap": 4 }]
+    }
+  },
+  {
+    "id": "separating_unit",
+    "powerConsumption": 20,
+    "category": "production_2",
+    "patch": "1.0",
+    "regions": ["wuling"],
+    "gridSize": [6, 4],
+    "ports": {
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "inputPorts": 6,
+      "outputPorts": 6,
+      "pipeInputs": 0,
+      "pipeOutputs": 1
+    }
+  }
+]

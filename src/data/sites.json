@@ -1,0 +1,74 @@
+[
+  {
+    "id": "valley_core",
+    "name": "Valley Core AIC",
+    "regionId": "valley",
+    "patch": "1.0",
+    "isCore": true,
+    "gridSize": [70, 70],
+    "depotPorts": {
+      "inputs": 14,
+      "outputs": 6
+    }
+  },
+  {
+    "id": "refugee_camp",
+    "name": "Refugee Camp",
+    "regionId": "valley",
+    "patch": "1.0",
+    "isCore": false,
+    "gridSize": [50, 50],
+    "depotPorts": {
+      "inputs": 14,
+      "outputs": 6
+    }
+  },
+  {
+    "id": "infra_station",
+    "name": "Infra-Station",
+    "regionId": "valley",
+    "patch": "1.0",
+    "isCore": false,
+    "gridSize": [50, 50],
+    "depotPorts": {
+      "inputs": 14,
+      "outputs": 6
+    }
+  },
+  {
+    "id": "reconstruction_hq",
+    "name": "Reconstruction HQ",
+    "regionId": "valley",
+    "patch": "1.0",
+    "isCore": false,
+    "gridSize": [50, 50],
+    "depotPorts": {
+      "inputs": 14,
+      "outputs": 6
+    }
+  },
+  {
+    "id": "wuling_core",
+    "name": "Wuling Core AIC",
+    "regionId": "wuling",
+    "patch": "1.0",
+    "isCore": true,
+    "gridSize": [70, 70],
+    "depotPorts": {
+      "inputs": 14,
+      "outputs": 6
+    }
+  },
+  {
+    "id": "sky_king_flats",
+    "name": "Sky King Flats",
+    "regionId": "wuling",
+    "patch": "1.0",
+    "isCore": false,
+    "gridSize": [50, 50],
+    "depotPorts": {
+      "inputs": 14,
+      "outputs": 6
+    }
+  }
+]
