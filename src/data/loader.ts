@@ -1,4 +1,10 @@
-import { FACILITY_CATEGORIES, PATCHES, REGION_IDS } from "@/types/constants";
+import {
+  FACILITY_CATEGORIES,
+  PATCHES,
+  REGION_IDS,
+  type Patch,
+  type RegionId,
+} from "@/types/constants";
 import { z } from "zod";
 
 import allFacilities from "./facilities.json";
@@ -127,3 +133,84 @@ export const FACILITY_MAP = new Map(FACILITIES.map((f) => [f.id, f]));
 export const RECIPE_MAP = new Map(RECIPES.map((r) => [r.id, r]));
 export const SITE_MAP = new Map(SITES.map((s) => [s.id, s]));
 export const REGION_MAP = new Map(REGIONS.map((r) => [r.id, r]));
+
+export const RECIPES_BY_OUTPUT = RECIPES.reduce((map, recipe) => {
+  for (const output of recipe.outputs) {
+    const existing = map.get(output.itemId) ?? [];
+    map.set(output.itemId, [...existing, recipe]);
+  }
+  return map;
+}, new Map<string, typeof RECIPES>());
+
+export const RECIPES_BY_FACILITY = RECIPES.reduce((map, recipe) => {
+  const existing = map.get(recipe.facilityId) ?? [];
+  map.set(recipe.facilityId, [...existing, recipe]);
+
+  return map;
+}, new Map<string, typeof RECIPES>());
+
+export const SITES_BY_REGION = SITES.reduce((map, site) => {
+  const existing = map.get(site.regionId) ?? [];
+  map.set(site.regionId, [...existing, site]);
+
+  return map;
+}, new Map<string, typeof SITES>());
+
+export function getFacilitiesForRegion(regionId: RegionId) {
+  return FACILITIES.filter(
+    (f) =>
+      f.regions === "all" ||
+      (Array.isArray(f.regions) && f.regions.includes(regionId)),
+  );
+}
+
+export function getAvailableRecipes(patch: Patch, regionId: RegionId) {
+  const availableFacilityIds = new Set(
+    getFacilitiesForRegion(regionId).map((f) => f.id),
+  );
+  return RECIPES.filter(
+    (r) => r.patch <= patch && availableFacilityIds.has(r.facilityId),
+  );
+}
+
+export function validateData() {
+  const errors: string[] = [];
+  for (const recipe of RECIPES) {
+    for (const input of recipe.inputs) {
+      if (!ITEM_MAP.has(input.itemId))
+        errors.push(
+          `Recipe "${recipe.id}" input references unknown item "${input.itemId}"`,
+        );
+    }
+    for (const output of recipe.outputs) {
+      if (!ITEM_MAP.has(output.itemId))
+        errors.push(
+          `Recipe "${recipe.id}" output references unknown item "${output.itemId}"`,
+        );
+    }
+    if (!FACILITY_MAP.has(recipe.facilityId))
+      errors.push(
+        `Recipe "${recipe.id}" references unknown facility "${recipe.facilityId}"`,
+      );
+  }
+
+  for (const site of SITES) {
+    if (!REGION_MAP.has(site.regionId))
+      errors.push(
+        `Site "${site.id}" references unknown region "${site.regionId}"`,
+      );
+  }
+
+  if (errors.length > 0) {
+    errors.forEach((e) =>
+      console.error(`[Endfield-Architect] Data integrity error: ${e}`),
+    );
+    throw new Error(
+      `Data integrity check failed with ${errors.length} error(s) — check console`,
+    );
+  }
+
+  console.info(
+    `[Endfield-Architect] Data has loaded successfully! ${ITEMS.length} items, ${FACILITIES.length} facilities, ${RECIPES.length} recipes`,
+  );
+}

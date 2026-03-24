@@ -27,6 +27,7 @@ export type Recipe = {
   facility: FacilityId;
   craftingTime: number;
   fluidMode: boolean;
+  patch: Patch;
   inputs: RecipeItem[];
   outputs: RecipeItem[];
 };
