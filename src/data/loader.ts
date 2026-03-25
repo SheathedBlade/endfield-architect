@@ -7,6 +7,7 @@ import {
 } from "@/types/constants";
 import { z } from "zod";
 
+import type { Facility, Item, Recipe, Region, Site } from "@/types";
 import allFacilities from "./facilities.json";
 import allItems from "./items.json";
 import allRecipes from "./recipes.json";
@@ -84,7 +85,7 @@ const RecipeItemSchema = z.object({
 
 const RecipeSchema = z.object({
   id: z.string(),
-  facilityId: z.string(),
+  facility: z.string(),
   craftingTime: z.number().positive(),
   fluidMode: z.boolean(),
   patch: PatchSchema,
@@ -122,11 +123,23 @@ function validate<T>(name: string, schema: z.ZodType<T>, data: unknown): T[] {
   return result.data;
 }
 
-export const ITEMS = validate("items", ItemSchema, allItems);
-export const FACILITIES = validate("facilities", FacilitySchema, allFacilities);
-export const RECIPES = validate("recipes", RecipeSchema, allRecipes);
-export const SITES = validate("sites", SiteSchema, allSites);
-export const REGIONS = validate("regions", RegionSchema, allRegions);
+export const ITEMS = validate("items", ItemSchema, allItems) as Item[];
+export const FACILITIES = validate(
+  "facilities",
+  FacilitySchema,
+  allFacilities,
+) as Facility[];
+export const RECIPES = validate(
+  "recipes",
+  RecipeSchema,
+  allRecipes,
+) as Recipe[];
+export const SITES = validate("sites", SiteSchema, allSites) as Site[];
+export const REGIONS = validate(
+  "regions",
+  RegionSchema,
+  allRegions,
+) as Region[];
 
 export const ITEM_MAP = new Map(ITEMS.map((i) => [i.id, i]));
 export const FACILITY_MAP = new Map(FACILITIES.map((f) => [f.id, f]));
@@ -143,8 +156,8 @@ export const RECIPES_BY_OUTPUT = RECIPES.reduce((map, recipe) => {
 }, new Map<string, typeof RECIPES>());
 
 export const RECIPES_BY_FACILITY = RECIPES.reduce((map, recipe) => {
-  const existing = map.get(recipe.facilityId) ?? [];
-  map.set(recipe.facilityId, [...existing, recipe]);
+  const existing = map.get(recipe.facility) ?? [];
+  map.set(recipe.facility, [...existing, recipe]);
 
   return map;
 }, new Map<string, typeof RECIPES>());
@@ -169,7 +182,7 @@ export function getAvailableRecipes(patch: Patch, regionId: RegionId) {
     getFacilitiesForRegion(regionId).map((f) => f.id),
   );
   return RECIPES.filter(
-    (r) => r.patch <= patch && availableFacilityIds.has(r.facilityId),
+    (r) => r.patch <= patch && availableFacilityIds.has(r.facility),
   );
 }
 
@@ -188,9 +201,9 @@ export function validateData() {
           `Recipe "${recipe.id}" output references unknown item "${output.itemId}"`,
         );
     }
-    if (!FACILITY_MAP.has(recipe.facilityId))
+    if (!FACILITY_MAP.has(recipe.facility))
       errors.push(
-        `Recipe "${recipe.id}" references unknown facility "${recipe.facilityId}"`,
+        `Recipe "${recipe.id}" references unknown facility "${recipe.facility}"`,
       );
   }
 
