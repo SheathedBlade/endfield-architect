@@ -31,7 +31,7 @@ export type DetectedCycle = {
 };
 
 export type SiteProductionNode = ProductionNode & {
-  sideId: string;
+  siteId: string;
   assignedFacilityIndex: number;
 };
 
@@ -62,4 +62,5 @@ export type ProductionPlan = {
   recipeOverrides: Partial<Record<ItemId, RecipeId>>;
   nodes: SiteProductionNode[];
   detectedCycles: DetectedCycle[];
+  errors: string[];
 };

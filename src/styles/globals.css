@@ -1,1 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
+
+:root {
+  /* Dark mode (default) - Endfield palette: white, gray, yellow */
+  --bg-primary: #0a0a0c; /* Deep near-black */
+  --bg-secondary: #15151c; /* Dark gray surface */
+  --bg-tertiary: #1e1e28; /* Slightly lighter gray */
+  --text-primary: #ffffff; /* White */
+  --text-secondary: #b0b0bc; /* Light gray */
+  --text-muted: #666680; /* Muted gray */
+  --accent-primary: #ffc107; /* Endfield yellow (vibrant) */
+  --accent-secondary: #ffb300; /* Slightly darker yellow for hover */
+  --border: #2a2a38; /* Dark gray border */
+  --border-focus: #ffc107; /* Yellow focus ring */
+}
+
+body.light {
+  --bg-primary: #f5f5f7; /* Light gray/white */
+  --bg-secondary: #ffffff; /* Pure white */
+  --bg-tertiary: #e8e8ed; /* Light gray input */
+  --text-primary: #0a0a0c; /* Near-black */
+  --text-secondary: #444450; /* Dark gray */
+  --text-muted: #8888a0; /* Muted gray */
+  --accent-primary: #f9a825; /* Endfield yellow (darker for light bg) */
+  --accent-secondary: #f57f17; /* Deep amber */
+  --border: #d0d0d8; /* Light gray border */
+  --border-focus: #f9a825; /* Yellow focus */
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: "Inter", sans-serif;
+}
+
+.font-mono {
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* Custom component classes */
+.btn {
+  background-color: var(--accent-primary);
+  color: #000; /* Yellow needs dark text for contrast */
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition:
+    background-color 150ms,
+    transform 100ms;
+  border: none;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: var(--accent-secondary);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  background-color: var(--text-muted);
+  color: var(--text-primary);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.input {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  font-family: inherit;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px var(--accent-primary);
+}
+
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+/* Scrollbar styling for dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

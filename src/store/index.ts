@@ -1,3 +1,5 @@
+import { SITE_MAP } from "@/data/loader";
+import { solve } from "@/solver";
 import {
   LATEST_PATCH,
   SiteId,
@@ -7,8 +9,10 @@ import {
   type Patch,
   type ProductionPlan,
   type RecipeId,
+  type RegionId,
   type SiteId as SiteIdType,
 } from "@/types";
+import { convertToSiteProduction } from "@/utils/siteAssignment";
 import { create } from "zustand";
 
 type AppState = {
@@ -34,6 +38,8 @@ type AppState = {
   setTTVCap: (cap: number) => void;
   addMetastorageTransfer: (transfer: MetaStorageTransfer) => void;
   removeMetastorageTransfer: (itemId: ItemId) => void;
+
+  calculate: () => void;
 };
 
 const DEFAULT_PLAN: ProductionPlan = {
@@ -49,9 +55,10 @@ const DEFAULT_PLAN: ProductionPlan = {
   recipeOverrides: {},
   nodes: [],
   detectedCycles: [],
+  errors: [],
 };
 
-export const useAppStore = create<AppState>((set) => ({
+export const useAppStore = create<AppState>((set, get) => ({
   plan: DEFAULT_PLAN,
   activePatch: LATEST_PATCH,
 
@@ -194,4 +201,44 @@ export const useAppStore = create<AppState>((set) => ({
         },
       },
     })),
+
+  calculate: () => {
+    const state = get();
+    const { plan, activePatch } = state;
+    if (plan.goals.length === 0) return;
+
+    const activeSiteRegions = [
+      ...new Set(
+        plan.unlockedSites
+          .map((siteId) => SITE_MAP.get(siteId)?.regionId)
+          .filter((r) => r !== undefined),
+      ),
+    ] as RegionId[];
+
+    const result = solve({
+      goals: plan.goals,
+      patch: activePatch,
+      activeSiteRegions,
+      unlockedSites: plan.unlockedSites,
+      recipeOverrides: plan.recipeOverrides,
+      rawInputOverrides: plan.rawInputOverrides,
+      manualRawMaterials: new Set<ItemId>(
+        Object.keys(plan.rawInputOverrides) as ItemId[],
+      ),
+    });
+
+    const siteNodes = convertToSiteProduction(
+      result.nodes,
+      plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
+    );
+
+    set((state) => ({
+      plan: {
+        ...state.plan,
+        nodes: siteNodes,
+        detectedCycles: result.detectedCycles,
+        errors: result.errors,
+      },
+    }));
+  },
 }));

@@ -81,7 +81,7 @@ export const isRecipeAvailable = (
   if (recipe.fluidMode) {
     if (!facility.fluidMode) return false;
     const fluidRegions = facility.fluidMode.regions;
-    if (fluidRegions !== "all" || !fluidRegions.includes(region)) return false;
+    if (fluidRegions !== "all" && !fluidRegions.includes(region)) return false;
   }
   return true;
 };
