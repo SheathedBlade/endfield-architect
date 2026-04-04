@@ -1,3 +1,4 @@
+import { ChevronDown, ChevronRight } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
 interface ToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -7,11 +8,15 @@ interface ToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Toggle = ({ expanded, className = "", ...props }: ToggleProps) => {
   return (
     <button
-      className={`text=gray-400 hover:text-white focus:outline-none w-6 ${className}`}
+      className={`text-gray-400 hover:text-white focus:outline-none w-6 ${className}`}
       aria-label={expanded ? "Collapse" : "Expand"}
       {...props}
     >
-      {expanded ? "▼" : "▶"}
+      {expanded ? (
+        <ChevronDown className="w-4 h-4" strokeWidth={2} />
+      ) : (
+        <ChevronRight className="w-4 h-4" strokeWidth={2} />
+      )}
     </button>
   );
 };

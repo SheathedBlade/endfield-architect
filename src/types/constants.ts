@@ -402,3 +402,21 @@ export const LATEST_PATCH: Patch = PATCHES[PATCHES.length - 1];
 
 export const FACILITY_CATEGORIES = ["production_1", "production_2"] as const;
 export type FacilityCategory = (typeof FACILITY_CATEGORIES)[number];
+
+export const RAW_MATERIAL_REGIONS: Record<RegionId, Partial<Record<ItemId, number>>> = {
+  valley: {
+    originium_ore: 560,
+    amethyst_ore: 240,
+    ferrium_ore: 1080,
+  },
+  wuling: {
+    originium_ore: 480,
+    ferrium_ore: 90,
+    cuprium_ore: 120,
+    clean_water: Infinity,
+  },
+} as const;
+
+export const ALL_RAW_MATERIALS = Object.values(RAW_MATERIAL_REGIONS)
+  .flatMap((region) => Object.keys(region))
+  .filter((v, i, a) => a.indexOf(v) === i) as readonly ItemId[];

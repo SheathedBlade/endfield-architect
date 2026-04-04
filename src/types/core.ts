@@ -10,6 +10,7 @@ import type {
 
 export type Item = {
   id: ItemId;
+  displayName: string;
   isLiquid: boolean;
   isRaw: boolean;
   isByproduct: boolean;
@@ -34,6 +35,7 @@ export type Recipe = {
 
 export type Facility = {
   id: FacilityId;
+  displayName: string;
   powerConsumption: number;
   gridSize: [number, number];
   regions: "all" | RegionId[];

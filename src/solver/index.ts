@@ -1,7 +1,71 @@
 import { FACILITY_MAP, ITEM_MAP, RECIPES_BY_OUTPUT } from "@/data/loader";
-import type { ProductionNode } from "@/types";
+import {
+  RAW_MATERIAL_REGIONS,
+  type ItemId,
+  type Patch,
+  type ProductionNode,
+  type RecipeId,
+  type RegionId,
+} from "@/types";
 import { solveNode } from "./solve";
 import type { SolverContext, SolverInput, SolverOutput } from "./types";
+import { computeProducibleItems } from "./utils";
+
+export function getProducibleItems(
+  regions: RegionId[],
+  patch: Patch,
+  recipeOverrides: Partial<Record<ItemId, RecipeId>> = {},
+  rawInputOverrides: Partial<Record<ItemId, number>> = {},
+): Set<ItemId> {
+  if (regions.length === 0) return new Set();
+
+  const primaryRegion = regions[0];
+  const context: SolverContext = {
+    patch: patch,
+    unlockedSites: [],
+    recipeOverrides,
+    rawInputOverrides,
+    manualRawMaterials: new Set(),
+    visitedItems: new Set(),
+    itemMap: ITEM_MAP,
+    facilityMap: FACILITY_MAP,
+    recipesByOutput: RECIPES_BY_OUTPUT,
+    producibleItems: new Set(),
+  };
+
+  return computeProducibleItems(context, primaryRegion);
+}
+
+const sumRawMaterialRates = (
+  nodes: ProductionNode[],
+  rates: Map<string, number>,
+): void => {
+  for (const node of nodes) {
+    if (node.isRawMaterial && node.targetRate > 0) {
+      const current = rates.get(node.item.id) ?? 0;
+      rates.set(node.item.id, current + node.targetRate);
+    }
+    if (node.dependencies.length > 0) {
+      sumRawMaterialRates(node.dependencies, rates);
+    }
+  }
+};
+
+const checkRawMaterialCaps = (
+  rates: Map<string, number>,
+  region: RegionId,
+  errors: string[],
+): void => {
+  const caps = RAW_MATERIAL_REGIONS[region];
+  for (const [itemId, rate] of rates) {
+    const cap = caps[itemId as keyof typeof caps];
+    if (cap !== undefined && cap !== Infinity && rate > cap) {
+      errors.push(
+        `Raw material "${itemId}" required at ${rate.toFixed(1)}/min exceeds region cap of ${cap}/min in ${region}`,
+      );
+    }
+  }
+};
 
 export const solve = (input: SolverInput): SolverOutput => {
   const {
@@ -21,6 +85,22 @@ export const solve = (input: SolverInput): SolverOutput => {
   const nodes: ProductionNode[] = [];
 
   const primaryRegion = activeSiteRegions[0] ?? "valley";
+
+  const tempContext: SolverContext = {
+    patch,
+    unlockedSites,
+    recipeOverrides,
+    rawInputOverrides,
+    manualRawMaterials,
+    visitedItems: new Set(),
+    itemMap: ITEM_MAP,
+    facilityMap: FACILITY_MAP,
+    recipesByOutput: RECIPES_BY_OUTPUT,
+    producibleItems: new Set(),
+  };
+
+  const producibleItems = computeProducibleItems(tempContext, primaryRegion);
+
   for (const goal of goals) {
     const context: SolverContext = {
       patch,
@@ -32,6 +112,7 @@ export const solve = (input: SolverInput): SolverOutput => {
       itemMap: ITEM_MAP,
       facilityMap: FACILITY_MAP,
       recipesByOutput: RECIPES_BY_OUTPUT,
+      producibleItems,
     };
 
     try {
@@ -48,5 +129,10 @@ export const solve = (input: SolverInput): SolverOutput => {
       errors.push(`Failed to solve for "${goal.itemId}": ${e}`);
     }
   }
+
+  const rawMaterialRates = new Map<string, number>();
+  sumRawMaterialRates(nodes, rawMaterialRates);
+  checkRawMaterialCaps(rawMaterialRates, primaryRegion, errors);
+
   return { nodes, detectedCycles, errors };
 };

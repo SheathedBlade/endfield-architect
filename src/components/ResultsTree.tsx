@@ -1,7 +1,7 @@
 import { FACILITY_MAP, ITEM_MAP } from "@/data/loader";
 import type { ProductionNode } from "@/types";
+import { ChevronDown, ChevronRight, Dot } from "lucide-react";
 import { useState } from "react";
-import { Toggle } from "./ui/Accordion";
 
 interface NodeRowProps {
   node: ProductionNode;
@@ -12,14 +12,14 @@ const ResultsTree = ({ nodes }: { nodes: ProductionNode[] }) => {
   if (nodes.length === 0) return null;
 
   return (
-    <div className="card">
-      <h2 className="text-xl font-semibold mb-4 text-gray-100">
-        Production Plan
-      </h2>
-      <div className="space-y-1">
-        {nodes.map((node, i) => (
-          <NodeRow key={i} node={node} />
-        ))}
+    <div className="panel">
+      <div className="panel-header">Production Plan — Data Readout</div>
+      <div className="panel-body">
+        <div className="space-y-0.5">
+          {nodes.map((node, i) => (
+            <NodeRow key={i} node={node} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -31,35 +31,63 @@ const NodeRow = ({ node, depth = 0 }: NodeRowProps) => {
   const item = ITEM_MAP.get(node.item.id);
   const facility = node.facility ? FACILITY_MAP.get(node.facility.id) : null;
 
+  const nodeClass = [
+    "tree-node",
+    node.isRawMaterial ? "raw" : "",
+    node.isTarget ? "target" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div style={{ marginLeft: depth * 20 }}>
-      <div className="flex items-center gap-3, py-2 group">
+    <div>
+      <div className={nodeClass} style={{ paddingLeft: depth * 16 + 8 }}>
         {hasChildren ? (
-          <Toggle expanded={expanded} onClick={() => setExpanded(!expanded)} />
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="w-4 h-4 flex items-center justify-center text-text-muted hover:text-accent transition-colors shrink-0"
+            aria-label={expanded ? "Collapse" : "Expand"}
+          >
+            {expanded ? (
+              <ChevronDown className="w-4 h-4" strokeWidth={2} />
+            ) : (
+              <ChevronRight className="w-4 h-4" strokeWidth={2} />
+            )}
+          </button>
         ) : (
-          <span className="w-6" />
+          <span className="w-4 flex items-center justify-center text-dim shrink-0">
+            <Dot className="w-4 h-4" strokeWidth={3} />
+          </span>
         )}
-        <span className="font-mono text-accent-primary text-sm">
-          {item?.id ?? node.item.id}
+
+        <span className="item-name flex-1 truncate">
+          {item?.displayName ?? node.item.id}
         </span>
-        <span className="text-gray-600">→</span>
-        <span className="font-mono text-blue-400 text-sm">
-          {facility?.id ?? node.facility?.id ?? "raw"}
-        </span>
-        <span className="text-gray-600">×</span>
-        <span className="font-mono text-green-400 font-semibold">
-          {node.facilityCount.toLocaleString()}
-        </span>
-        <span className="text-gray-600">@</span>
-        <span className="font-mono text-yellow-400">
-          {node.targetRate.toLocaleString()}/min
-        </span>
+
+        {!node.isRawMaterial && (
+          <>
+            <span className="text-dim">→</span>
+            <span className="facility-name">
+              {facility?.displayName ?? node.facility?.id ?? "raw"}
+            </span>
+            <span className="text-dim">×</span>
+            <span className="count">{node.facilityCount.toLocaleString()}</span>
+          </>
+        )}
+
+        <span className="text-dim">@</span>
+        <span className="rate">{node.targetRate.toLocaleString()}/min</span>
       </div>
-      {hasChildren && expanded && (
-        <div className="ml-4 border-l border-gray-700 pl-2">
-          {node.dependencies!.map((child, i) => (
-            <NodeRow key={i} node={child} depth={depth + 1} />
-          ))}
+
+      {hasChildren && (
+        <div className={`tree-children ${expanded ? "expanded" : ""}`}>
+          <div className="tree-children-inner">
+            <div className="border-l border-border ml-6">
+              {node.dependencies!.map((child, i) => (
+                <NodeRow key={i} node={child} depth={depth + 1} />
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>

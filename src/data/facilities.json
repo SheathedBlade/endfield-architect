@@ -5,7 +5,10 @@
     "category": "production_1",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [3, 3],
+    "gridSize": [
+      3,
+      3
+    ],
     "ports": {
       "inputSlots": 1,
       "outputSlots": 1,
@@ -18,8 +21,11 @@
       "additionalPipeInputs": 1,
       "additionalPipeOutputs": 1,
       "unlockedInPatch": "1.1",
-      "regions": ["wuling"]
-    }
+      "regions": [
+        "wuling"
+      ]
+    },
+    "displayName": "Refining Unit"
   },
   {
     "id": "shredding_unit",
@@ -27,7 +33,10 @@
     "category": "production_1",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [3, 3],
+    "gridSize": [
+      3,
+      3
+    ],
     "ports": {
       "inputSlots": 1,
       "outputSlots": 1,
@@ -35,7 +44,8 @@
       "outputPorts": 3,
       "pipeInputs": 0,
       "pipeOutputs": 0
-    }
+    },
+    "displayName": "Shredding Unit"
   },
   {
     "id": "moulding_unit",
@@ -43,7 +53,10 @@
     "category": "production_1",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [3, 3],
+    "gridSize": [
+      3,
+      3
+    ],
     "ports": {
       "inputSlots": 1,
       "outputSlots": 1,
@@ -51,7 +64,8 @@
       "outputPorts": 3,
       "pipeInputs": 0,
       "pipeOutputs": 0
-    }
+    },
+    "displayName": "Moulding Unit"
   },
   {
     "id": "fitting_unit",
@@ -59,7 +73,10 @@
     "category": "production_1",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [3, 3],
+    "gridSize": [
+      3,
+      3
+    ],
     "ports": {
       "inputSlots": 1,
       "outputSlots": 1,
@@ -67,7 +84,8 @@
       "outputPorts": 3,
       "pipeInputs": 0,
       "pipeOutputs": 0
-    }
+    },
+    "displayName": "Fitting Unit"
   },
   {
     "id": "planting_unit",
@@ -75,7 +93,10 @@
     "category": "production_1",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [5, 5],
+    "gridSize": [
+      5,
+      5
+    ],
     "ports": {
       "inputSlots": 1,
       "outputSlots": 1,
@@ -88,8 +109,11 @@
       "additionalPipeInputs": 1,
       "additionalPipeOutputs": 0,
       "unlockedInPatch": "1.1",
-      "regions": ["wuling"]
-    }
+      "regions": [
+        "wuling"
+      ]
+    },
+    "displayName": "Planting Unit"
   },
   {
     "id": "seed_picking_unit",
@@ -97,7 +121,10 @@
     "category": "production_1",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [5, 5],
+    "gridSize": [
+      5,
+      5
+    ],
     "ports": {
       "inputSlots": 1,
       "outputSlots": 1,
@@ -105,7 +132,8 @@
       "outputPorts": 5,
       "pipeInputs": 0,
       "pipeOutputs": 0
-    }
+    },
+    "displayName": "Seed-Picking Unit"
   },
   {
     "id": "gearing_unit",
@@ -113,7 +141,10 @@
     "category": "production_2",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [6, 4],
+    "gridSize": [
+      6,
+      4
+    ],
     "ports": {
       "inputSlots": 2,
       "outputSlots": 1,
@@ -121,7 +152,8 @@
       "outputPorts": 6,
       "pipeInputs": 0,
       "pipeOutputs": 0
-    }
+    },
+    "displayName": "Gearing Unit"
   },
   {
     "id": "filling_unit",
@@ -129,7 +161,10 @@
     "category": "production_2",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [6, 4],
+    "gridSize": [
+      6,
+      4
+    ],
     "ports": {
       "inputSlots": 2,
       "outputSlots": 1,
@@ -142,8 +177,11 @@
       "additionalPipeInputs": 1,
       "additionalPipeOutputs": 0,
       "unlockedInPatch": "1.1",
-      "regions": ["wuling"]
-    }
+      "regions": [
+        "wuling"
+      ]
+    },
+    "displayName": "Filling Unit"
   },
   {
     "id": "packaging_unit",
@@ -151,7 +189,10 @@
     "category": "production_2",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [6, 4],
+    "gridSize": [
+      6,
+      4
+    ],
     "ports": {
       "inputSlots": 2,
       "outputSlots": 1,
@@ -159,7 +200,8 @@
       "outputPorts": 6,
       "pipeInputs": 0,
       "pipeOutputs": 0
-    }
+    },
+    "displayName": "Packaging Unit"
   },
   {
     "id": "grinding_unit",
@@ -167,7 +209,10 @@
     "category": "production_2",
     "patch": "1.0",
     "regions": "all",
-    "gridSize": [6, 4],
+    "gridSize": [
+      6,
+      4
+    ],
     "ports": {
       "inputSlots": 2,
       "outputSlots": 1,
@@ -175,15 +220,21 @@
       "outputPorts": 6,
       "pipeInputs": 0,
       "pipeOutputs": 0
-    }
+    },
+    "displayName": "Grinding Unit"
   },
   {
     "id": "reactor_crucible",
     "powerConsumption": 50,
     "category": "production_2",
     "patch": "1.0",
-    "regions": ["wuling"],
-    "gridSize": [5, 5],
+    "regions": [
+      "wuling"
+    ],
+    "gridSize": [
+      5,
+      5
+    ],
     "ports": {
       "inputSlots": 5,
       "outputSlots": 1,
@@ -194,16 +245,27 @@
     },
     "parallelRecipes": {
       "default": 1,
-      "upgrades": [{ "patch": "1.0", "count": 2 }]
-    }
+      "upgrades": [
+        {
+          "patch": "1.0",
+          "count": 2
+        }
+      ]
+    },
+    "displayName": "Reactor Crucible"
   },
   {
     "id": "forge_of_the_sky",
     "powerConsumption": 50,
     "category": "production_2",
     "patch": "1.0",
-    "regions": ["wuling"],
-    "gridSize": [5, 5],
+    "regions": [
+      "wuling"
+    ],
+    "gridSize": [
+      5,
+      5
+    ],
     "ports": {
       "inputSlots": 2,
       "outputSlots": 1,
@@ -214,16 +276,27 @@
     },
     "placementCap": {
       "default": 2,
-      "upgrades": [{ "patch": "1.1", "cap": 4 }]
-    }
+      "upgrades": [
+        {
+          "patch": "1.1",
+          "cap": 4
+        }
+      ]
+    },
+    "displayName": "Forge of the Sky"
   },
   {
     "id": "separating_unit",
     "powerConsumption": 20,
     "category": "production_2",
     "patch": "1.0",
-    "regions": ["wuling"],
-    "gridSize": [6, 4],
+    "regions": [
+      "wuling"
+    ],
+    "gridSize": [
+      6,
+      4
+    ],
     "ports": {
       "inputSlots": 1,
       "outputSlots": 1,
@@ -231,6 +304,7 @@
       "outputPorts": 6,
       "pipeInputs": 0,
       "pipeOutputs": 1
-    }
+    },
+    "displayName": "Separating Unit"
   }
 ]

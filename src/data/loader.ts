@@ -19,6 +19,7 @@ const RegionIdSchema = z.enum(REGION_IDS);
 
 const ItemSchema = z.object({
   id: z.string(),
+  displayName: z.string(),
   isLiquid: z.boolean(),
   isRaw: z.boolean(),
   isByproduct: z.boolean(),
@@ -67,6 +68,7 @@ const ParallelRecipesSchema = z.object({
 
 const FacilitySchema = z.object({
   id: z.string(),
+  displayName: z.string(),
   powerConsumption: z.number().nonnegative(),
   category: z.enum(FACILITY_CATEGORIES),
   patch: PatchSchema,

@@ -6,7 +6,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 const Select = ({ options, className = "", ...props }: SelectProps) => {
   return (
-    <select className={`inpute ${className}`} {...props}>
+    <select className={`input ${className}`} {...props}>
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>
           {opt.label}

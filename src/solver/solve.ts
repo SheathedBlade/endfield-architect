@@ -48,8 +48,25 @@ export const solveNode = (
     };
   }
 
-  // Check if we arrived at a seed loop
+  // Check if we arrived at a cycle item (seed/plant loop)
   if (context.visitedItems.has(itemId) && isCycleItem(itemId)) {
+    const placeholder: ProductionNode = {
+      item,
+      targetRate,
+      recipe: null,
+      facility: null,
+      facilityCount: 0,
+      isRawMaterial: false,
+      isTarget,
+      dependencies: [],
+      isCyclePlaceholder: true,
+      cycleItemId: itemId,
+    };
+    return placeholder;
+  }
+
+  // Check for any other cycle — item already being visited in current branch
+  if (context.visitedItems.has(itemId)) {
     const placeholder: ProductionNode = {
       item,
       targetRate,
@@ -105,7 +122,7 @@ export const solveNode = (
       primaryOutput.amount,
     );
     const dependentNode = solveNode(
-      itemId,
+      input.itemId,
       inputRate,
       context,
       regionId,
@@ -115,11 +132,11 @@ export const solveNode = (
 
     // Check if we get the placeholder for the cycle back
     if (dependentNode.isCyclePlaceholder && dependentNode.cycleItemId) {
-      const seedId = SEED_LOOP_ITEMS.has(dependentNode.cycleItemId)
-        ? dependentNode.cycleItemId
-        : input.itemId;
-      const cycle = buildSeedCycle(seedId, [dependentNode]);
-      detectedCycles.push(cycle);
+      if (SEED_LOOP_ITEMS.has(dependentNode.cycleItemId)) {
+        const cycle = buildSeedCycle(dependentNode.cycleItemId, [dependentNode]);
+        detectedCycles.push(cycle);
+      }
+      // Non-seed cycles are silently absorbed — the item is already being produced upstream
     }
     dependencies.push(dependentNode);
   }

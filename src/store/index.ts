@@ -18,11 +18,14 @@ import { create } from "zustand";
 type AppState = {
   plan: ProductionPlan;
   activePatch: Patch;
+  activeRegion: RegionId;
 
   setPatch: (patch: Patch) => void;
+  setActiveRegion: (regionId: RegionId) => void;
 
   addGoal: (goal: Goal) => void;
   removeGoal: (itemId: ItemId) => void;
+  clearGoals: () => void;
   updateGoal: (goal: Goal) => void;
 
   unlockSite: (siteId: SiteIdType) => void;
@@ -61,6 +64,7 @@ const DEFAULT_PLAN: ProductionPlan = {
 export const useAppStore = create<AppState>((set, get) => ({
   plan: DEFAULT_PLAN,
   activePatch: LATEST_PATCH,
+  activeRegion: "valley",
 
   setPatch: (patch) =>
     set((state) => ({
@@ -68,34 +72,173 @@ export const useAppStore = create<AppState>((set, get) => ({
       plan: { ...state.plan, version: patch },
     })),
 
+  setActiveRegion: (regionId) =>
+    set((state) => {
+      const sites = SITE_MAP;
+      const newUnlocked: SiteIdType[] = [];
+      for (const [sid, site] of sites) {
+        if (site.regionId === regionId) {
+          if (state.plan.unlockedSites.includes(sid as SiteIdType)) {
+            newUnlocked.push(sid as SiteIdType);
+          }
+        }
+      }
+      const coreSites = Array.from(sites.values())
+        .filter((s) => s.regionId === regionId && s.isCore)
+        .map((s) => s.id as SiteIdType);
+      for (const core of coreSites) {
+        if (!newUnlocked.includes(core)) newUnlocked.push(core);
+      }
+      return {
+        activeRegion: regionId,
+        plan: { ...state.plan, unlockedSites: newUnlocked, goals: [], nodes: [], errors: [] },
+      };
+    }),
+
   addGoal: (goal) =>
-    set((state) => ({
-      plan: {
-        ...state.plan,
-        goals: [
-          ...state.plan.goals.filter((g) => g.itemId !== goal.itemId),
-          goal,
-        ],
-      },
-    })),
+    set((state) => {
+      const newGoals = [
+        ...state.plan.goals.filter((g) => g.itemId !== goal.itemId),
+        goal,
+      ];
+
+      const activeSiteRegions = [
+        ...new Set(
+          state.plan.unlockedSites
+            .map((siteId) => SITE_MAP.get(siteId)?.regionId)
+            .filter((r) => r !== undefined),
+        ),
+      ] as RegionId[];
+
+      const result = solve({
+        goals: newGoals,
+        patch: state.activePatch,
+        activeSiteRegions,
+        unlockedSites: state.plan.unlockedSites,
+        recipeOverrides: state.plan.recipeOverrides,
+        rawInputOverrides: state.plan.rawInputOverrides,
+        manualRawMaterials: new Set<ItemId>(
+          Object.keys(state.plan.rawInputOverrides) as ItemId[],
+        ),
+      });
+
+      const siteNodes = convertToSiteProduction(
+        result.nodes,
+        state.plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
+      );
+
+      return {
+        plan: {
+          ...state.plan,
+          goals: newGoals,
+          nodes: siteNodes,
+          detectedCycles: result.detectedCycles,
+          errors: result.errors,
+        },
+      };
+    }),
 
   removeGoal: (itemId) =>
+    set((state) => {
+      const remainingGoals = state.plan.goals.filter((g) => g.itemId !== itemId);
+      if (remainingGoals.length === 0) {
+        return {
+          plan: {
+            ...state.plan,
+            goals: [],
+            nodes: [],
+            errors: [],
+          },
+        };
+      }
+
+      const activeSiteRegions = [
+        ...new Set(
+          state.plan.unlockedSites
+            .map((siteId) => SITE_MAP.get(siteId)?.regionId)
+            .filter((r) => r !== undefined),
+        ),
+      ] as RegionId[];
+
+      const result = solve({
+        goals: remainingGoals,
+        patch: state.activePatch,
+        activeSiteRegions,
+        unlockedSites: state.plan.unlockedSites,
+        recipeOverrides: state.plan.recipeOverrides,
+        rawInputOverrides: state.plan.rawInputOverrides,
+        manualRawMaterials: new Set<ItemId>(
+          Object.keys(state.plan.rawInputOverrides) as ItemId[],
+        ),
+      });
+
+      const siteNodes = convertToSiteProduction(
+        result.nodes,
+        state.plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
+      );
+
+      return {
+        plan: {
+          ...state.plan,
+          goals: remainingGoals,
+          nodes: siteNodes,
+          detectedCycles: result.detectedCycles,
+          errors: result.errors,
+        },
+      };
+    }),
+
+  clearGoals: () =>
     set((state) => ({
       plan: {
         ...state.plan,
-        goals: state.plan.goals.filter((g) => g.itemId !== itemId),
+        goals: [],
+        nodes: [],
+        errors: [],
       },
     })),
 
   updateGoal: (goal) =>
-    set((state) => ({
-      plan: {
-        ...state.plan,
-        goals: state.plan.goals.map((g) =>
-          g.itemId === goal.itemId ? goal : g,
+    set((state) => {
+      const newGoals = state.plan.goals.map((g) =>
+        g.itemId === goal.itemId ? goal : g,
+      );
+
+      const activeSiteRegions = [
+        ...new Set(
+          state.plan.unlockedSites
+            .map((siteId) => SITE_MAP.get(siteId)?.regionId)
+            .filter((r) => r !== undefined),
         ),
-      },
-    })),
+      ] as RegionId[];
+
+      const result = solve({
+        goals: newGoals,
+        patch: state.activePatch,
+        activeSiteRegions,
+        unlockedSites: state.plan.unlockedSites,
+        recipeOverrides: state.plan.recipeOverrides,
+        rawInputOverrides: state.plan.rawInputOverrides,
+        manualRawMaterials: new Set<ItemId>(
+          Object.keys(state.plan.rawInputOverrides) as ItemId[],
+        ),
+      });
+
+      const siteNodes = convertToSiteProduction(
+        result.nodes,
+        state.plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
+      );
+
+      return {
+        plan: {
+          ...state.plan,
+          goals: newGoals,
+          nodes: siteNodes,
+          detectedCycles: result.detectedCycles,
+          errors: result.errors,
+        },
+      };
+    }),
 
   unlockSite: (siteId) =>
     set((state) => ({
@@ -108,12 +251,16 @@ export const useAppStore = create<AppState>((set, get) => ({
     })),
 
   lockSite: (siteId) =>
-    set((state) => ({
-      plan: {
-        ...state.plan,
-        unlockedSites: state.plan.unlockedSites.filter((s) => s !== siteId),
-      },
-    })),
+    set((state) => {
+      const site = SITE_MAP.get(siteId);
+      if (site?.isCore) return state;
+      return {
+        plan: {
+          ...state.plan,
+          unlockedSites: state.plan.unlockedSites.filter((s) => s !== siteId),
+        },
+      };
+    }),
 
   setRawInputOverride: (itemId, ratePerMin) =>
     set((state) => ({

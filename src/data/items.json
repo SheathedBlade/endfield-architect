@@ -4,869 +4,975 @@
     "isLiquid": false,
     "isRaw": true,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Originium Ore"
   },
   {
     "id": "amethyst_ore",
     "isLiquid": false,
     "isRaw": true,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Amethyst Ore"
   },
   {
     "id": "ferrium_ore",
     "isLiquid": false,
     "isRaw": true,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Ferrium Ore"
   },
   {
     "id": "carbon",
     "isLiquid": false,
-    "isRaw": true,
+    "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Carbon"
   },
   {
     "id": "cuprium_ore",
     "isLiquid": false,
     "isRaw": true,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Ore"
   },
-
   {
     "id": "clean_water",
     "isLiquid": true,
     "isRaw": true,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Clean Water"
   },
   {
     "id": "sewage",
     "isLiquid": true,
     "isRaw": false,
     "isByproduct": true,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Sewage"
   },
   {
     "id": "xircon_effluent",
     "isLiquid": true,
     "isRaw": false,
     "isByproduct": true,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Xircon Effluent"
   },
   {
     "id": "inert_xircon_effluent",
     "isLiquid": true,
     "isRaw": false,
     "isByproduct": true,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Inert Xircon Effluent"
   },
   {
     "id": "liquid_xiranite",
     "isLiquid": true,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Liquid Xiranite"
   },
   {
     "id": "jincao_solution",
     "isLiquid": true,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Jincao Solution"
   },
   {
     "id": "yazhen_solution",
     "isLiquid": true,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Yazhen Solution"
   },
-
   {
     "id": "citrome",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Citrome"
   },
   {
     "id": "buckflower",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Buckflower"
   },
   {
     "id": "sandleaf",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Sandleaf"
   },
   {
     "id": "aketine",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Aketine"
   },
   {
     "id": "jincao",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Jincao"
   },
   {
     "id": "yazhen",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Yazhen"
   },
-
   {
     "id": "buckflower_seed",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Buckflower Seed"
   },
   {
     "id": "citrome_seed",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Citrome Seed"
   },
   {
     "id": "sandleaf_seed",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Sandleaf Seed"
   },
   {
     "id": "aketine_seed",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Aketine Seed"
   },
   {
     "id": "jincao_seed",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Jincao Seed"
   },
   {
     "id": "yazhen_seed",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Yazhen Seed"
   },
-
   {
     "id": "origocrust",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Origocrust"
   },
   {
     "id": "amethyst_fiber",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Amethyst Fiber"
   },
   {
     "id": "ferrium",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Ferrium"
   },
   {
     "id": "carbon_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Carbon Powder"
   },
   {
     "id": "cryston_fiber",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Cryston Fiber"
   },
   {
     "id": "steel",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Steel"
   },
   {
     "id": "stabilized_carbon",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Stabilized Carbon"
   },
   {
     "id": "packed_origocrust",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Packed Origocrust"
   },
   {
     "id": "xiranite",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Xiranite"
   },
   {
     "id": "cuprium",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium"
   },
   {
     "id": "xircon",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Xircon"
   },
-
   {
     "id": "originium_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Originium Powder"
   },
   {
     "id": "origocrust_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Origocrust Powder"
   },
   {
     "id": "amethyst_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Amethyst Powder"
   },
   {
     "id": "ferrium_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Ferrium Powder"
   },
   {
     "id": "carbon_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Carbon Powder"
   },
   {
     "id": "dense_originium_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Dense Originium Powder"
   },
   {
     "id": "dense_ferrium_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Dense Ferrium Powder"
   },
   {
     "id": "dense_carbon_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Dense Carbon Powder"
   },
   {
     "id": "dense_origocrust_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Dense Origocrust Powder"
   },
   {
     "id": "cryston_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Cryston Powder"
   },
   {
     "id": "sandleaf_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Sandleaf Powder"
   },
   {
     "id": "aketine_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Aketine Powder"
   },
   {
     "id": "buckflower_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Buckflower Powder"
   },
   {
     "id": "citrome_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Citrome Powder"
   },
   {
     "id": "jincao_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Jincao Powder"
   },
   {
     "id": "yazhen_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Yazhen Powder"
   },
   {
     "id": "ground_buckflower_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Ground Buckflower Powder"
   },
   {
     "id": "ground_citrome_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Ground Citrome Powder"
   },
   {
     "id": "cuprium_powder",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Powder"
   },
-
   {
     "id": "amethyst_bottle",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Amethyst Bottle"
   },
   {
     "id": "ferrium_bottle",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Ferrium Bottle"
   },
   {
     "id": "cryston_bottle",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Cryston Bottle"
   },
   {
     "id": "steel_bottle",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Steel Bottle"
   },
   {
     "id": "cuprium_bottle",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Bottle"
   },
-
   {
     "id": "amethyst_bottle_clean_water",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Amethyst Bottle (Clean Water)"
   },
   {
     "id": "amethyst_bottle_jincao_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Amethyst Bottle (Jincao Solution)"
   },
   {
     "id": "amethyst_bottle_yazhen_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Amethyst Bottle (Yazhen Solution)"
   },
   {
     "id": "amethyst_bottle_liquid_xiranite",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Amethyst Bottle (Liquid Xiranite)"
   },
   {
     "id": "amethyst_bottle_sewage",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Amethyst Bottle (Sewage)"
   },
   {
     "id": "amethyst_bottle_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Amethyst Bottle (Xircon Effluent)"
   },
   {
     "id": "amethyst_bottle_inert_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Amethyst Bottle (Inert Xircon Effluent)"
   },
-
   {
     "id": "ferrium_bottle_clean_water",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Ferrium Bottle (Clean Water)"
   },
   {
     "id": "ferrium_bottle_jincao_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Ferrium Bottle (Jincao Solution)"
   },
   {
     "id": "ferrium_bottle_yazhen_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Ferrium Bottle (Yazhen Solution)"
   },
   {
     "id": "ferrium_bottle_liquid_xiranite",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Ferrium Bottle (Liquid Xiranite)"
   },
   {
     "id": "ferrium_bottle_sewage",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Ferrium Bottle (Sewage)"
   },
   {
     "id": "ferrium_bottle_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Ferrium Bottle (Xircon Effluent)"
   },
   {
     "id": "ferrium_bottle_inert_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Ferrium Bottle (Inert Xircon Effluent)"
   },
-
   {
     "id": "cryston_bottle_clean_water",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cryston Bottle (Clean Water)"
   },
   {
     "id": "cryston_bottle_jincao_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cryston Bottle (Jincao Solution)"
   },
   {
     "id": "cryston_bottle_yazhen_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cryston Bottle (Yazhen Solution)"
   },
   {
     "id": "cryston_bottle_liquid_xiranite",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cryston Bottle (Liquid Xiranite)"
   },
   {
     "id": "cryston_bottle_sewage",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cryston Bottle (Sewage)"
   },
   {
     "id": "cryston_bottle_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cryston Bottle (Xircon Effluent)"
   },
   {
     "id": "cryston_bottle_inert_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cryston Bottle (Inert Xircon Effluent)"
   },
-
   {
     "id": "steel_bottle_clean_water",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Steel Bottle (Clean Water)"
   },
   {
     "id": "steel_bottle_jincao_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Steel Bottle (Jincao Solution)"
   },
   {
     "id": "steel_bottle_yazhen_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Steel Bottle (Yazhen Solution)"
   },
   {
     "id": "steel_bottle_liquid_xiranite",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Steel Bottle (Liquid Xiranite)"
   },
   {
     "id": "steel_bottle_sewage",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Steel Bottle (Sewage)"
   },
   {
     "id": "steel_bottle_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Steel Bottle (Xircon Effluent)"
   },
   {
     "id": "steel_bottle_inert_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Steel Bottle (Inert Xircon Effluent)"
   },
-
   {
     "id": "cuprium_bottle_clean_water",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Bottle (Clean Water)"
   },
   {
     "id": "cuprium_bottle_jincao_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Bottle (Jincao Solution)"
   },
   {
     "id": "cuprium_bottle_yazhen_solution",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Bottle (Yazhen Solution)"
   },
   {
     "id": "cuprium_bottle_liquid_xiranite",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Bottle (Liquid Xiranite)"
   },
   {
     "id": "cuprium_bottle_sewage",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Bottle (Sewage)"
   },
   {
     "id": "cuprium_bottle_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Bottle (Xircon Effluent)"
   },
   {
     "id": "cuprium_bottle_inert_xircon_effluent",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Bottle (Inert Xircon Effluent)"
   },
-
   {
     "id": "amethyst_part",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Amethyst Part"
   },
   {
     "id": "ferrium_part",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Ferrium Part"
   },
   {
     "id": "cryston_part",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Cryston Part"
   },
   {
     "id": "steel_part",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Steel Part"
   },
   {
     "id": "cuprium_part",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Part"
   },
-
   {
     "id": "amethyst_component",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Amethyst Component"
   },
   {
     "id": "ferrium_component",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Ferrium Component"
   },
   {
     "id": "cryston_component",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Cryston Component"
   },
   {
     "id": "xiranite_component",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Xiranite Component"
   },
   {
     "id": "cuprium_component",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Cuprium Component"
   },
-
   {
     "id": "buck_capsule_c",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Buck Capsule C"
   },
   {
     "id": "buck_capsule_b",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Buck Capsule B"
   },
   {
     "id": "buck_capsule_a",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Buck Capsule A"
   },
   {
     "id": "canned_citrome_c",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Canned Citrome C"
   },
   {
     "id": "canned_citrome_b",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Canned Citrome B"
   },
   {
     "id": "canned_citrome_a",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Canned Citrome A"
   },
   {
     "id": "yazhen_syringe_c",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Yazhen Syringe C"
   },
   {
     "id": "yazhen_syringe_a",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Yazhen Syringe A"
   },
   {
     "id": "jincao_drink",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Jincao Drink"
   },
   {
     "id": "jincao_tea",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "Jincao Tea"
   },
-
   {
     "id": "lc_valley_battery",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "LC Valley Battery"
   },
   {
     "id": "sc_valley_battery",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "SC Valley Battery"
   },
   {
     "id": "hc_valley_battery",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "HC Valley Battery"
   },
   {
     "id": "lc_wuling_battery",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "LC Wuling Battery"
   },
   {
     "id": "sc_wuling_battery",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.1"
+    "patch": "1.1",
+    "displayName": "SC Wuling Battery"
   },
-
   {
     "id": "industrial_explosive",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Industrial Explosive"
   },
   {
     "id": "bumper_rich",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Bumper Rich"
   },
   {
     "id": "burdo_muck",
     "isLiquid": false,
     "isRaw": false,
     "isByproduct": false,
-    "patch": "1.0"
+    "patch": "1.0",
+    "displayName": "Burdo Muck"
   }
 ]

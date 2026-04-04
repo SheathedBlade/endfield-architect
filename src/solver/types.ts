@@ -17,6 +17,7 @@ export type SolverContext = {
   rawInputOverrides: Partial<Record<ItemId, number>>;
   manualRawMaterials: Set<ItemId>;
   visitedItems: Set<ItemId>;
+  producibleItems: Set<ItemId>;
 
   itemMap: Map<string, Item>;
   facilityMap: Map<string, Facility>;
