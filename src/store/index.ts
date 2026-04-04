@@ -66,11 +66,13 @@ export const useAppStore = create<AppState>((set, get) => ({
   activePatch: LATEST_PATCH,
   activeRegion: "valley",
 
-  setPatch: (patch) =>
+  setPatch: (patch) => {
+    get().clearGoals();
     set((state) => ({
       activePatch: patch,
       plan: { ...state.plan, version: patch },
-    })),
+    }));
+  },
 
   setActiveRegion: (regionId) =>
     set((state) => {

@@ -1,4 +1,4 @@
-import { FACILITY_MAP, ITEM_MAP, RECIPES_BY_OUTPUT } from "@/data/loader";
+import { FACILITY_MAP, ITEM_MAP, RECIPES_BY_OUTPUT, REGION_MAP } from "@/data/loader";
 import {
   RAW_MATERIAL_REGIONS,
   type ItemId,
@@ -60,8 +60,10 @@ const checkRawMaterialCaps = (
   for (const [itemId, rate] of rates) {
     const cap = caps[itemId as keyof typeof caps];
     if (cap !== undefined && cap !== Infinity && rate > cap) {
+      const itemName = ITEM_MAP.get(itemId as ItemId)?.displayName ?? itemId;
+      const regionName = REGION_MAP.get(region)?.name ?? region;
       errors.push(
-        `Raw material "${itemId}" required at ${rate.toFixed(1)}/min exceeds region cap of ${cap}/min in ${region}`,
+        `Raw material "${itemName}" required at ${rate.toFixed(1)}/min exceeds region cap of ${cap}/min in ${regionName}`,
       );
     }
   }
@@ -126,7 +128,8 @@ export const solve = (input: SolverInput): SolverOutput => {
       );
       nodes.push(node);
     } catch (e) {
-      errors.push(`Failed to solve for "${goal.itemId}": ${e}`);
+      const itemName = ITEM_MAP.get(goal.itemId)?.displayName ?? goal.itemId;
+      errors.push(`Failed to solve for "${itemName}": ${e}`);
     }
   }
 

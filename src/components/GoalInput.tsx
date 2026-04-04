@@ -19,7 +19,7 @@ const GoalInput = () => {
   const activeRegion = useAppStore((s) => s.activeRegion);
   const { goals } = plan;
   const prevCountRef = useRef(goals.length);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const producibleItems = useMemo(() => {
     return getProducibleItems([activeRegion], plan.version);
@@ -34,15 +34,15 @@ const GoalInput = () => {
 
   const filteredOptions = useMemo(() => {
     if (!searchQuery) return itemOptions;
-    const q = searchQuery.toLowerCase();
+    const q = searchQuery.trimEnd().toLowerCase();
     return itemOptions.filter((opt) => opt.label.toLowerCase().includes(q));
   }, [itemOptions, searchQuery]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
       ) {
         setShowDropdown(false);
       }
@@ -198,7 +198,17 @@ const GoalInput = () => {
         ) : (
           <div className="space-y-3 goal-form-slide">
             {/* Autocomplete input */}
-            <div className="relative" ref={containerRef}>
+            <div
+              className="relative"
+              ref={dropdownRef}
+              onBlur={(e) => {
+                if (
+                  !dropdownRef.current?.contains(e.relatedTarget as Node)
+                ) {
+                  setShowDropdown(false);
+                }
+              }}
+            >
               <div className="flex items-center input-terminal w-full px-0">
                 <Search
                   className="w-4 h-4 text-text-muted ml-3 shrink-0"
@@ -238,7 +248,7 @@ const GoalInput = () => {
                 </div>
               )}
               {showDropdown && filteredOptions.length === 0 && (
-                <div className="autocomplete-dropdown text-text-muted">
+                <div className="autocomplete-dropdown dropdown-empty">
                   No items match "{searchQuery}"
                 </div>
               )}
@@ -252,19 +262,29 @@ const GoalInput = () => {
                   <button
                     type="button"
                     className="stepper-btn"
-                    onClick={() => setDraftRate((r) => Math.max(1, r - 1))}
-                    disabled={draftRate <= 1}
+                    onClick={() => setDraftRate((r) => Math.max(0, r - 1))}
+                    disabled={draftRate <= 0}
                   >
                     -
                   </button>
                   <input
                     className="stepper-input"
-                    type="number"
-                    min={1}
+                    type="text"
+                    inputMode="numeric"
                     value={draftRate}
-                    onChange={(e) =>
-                      setDraftRate(Math.max(1, Number(e.target.value)))
-                    }
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      if (v === "") {
+                        setDraftRate(0);
+                      } else {
+                        const n = Number(v);
+                        if (!isNaN(n) && n >= 0) setDraftRate(n);
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const n = Number(e.target.value);
+                      if (isNaN(n) || n < 1) setDraftRate(0);
+                    }}
                   />
                   <button
                     type="button"
@@ -282,7 +302,7 @@ const GoalInput = () => {
                 type="button"
                 onClick={confirmEdit}
                 className="btn-tactical primary flex-1 flex items-center justify-center gap-1.5"
-                disabled={draftItem === null}
+                disabled={draftItem === null || draftRate <= 0}
               >
                 <Check className="w-3.5 h-3.5" strokeWidth={2.5} />
                 <span>{isEditing ? "Update" : "Confirm"}</span>
@@ -300,68 +320,58 @@ const GoalInput = () => {
         )}
 
         {goals.length > 0 && (
-          <div
-            className={`goal-list-container ${goals.length > 0 ? "expanded" : ""}`}
-          >
-            <div className="goal-list-container-inner">
-              <div className="divider mt-4 mb-3" />
-              <div className="goal-list space-y-1">
-                {goals.map((goal: Goal) => {
-                  const item = ITEM_MAP.get(goal.itemId);
-                  const isEntering = entering.has(goal.itemId);
-                  const isExiting = exiting.has(goal.itemId);
-                  const animClass = isExiting
-                    ? "goal-item-exiting"
-                    : isEntering
-                      ? "goal-item-entering"
-                      : "";
-                  return (
-                    <div
-                      key={goal.itemId}
-                      className={`flex items-center justify-between px-3 py-2 bg- border-l-2 border-accent-border ${animClass}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Target
-                          className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5"
-                          strokeWidth={2}
-                        />
-                        <div className="flex flex-col">
-                          <span className="font-display text-sm">
-                            {item?.displayName ?? goal.itemId}
-                          </span>
-                          <span className="font-display text-xs text-accent font-bold">
-                            {goal.targetRate.toLocaleString()}/min
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <button
-                          onClick={() => openEdit(goal)}
-                          className="btn-tactical ghost"
-                          style={{
-                            padding: "0.3rem 0.5rem",
-                            fontSize: "0.7rem",
-                          }}
-                        >
-                          <Pencil className="w-3 h-3" strokeWidth={2.5} />
-                        </button>
-                        <button
-                          onClick={() => handleRemove(goal.itemId)}
-                          className="btn-tactical danger"
-                          style={{
-                            padding: "0.3rem 0.5rem",
-                            fontSize: "0.7rem",
-                          }}
-                        >
-                          <X className="w-3 h-3" strokeWidth={2.5} />
-                        </button>
+          <>
+            <div className="divider mt-4 mb-3" />
+            <div className="goal-list space-y-1">
+              {goals.map((goal: Goal) => {
+                const item = ITEM_MAP.get(goal.itemId);
+                const isEntering = entering.has(goal.itemId);
+                const isExiting = exiting.has(goal.itemId);
+                const animClass = isExiting
+                  ? "goal-item-exiting"
+                  : isEntering
+                    ? "goal-item-entering"
+                    : "";
+                return (
+                  <div
+                    key={goal.itemId}
+                    className={`flex items-center justify-between px-3 py-2 bg- border-l-2 border-accent-border ${animClass}`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Target
+                        className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5"
+                        strokeWidth={2}
+                      />
+                      <div className="flex flex-col">
+                        <span className="font-display text-sm">
+                          {item?.displayName ?? goal.itemId}
+                        </span>
+                        <span className="font-display text-xs text-accent font-bold">
+                          {goal.targetRate.toLocaleString()}/min
+                        </span>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => openEdit(goal)}
+                        className="btn-tactical ghost"
+                        style={{ padding: "0.3rem 0.5rem", fontSize: "0.7rem" }}
+                      >
+                        <Pencil className="w-3 h-3" strokeWidth={2.5} />
+                      </button>
+                      <button
+                        onClick={() => handleRemove(goal.itemId)}
+                        className="btn-tactical danger"
+                        style={{ padding: "0.3rem 0.5rem", fontSize: "0.7rem" }}
+                      >
+                        <X className="w-3 h-3" strokeWidth={2.5} />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
+          </>
         )}
 
         {goals.length === 0 && !isAdding && (

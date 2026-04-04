@@ -1,6 +1,7 @@
 import { AlertCircle, Diamond } from "lucide-react";
 import { useEffect } from "react";
 import GoalInput from "./components/GoalInput";
+import PatchSelector from "./components/PatchSelector";
 import RegionSwitcher from "./components/RegionSwitcher";
 import ResultsTree from "./components/ResultsTree";
 import { useAppStore } from "./store";
@@ -22,7 +23,7 @@ function App() {
     <div className="app-content min-h-screen p-4 md:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto">
         {/* ═══ HEADER ═══ */}
-        <header className="mb-6">
+        <header className="mb-6 z-50 relative">
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-center gap-3 mb-1">
@@ -32,18 +33,21 @@ function App() {
                 </h1>
               </div>
               <p className="font-display text-xs text-text-muted tracking-wider ml-5">
-                AIC PRODUCTION PLANNING SYSTEM // PATCH {plan.version}
+                AIC PRODUCTION PLANNING SYSTEM
               </p>
             </div>
-            <div className="flex items-center gap-4 font-display text-xs text-text-muted">
-              <div className="flex items-center gap-2">
-                <span className="text-secondary">GOALS:</span>
-                <span className="text-accent">{goalCount}</span>
-              </div>
-              <div className="w-px h-4 bg-border-mid" />
-              <div className="flex items-center gap-2">
-                <span className="text-secondary">NODES:</span>
-                <span className="text-accent">{nodeCount}</span>
+            <div className="flex items-center gap-6">
+              <PatchSelector />
+              <div className="flex items-center gap-4 font-display text-xs text-text-muted">
+                <div className="flex items-center gap-2">
+                  <span className="text-secondary">GOALS:</span>
+                  <span className="text-accent">{goalCount}</span>
+                </div>
+                <div className="w-px h-4 bg-border-mid" />
+                <div className="flex items-center gap-2">
+                  <span className="text-secondary">NODES:</span>
+                  <span className="text-accent">{nodeCount}</span>
+                </div>
               </div>
             </div>
           </div>
