@@ -37,6 +37,7 @@
   --color-border-mid: #4d4d4d;
   --color-border-light: #666;
   --color-status-error: #e04040;
+  --color-status-warning: #c8860a;
   --color-status-ok: #40c070;
 }
 
@@ -106,7 +107,9 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1.25rem;
+  padding: 0 1.25rem;
+  height: 2.5rem;
+  overflow: hidden;
   background: linear-gradient(
     90deg,
     var(--color-accent-glow) 0%,
@@ -507,6 +510,12 @@ input[type="number"]::-webkit-inner-spin-button {
 /* Suppress focus ring on goal dropdown search input */
 .goal-form-slide input:focus-visible {
   outline: none;
+}
+
+/* Suppress focus ring on override panel search inputs */
+.input-terminal input:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 /* ═══ ANIMATION KEYFRAMES ═══ */

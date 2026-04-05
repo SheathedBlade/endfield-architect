@@ -18,6 +18,7 @@ export type SolverContext = {
   manualRawMaterials: Set<ItemId>;
   visitedItems: Set<ItemId>;
   producibleItems: Set<ItemId>;
+  capErrors: string[];
 
   itemMap: Map<string, Item>;
   facilityMap: Map<string, Facility>;

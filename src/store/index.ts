@@ -37,6 +37,8 @@ type AppState = {
   setRecipeOverride: (itemId: ItemId, recipeId: RecipeId) => void;
   removeRecipeOverride: (itemId: ItemId) => void;
 
+  importPlan: (plan: ProductionPlan) => void;
+
   setRegionalTransferUnlocked: (unlocked: boolean) => void;
   setTTVCap: (cap: number) => void;
   addMetastorageTransfer: (transfer: MetaStorageTransfer) => void;
@@ -264,7 +266,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       };
     }),
 
-  setRawInputOverride: (itemId, ratePerMin) =>
+  setRawInputOverride: (itemId, ratePerMin) => {
     set((state) => ({
       plan: {
         ...state.plan,
@@ -273,16 +275,20 @@ export const useAppStore = create<AppState>((set, get) => ({
           [itemId]: ratePerMin,
         },
       },
-    })),
+    }));
+    get().calculate();
+  },
 
-  removeRawInputOverride: (itemId) =>
+  removeRawInputOverride: (itemId) => {
     set((state) => {
       const overrides = { ...state.plan.rawInputOverrides };
       delete overrides[itemId];
       return { plan: { ...state.plan, rawInputOverrides: overrides } };
-    }),
+    });
+    get().calculate();
+  },
 
-  setRecipeOverride: (itemId, recipeId) =>
+  setRecipeOverride: (itemId, recipeId) => {
     set((state) => ({
       plan: {
         ...state.plan,
@@ -291,14 +297,55 @@ export const useAppStore = create<AppState>((set, get) => ({
           [itemId]: recipeId,
         },
       },
-    })),
+    }));
+    get().calculate();
+  },
 
-  removeRecipeOverride: (itemId) =>
+  removeRecipeOverride: (itemId) => {
     set((state) => {
       const overrides = { ...state.plan.recipeOverrides };
       delete overrides[itemId];
       return { plan: { ...state.plan, recipeOverrides: overrides } };
-    }),
+    });
+    get().calculate();
+  },
+
+  importPlan: (plan) => {
+    const activeSiteRegions = [
+      ...new Set(
+        plan.unlockedSites
+          .map((siteId) => SITE_MAP.get(siteId)?.regionId)
+          .filter((r) => r !== undefined),
+      ),
+    ] as RegionId[];
+
+    const result = solve({
+      goals: plan.goals,
+      patch: plan.version,
+      activeSiteRegions,
+      unlockedSites: plan.unlockedSites,
+      recipeOverrides: plan.recipeOverrides,
+      rawInputOverrides: plan.rawInputOverrides,
+      manualRawMaterials: new Set<ItemId>(
+        Object.keys(plan.rawInputOverrides) as ItemId[],
+      ),
+    });
+
+    const siteNodes = convertToSiteProduction(
+      result.nodes,
+      plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
+    );
+
+    set({
+      plan: {
+        ...plan,
+        nodes: siteNodes,
+        detectedCycles: result.detectedCycles,
+        errors: result.errors,
+      },
+      activePatch: plan.version,
+    });
+  },
 
   setRegionalTransferUnlocked: (unlocked) =>
     set((state) => ({

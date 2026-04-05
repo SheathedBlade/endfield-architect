@@ -22,9 +22,17 @@ export const solveNode = (
 
   // Check if we have a raw mat override
   if (context.manualRawMaterials.has(itemId)) {
+    const overrideRate = context.rawInputOverrides[itemId];
+    const isCapped = overrideRate !== undefined && targetRate > overrideRate;
+    if (isCapped) {
+      context.capErrors.push(
+        `"${item.displayName}" capped at ${overrideRate}/min (demand: ${targetRate}/min)`,
+      );
+    }
+    const effectiveRate = isCapped ? overrideRate : targetRate;
     return {
       item,
-      targetRate,
+      targetRate: effectiveRate,
       recipe: null,
       facility: null,
       facilityCount: 0,

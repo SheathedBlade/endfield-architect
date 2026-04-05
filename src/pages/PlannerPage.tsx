@@ -1,20 +1,21 @@
 import { REGION_MAP } from "@/data/loader";
-import { AlertCircle, Diamond } from "lucide-react";
+import { AlertCircle, AlertTriangle, Diamond } from "lucide-react";
 import { useEffect } from "react";
 import GoalInput from "../components/GoalInput";
+import PlannerTools from "../components/PlannerTools";
 import RegionSwitcher from "../components/RegionSwitcher";
 import ResultsTree from "../components/ResultsTree";
 import { useAppStore } from "../store";
 import { loadPlanFromURL } from "../utils/persistence";
 
 const PlannerPage = () => {
-  const { plan } = useAppStore();
+  const { plan, importPlan } = useAppStore();
   const activeRegion = useAppStore((s) => s.activeRegion);
 
   useEffect(() => {
     const loaded = loadPlanFromURL();
-    if (loaded) useAppStore.setState({ plan: loaded });
-  }, []);
+    if (loaded) importPlan(loaded);
+  }, [importPlan]);
 
   const nodeCount = plan.nodes.length;
   const goalCount = plan.goals.length;
@@ -41,30 +42,52 @@ const PlannerPage = () => {
       </div>
 
       {/* ═══ ERRORS ═══ */}
-      {plan.errors.length > 0 && (
-        <div className="mb-4 space-y-2">
-          {plan.errors.map((err, i) => (
-            <div
-              key={i}
-              className="flex items-start gap-2.5 px-3 py-2.5 rounded bg-status-error/10 border border-status-error/20"
-            >
-              <AlertCircle
-                className="w-4 h-4 text-status-error shrink-0 mt-0.5"
-                strokeWidth={2}
-              />
-              <span className="font-display text-sm text-status-error leading-snug">
-                {err}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+      {(() => {
+        const capWarnings = plan.errors.filter((e) => e.includes("capped"));
+        const solveErrors = plan.errors.filter((e) => !e.includes("capped"));
+
+        return (
+          <div className="mb-4 space-y-2">
+            {/* Cap warnings — amber */}
+            {capWarnings.map((err, i) => (
+              <div
+                key={`cap-${i}`}
+                className="flex items-start gap-2.5 px-3 py-2.5 rounded bg-status-warning/10 border border-status-warning/20"
+              >
+                <AlertTriangle
+                  className="w-4 h-4 text-status-warning shrink-0 mt-0.5"
+                  strokeWidth={2}
+                />
+                <span className="font-display text-sm text-status-warning leading-snug">
+                  {err}
+                </span>
+              </div>
+            ))}
+            {/* Solve errors — red */}
+            {solveErrors.map((err, i) => (
+              <div
+                key={`err-${i}`}
+                className="flex items-start gap-2.5 px-3 py-2.5 rounded bg-status-error/10 border border-status-error/20"
+              >
+                <AlertCircle
+                  className="w-4 h-4 text-status-error shrink-0 mt-0.5"
+                  strokeWidth={2}
+                />
+                <span className="font-display text-sm text-status-error leading-snug">
+                  {err}
+                </span>
+              </div>
+            ))}
+          </div>
+        );
+      })()}
 
       {/* ═══ MAIN CONTENT ═══ */}
       <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-4">
         {/* Left column: controls */}
         <div className="space-y-4">
           <GoalInput />
+          <PlannerTools />
           <RegionSwitcher />
         </div>
 

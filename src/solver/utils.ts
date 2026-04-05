@@ -125,6 +125,11 @@ export const computeProducibleItems = (
     producible.add(plantId);
   }
 
+  // Seed: manually supplied items (from raw input overrides)
+  for (const itemId of Object.keys(context.rawInputOverrides) as ItemId[]) {
+    producible.add(itemId);
+  }
+
   // Fixed-point iteration: keep adding items whose recipes are fully satisfiable
   let changed = true;
   while (changed) {

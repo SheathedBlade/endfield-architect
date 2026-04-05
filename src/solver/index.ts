@@ -31,6 +31,7 @@ export function getProducibleItems(
     facilityMap: FACILITY_MAP,
     recipesByOutput: RECIPES_BY_OUTPUT,
     producibleItems: new Set(),
+    capErrors: [],
   };
 
   return computeProducibleItems(context, primaryRegion);
@@ -99,6 +100,7 @@ export const solve = (input: SolverInput): SolverOutput => {
     facilityMap: FACILITY_MAP,
     recipesByOutput: RECIPES_BY_OUTPUT,
     producibleItems: new Set(),
+    capErrors: [],
   };
 
   const producibleItems = computeProducibleItems(tempContext, primaryRegion);
@@ -115,6 +117,7 @@ export const solve = (input: SolverInput): SolverOutput => {
       facilityMap: FACILITY_MAP,
       recipesByOutput: RECIPES_BY_OUTPUT,
       producibleItems,
+      capErrors: tempContext.capErrors,
     };
 
     try {
@@ -135,7 +138,15 @@ export const solve = (input: SolverInput): SolverOutput => {
 
   const rawMaterialRates = new Map<string, number>();
   sumRawMaterialRates(nodes, rawMaterialRates);
-  checkRawMaterialCaps(rawMaterialRates, primaryRegion, errors);
+
+  // Strip manual materials from cap check since they're capped inline in solveNode
+  const ratesWithoutManual = new Map(
+    [...rawMaterialRates.entries()].filter(([id]) => !manualRawMaterials.has(id as ItemId)),
+  );
+  checkRawMaterialCaps(ratesWithoutManual, primaryRegion, errors);
+
+  // Append cap warnings from override enforcement
+  errors.push(...tempContext.capErrors);
 
   return { nodes, detectedCycles, errors };
 };

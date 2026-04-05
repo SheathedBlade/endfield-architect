@@ -177,8 +177,8 @@ const GoalInput = () => {
           <button
             type="button"
             onClick={handleClearAll}
-            className="ml-auto btn-tactical danger flex items-center gap-1"
-            style={{ padding: "0.2rem 0.5rem", fontSize: "0.65rem" }}
+            className="ml-auto btn-tactical danger flex items-center gap-1 text-[0.65rem] self-center"
+            style={{ padding: "0.2rem 0.5rem" }}
           >
             <Eraser className="w-3 h-3" strokeWidth={2} />
             <span>Clear</span>
@@ -202,9 +202,7 @@ const GoalInput = () => {
               className="relative"
               ref={dropdownRef}
               onBlur={(e) => {
-                if (
-                  !dropdownRef.current?.contains(e.relatedTarget as Node)
-                ) {
+                if (!dropdownRef.current?.contains(e.relatedTarget as Node)) {
                   setShowDropdown(false);
                 }
               }}
@@ -354,15 +352,13 @@ const GoalInput = () => {
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => openEdit(goal)}
-                        className="btn-tactical ghost"
-                        style={{ padding: "0.3rem 0.5rem", fontSize: "0.7rem" }}
+                        className="btn-tactical ghost px-2 py-1 text-[0.7rem]"
                       >
                         <Pencil className="w-3 h-3" strokeWidth={2.5} />
                       </button>
                       <button
                         onClick={() => handleRemove(goal.itemId)}
-                        className="btn-tactical danger"
-                        style={{ padding: "0.3rem 0.5rem", fontSize: "0.7rem" }}
+                        className="btn-tactical danger px-2 py-1 text-[0.7rem]"
                       >
                         <X className="w-3 h-3" strokeWidth={2.5} />
                       </button>
