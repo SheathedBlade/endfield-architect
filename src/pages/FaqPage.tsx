@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
-import { Toggle } from "../components/ui/Accordion";
+import { ChevronDown, ChevronRight, Search } from "lucide-react";
 import { REGION_MAP } from "@/data/loader";
 import { PATCHES, type RegionId } from "@/types";
 
@@ -179,7 +178,17 @@ const FaqPage = () => {
                           }
                         }}
                       >
-                        <Toggle expanded={isOpen} />
+                        <button
+                          type="button"
+                          className="text-text-muted hover:text-text-primary focus:outline-none w-6"
+                          aria-label={isOpen ? "Collapse" : "Expand"}
+                        >
+                          {isOpen ? (
+                            <ChevronDown className="w-4 h-4" strokeWidth={2} />
+                          ) : (
+                            <ChevronRight className="w-4 h-4" strokeWidth={2} />
+                          )}
+                        </button>
                         <span>{item.q}</span>
                       </div>
                       <div className={`faq-answer${isOpen ? " expanded" : ""}`}>
