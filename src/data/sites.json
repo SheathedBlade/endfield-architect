@@ -1,7 +1,7 @@
 [
   {
     "id": "valley_core",
-    "name": "Valley Core AIC",
+    "name": "Valley IV Core AIC",
     "regionId": "valley",
     "patch": "1.0",
     "isCore": true,

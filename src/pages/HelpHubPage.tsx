@@ -37,15 +37,19 @@ const HelpHubPage = () => {
 
       <div className="about-section">
         <h3 className="about-title">About Endfield Architect</h3>
-        <p className="about-body">
+        <p className="about-body text-text-secondary">
           Endfield Architect is a fan-made AIC production planning tool for
-          Arknights: Endfield. It is not affiliated with, endorsed by, or
-          connected to Hypergryph or any other IP holders.
+          Arknights: Endfield. If you want to find the most optimal way to set
+          up your base, and don't want to set up your base on your own, then
+          this tool is for you. The tool simulates all your machines, recipes,
+          belts, and items onto a grid, using A* pathfinding to find the best
+          configuration of your base based on your production goals.
         </p>
-        <p className="about-body">
+        <p className="about-body text-text-muted">
           All game content, including but not limited to facility names, item
           names, recipes, and locations, are property of their respective
-          owners. Arknights and Arknights: Endfield are trademarks of
+          owners. This tool is not affiliated with, endorsed by, or connected to
+          Hypergryph. Arknights and Arknights: Endfield are trademarks of
           Hypergryph.
         </p>
         <a

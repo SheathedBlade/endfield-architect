@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
-import { ChevronDown, ChevronRight, Search } from "lucide-react";
 import { REGION_MAP } from "@/data/loader";
 import { PATCHES, type RegionId } from "@/types";
+import { ChevronDown, ChevronRight, Search } from "lucide-react";
+import { useMemo, useState } from "react";
 
 const faqCategories = [
   {
@@ -48,7 +48,7 @@ const faqCategories = [
       },
       {
         q: "How do I unlock sites in a region?",
-        a: "Use the Region & Site Control panel to lock or unlock sites. Core sites are always active. Unlock sub-sites to include their production in your plan.",
+        a: "Use the Region & Site Control panel to lock or unlock sites. Core sites are always active. Unlock sub-sites to include their production in your plan. This is only applicable to the Production Grid Simulator.",
       },
     ],
   },
@@ -82,7 +82,7 @@ const faqCategories = [
       },
       {
         q: "Are there limits on how much I can produce?",
-        a: "Raw materials have per-minute caps based on your active region. The solver will warn you if your plan exceeds these caps. Mining rigs allow you to set raw input rates manually.",
+        a: "Raw materials have per-minute caps based on your active region. The solver will warn you if your plan exceeds these caps.",
       },
     ],
   },
@@ -101,9 +101,7 @@ const FaqPage = () => {
         items: cat.items.filter((item) => {
           const question = item.q.toLowerCase();
           const answer =
-            typeof item.a === "function"
-              ? ""
-              : item.a.toLowerCase();
+            typeof item.a === "function" ? "" : item.a.toLowerCase();
           const category = cat.title.toLowerCase();
           return (
             question.includes(q) || answer.includes(q) || category.includes(q)
@@ -129,9 +127,13 @@ const FaqPage = () => {
   return (
     <div>
       <div className="flex items-center gap-2 mb-4">
-        <span className="font-display text-[0.6rem] uppercase tracking-widest text-text-muted">Help</span>
+        <span className="font-display text-[0.6rem] uppercase tracking-widest text-text-muted">
+          Help
+        </span>
         <span className="text-text-dim text-xs">/</span>
-        <span className="font-display text-[0.6rem] uppercase tracking-widest text-accent">FAQ</span>
+        <span className="font-display text-[0.6rem] uppercase tracking-widest text-accent">
+          FAQ
+        </span>
       </div>
 
       <div className="help-page-header">
