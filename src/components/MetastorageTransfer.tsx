@@ -52,7 +52,9 @@ export default function MetastorageTransfer() {
   const filteredTransferItems = useMemo(() => {
     if (!itemSearch) return allTransferItems;
     const q = itemSearch.trimEnd().toLowerCase();
-    return allTransferItems.filter((opt) => opt.label.toLowerCase().includes(q));
+    return allTransferItems.filter((opt) =>
+      opt.label.toLowerCase().includes(q),
+    );
   }, [allTransferItems, itemSearch]);
 
   const handleAdd = () => {
@@ -75,7 +77,7 @@ export default function MetastorageTransfer() {
         {/* Active Transfers */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <span className="font-display text-sm text-text-muted uppercase tracking-wider">
+            <span className="font-display text-sm text-text-secondary uppercase tracking-wider">
               Active Transfers
             </span>
             <button
@@ -92,7 +94,7 @@ export default function MetastorageTransfer() {
             <div className="border border-border rounded p-3 space-y-2 mb-3 bg-bg-deep/30">
               {/* Item selector */}
               <div>
-                <label className="block font-sans text-sm text-text-muted mb-1">
+                <label className="block font-sans text-sm uppercase text-text-muted mb-1">
                   Item
                 </label>
                 <AutocompleteDropdown
@@ -176,7 +178,7 @@ export default function MetastorageTransfer() {
 
               {/* Rate input */}
               <div>
-                <label className="block font-sans text-sm text-text-muted mb-1">
+                <label className="block font-sans text-sm uppercase text-text-muted mb-1">
                   Rate (per hour)
                 </label>
                 <input
@@ -201,7 +203,7 @@ export default function MetastorageTransfer() {
 
           {/* Transfer list */}
           {activeTransfers.length === 0 ? (
-            <p className="text-sm text-text-muted italic py-2">
+            <p className="font-display text-xs text-text-muted text-center py-2">
               No active transfers
             </p>
           ) : (

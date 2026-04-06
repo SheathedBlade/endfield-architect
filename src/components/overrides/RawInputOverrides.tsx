@@ -60,7 +60,7 @@ export const RawInputOverrides = () => {
       </div>
 
       {overrideEntries.length === 0 && !showAdd && (
-        <p className="font-display text-sm text-text-muted italic py-1">
+        <p className="font-display text-xs text-center text-text-muted py-1">
           No raw input overrides
         </p>
       )}

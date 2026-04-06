@@ -25,7 +25,10 @@ const GoalInput = () => {
     return getProducibleItems([activeRegion], plan.version);
   }, [activeRegion, plan.version]);
 
-  const goalItemIds = useMemo(() => new Set(goals.map((g) => g.itemId)), [goals]);
+  const goalItemIds = useMemo(
+    () => new Set(goals.map((g) => g.itemId)),
+    [goals],
+  );
 
   const selectableItems = useMemo(() => {
     return Array.from(ITEM_MAP.values())
@@ -33,7 +36,9 @@ const GoalInput = () => {
         (item) =>
           !item.isRaw &&
           producibleItems.has(item.id as ItemId) &&
-          (editingItemId !== null ? item.id === editingItemId : !goalItemIds.has(item.id as ItemId)),
+          (editingItemId !== null
+            ? item.id === editingItemId
+            : !goalItemIds.has(item.id as ItemId)),
       )
       .sort((a, b) => a.displayName.localeCompare(b.displayName))
       .map((item) => ({ value: item.id as ItemId, label: item.displayName }));
@@ -113,11 +118,17 @@ const GoalInput = () => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setShowPicker(true);
-      setPickerHighlighted((i) => Math.min(i + 1, filteredPickerItems.length - 1));
+      setPickerHighlighted((i) =>
+        Math.min(i + 1, filteredPickerItems.length - 1),
+      );
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setPickerHighlighted((i) => Math.max(i - 1, 0));
-    } else if (e.key === "Enter" && showPicker && filteredPickerItems[pickerHighlighted]) {
+    } else if (
+      e.key === "Enter" &&
+      showPicker &&
+      filteredPickerItems[pickerHighlighted]
+    ) {
       e.preventDefault();
       selectFromPicker(filteredPickerItems[pickerHighlighted]);
     } else if (e.key === "Escape") {
@@ -179,7 +190,7 @@ const GoalInput = () => {
   const isEditing = editingItemId !== null;
 
   return (
-    <div className="panel">
+    <div className="panel z-dropdown">
       <div className="panel-header">
         <span>Production Goals</span>
         {goals.length > 0 && (
@@ -194,7 +205,7 @@ const GoalInput = () => {
           </button>
         )}
       </div>
-      <div className="panel-body">
+      <div className="panel-body p-5">
         {/* Add Goal button — always visible */}
         {!isAdding && (
           <button
@@ -208,7 +219,7 @@ const GoalInput = () => {
         )}
 
         {/* Goal list — collapsed when form is open */}
-        <div className={`goal-list-container${isAdding ? " collapsed" : ""}`}>
+        <div className={`goal-list-container${isAdding ? "" : " expanded"}`}>
           <div className="goal-list-container-inner">
             {goals.length > 0 && (
               <>
@@ -277,7 +288,7 @@ const GoalInput = () => {
               <div className="space-y-3 goal-form-slide">
                 {/* Picker search — shown when no item selected */}
                 {draftItem === null && (
-                  <div ref={pickerRef}>
+                  <div ref={pickerRef} className="goal-picker-anchor">
                     <div className="flex items-center input-terminal w-full px-0">
                       <Search
                         className="w-4 h-4 text-text-muted ml-3 shrink-0"
@@ -324,7 +335,10 @@ const GoalInput = () => {
                 {/* Selected item display — shown once item is picked */}
                 {draftItem !== null && (
                   <div className="flex items-center gap-2 px-3 py-2 bg-bg-deep/50 border border-border rounded">
-                    <Target className="w-4 h-4 text-accent shrink-0" strokeWidth={2} />
+                    <Target
+                      className="w-4 h-4 text-accent shrink-0"
+                      strokeWidth={2}
+                    />
                     <span className="font-display text-sm text-text-primary flex-1">
                       {ITEM_MAP.get(draftItem)?.displayName ?? draftItem}
                     </span>

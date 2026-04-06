@@ -292,4 +292,95 @@ describe("store actions", () => {
       expect(carbonNode.dependencies[0]?.item.id).toBe(ItemId.JINCAO);
     });
   });
+
+  describe("metastorage transfer actions", () => {
+    beforeEach(() => {
+      useAppStore.getState().clearGoals();
+    });
+
+    it("addMetastorageTransfer adds a transfer to activeTransfers", () => {
+      useAppStore.getState().addMetastorageTransfer({
+        itemId: ItemId.FERRIUM_ORE,
+        sourceRegion: "wuling",
+        destinationRegion: "valley",
+        amountPerHour: 1500,
+      });
+
+      const { plan } = useAppStore.getState();
+      expect(plan.regionalTransfer.activeTransfers).toHaveLength(1);
+      expect(plan.regionalTransfer.activeTransfers[0].itemId).toBe(
+        ItemId.FERRIUM_ORE,
+      );
+      expect(plan.regionalTransfer.activeTransfers[0].amountPerHour).toBe(1500);
+    });
+
+    it("addMetastorageTransfer overwrites existing transfer for same item", () => {
+      useAppStore.getState().addMetastorageTransfer({
+        itemId: ItemId.FERRIUM_ORE,
+        sourceRegion: "wuling",
+        destinationRegion: "valley",
+        amountPerHour: 1500,
+      });
+      useAppStore.getState().addMetastorageTransfer({
+        itemId: ItemId.FERRIUM_ORE,
+        sourceRegion: "wuling",
+        destinationRegion: "valley",
+        amountPerHour: 2000,
+      });
+
+      const { plan } = useAppStore.getState();
+      expect(plan.regionalTransfer.activeTransfers).toHaveLength(1);
+      expect(plan.regionalTransfer.activeTransfers[0].amountPerHour).toBe(2000);
+    });
+
+    it("removeMetastorageTransfer removes a transfer by itemId", () => {
+      useAppStore.getState().addMetastorageTransfer({
+        itemId: ItemId.ORIGINIUM_ORE,
+        sourceRegion: "wuling",
+        destinationRegion: "valley",
+        amountPerHour: 600,
+      });
+      expect(useAppStore.getState().plan.regionalTransfer.activeTransfers).toHaveLength(1);
+
+      useAppStore.getState().removeMetastorageTransfer(ItemId.ORIGINIUM_ORE);
+
+      const { plan } = useAppStore.getState();
+      expect(plan.regionalTransfer.activeTransfers).toHaveLength(0);
+    });
+
+    it("clearMetastorageTransfers removes all transfers", () => {
+      useAppStore.getState().addMetastorageTransfer({
+        itemId: ItemId.FERRIUM_ORE,
+        sourceRegion: "wuling",
+        destinationRegion: "valley",
+        amountPerHour: 1500,
+      });
+      useAppStore.getState().addMetastorageTransfer({
+        itemId: ItemId.ORIGINIUM_ORE,
+        sourceRegion: "wuling",
+        destinationRegion: "valley",
+        amountPerHour: 600,
+      });
+
+      useAppStore.getState().clearMetastorageTransfers();
+
+      const { plan } = useAppStore.getState();
+      expect(plan.regionalTransfer.activeTransfers).toHaveLength(0);
+    });
+
+    it("setActiveRegion clears all active transfers", () => {
+      useAppStore.getState().addMetastorageTransfer({
+        itemId: ItemId.FERRIUM_ORE,
+        sourceRegion: "wuling",
+        destinationRegion: "valley",
+        amountPerHour: 1500,
+      });
+      expect(useAppStore.getState().plan.regionalTransfer.activeTransfers).toHaveLength(1);
+
+      useAppStore.getState().setActiveRegion("wuling");
+
+      const { plan } = useAppStore.getState();
+      expect(plan.regionalTransfer.activeTransfers).toHaveLength(0);
+    });
+  });
 });

@@ -73,7 +73,7 @@ export const ImportExportControls = () => {
       <button
         type="button"
         onClick={handleCopy}
-        className="btn-tactical w-full flex items-center justify-center gap-2 text-[0.65rem]"
+        className="btn-tactical w-full flex border border-accent-border/20 items-center justify-center gap-2 text-[0.65rem]"
       >
         {copyState === "copied" ? (
           <>

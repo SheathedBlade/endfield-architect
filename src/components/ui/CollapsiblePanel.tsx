@@ -31,7 +31,9 @@ export default function CollapsiblePanel({
         />
       </button>
       <div className="panel-body">
-        <div className="panel-body-inner">{children}</div>
+        <div className="panel-body-inner">
+          <div className="panel-content">{children}</div>
+        </div>
       </div>
     </div>
   );
