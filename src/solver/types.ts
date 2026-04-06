@@ -16,6 +16,14 @@ export type SolverContext = {
   recipeOverrides: Partial<Record<ItemId, RecipeId>>;
   rawInputOverrides: Partial<Record<ItemId, number>>;
   manualRawMaterials: Set<ItemId>;
+  /** Per-minute external supply rates from metastorage transfers.
+   * Consumed by the solver before local production is planned.
+   */
+  externalInputRates: Map<ItemId, number>;
+  /** Mutable remaining external supply shared across all goals in one solve run.
+   * Depleted as demand is satisfied; reset at start of each solve().
+   */
+  remainingExternalInputRates: Map<ItemId, number>;
   visitedItems: Set<ItemId>;
   producibleItems: Set<ItemId>;
   capErrors: string[];
@@ -33,6 +41,8 @@ export type SolverInput = {
   recipeOverrides: Partial<Record<ItemId, RecipeId>>;
   rawInputOverrides: Partial<Record<ItemId, number>>;
   manualRawMaterials: Set<ItemId>;
+  /** Per-minute external supply rates from metastorage transfers. */
+  externalInputRates?: Partial<Record<ItemId, number>>;
 };
 
 export type SolverOutput = {

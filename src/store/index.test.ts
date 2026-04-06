@@ -184,4 +184,112 @@ describe("store actions", () => {
       expect(capErrors).toHaveLength(0);
     });
   });
+
+  describe("setRecipeOverride — integration with solver", () => {
+    it("changes the recipe used in the solved tree", () => {
+      // Add a carbon goal (default uses buckflower)
+      useAppStore.getState().addGoal({ itemId: ItemId.CARBON, targetRate: 4 });
+
+      const before = useAppStore.getState().plan.nodes[0];
+      expect(before.dependencies[0]?.item.id).toBe(ItemId.BUCKFLOWER);
+
+      // Override to jincao recipe
+      useAppStore.getState().setRecipeOverride(
+        ItemId.CARBON,
+        RecipeId.REFINE_CARBON_FROM_JINCAO,
+      );
+
+      const after = useAppStore.getState().plan.nodes[0];
+      expect(after.dependencies[0]?.item.id).toBe(ItemId.JINCAO);
+    });
+
+    it("removes a recipe override and recalculates with default recipe", () => {
+      useAppStore.getState().addGoal({ itemId: ItemId.CARBON, targetRate: 4 });
+      useAppStore.getState().setRecipeOverride(
+        ItemId.CARBON,
+        RecipeId.REFINE_CARBON_FROM_JINCAO,
+      );
+
+      expect(
+        useAppStore.getState().plan.nodes[0]?.dependencies[0]?.item.id,
+      ).toBe(ItemId.JINCAO);
+
+      useAppStore.getState().removeRecipeOverride(ItemId.CARBON);
+
+      expect(
+        useAppStore.getState().plan.nodes[0]?.dependencies[0]?.item.id,
+      ).toBe(ItemId.BUCKFLOWER);
+    });
+  });
+
+  describe("importPlan — UI integration", () => {
+    it("importing a plan with goals and overrides sets all store state", () => {
+      const plan: ProductionPlan = {
+        version: "1.0",
+        goals: [{ itemId: ItemId.CARBON, targetRate: 20 }],
+        regionalTransfer: { unlocked: false, ttvCapPerHour: 0, activeTransfers: [] },
+        unlockedSites: ["valley_core"],
+        rawInputOverrides: { [ItemId.BUCKFLOWER]: 50 },
+        recipeOverrides: { [ItemId.CARBON]: RecipeId.REFINE_CARBON_FROM_JINCAO },
+        nodes: [],
+        detectedCycles: [],
+        errors: [],
+      };
+
+      useAppStore.getState().importPlan(plan);
+
+      const { plan: stored } = useAppStore.getState();
+      expect(stored.goals).toHaveLength(1);
+      expect(stored.goals[0].targetRate).toBe(20);
+      expect(stored.rawInputOverrides[ItemId.BUCKFLOWER]).toBe(50);
+      expect(stored.recipeOverrides[ItemId.CARBON]).toBe(
+        RecipeId.REFINE_CARBON_FROM_JINCAO,
+      );
+    });
+
+    it("importing a plan with no goals clears the result nodes", () => {
+      // First set up some goals
+      useAppStore.getState().addGoal({ itemId: ItemId.CARBON, targetRate: 10 });
+      expect(useAppStore.getState().plan.nodes.length).toBeGreaterThan(0);
+
+      // Import an empty plan
+      const emptyPlan: ProductionPlan = {
+        version: "1.0",
+        goals: [],
+        regionalTransfer: { unlocked: false, ttvCapPerHour: 0, activeTransfers: [] },
+        unlockedSites: ["valley_core"],
+        rawInputOverrides: {},
+        recipeOverrides: {},
+        nodes: [],
+        detectedCycles: [],
+        errors: [],
+      };
+
+      useAppStore.getState().importPlan(emptyPlan);
+
+      const { plan: stored } = useAppStore.getState();
+      expect(stored.goals).toHaveLength(0);
+      expect(stored.nodes).toHaveLength(0);
+    });
+
+    it("setRawInputOverride and setRecipeOverride can be called in sequence", () => {
+      // Regression: ensure override setters don't conflict when called together
+      useAppStore.getState().addGoal({ itemId: ItemId.CARBON, targetRate: 8 });
+
+      useAppStore.getState().setRawInputOverride(ItemId.BUCKFLOWER, 20);
+      useAppStore.getState().setRecipeOverride(
+        ItemId.CARBON,
+        RecipeId.REFINE_CARBON_FROM_JINCAO,
+      );
+
+      const { plan } = useAppStore.getState();
+      expect(plan.rawInputOverrides[ItemId.BUCKFLOWER]).toBe(20);
+      expect(plan.recipeOverrides[ItemId.CARBON]).toBe(
+        RecipeId.REFINE_CARBON_FROM_JINCAO,
+      );
+      // Carbon should use jincao recipe, which doesn't need buckflower
+      const carbonNode = plan.nodes[0];
+      expect(carbonNode.dependencies[0]?.item.id).toBe(ItemId.JINCAO);
+    });
+  });
 });

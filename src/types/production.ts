@@ -6,11 +6,19 @@ export type ProductionNode = {
   targetRate: number;
   recipe: Recipe | null;
   facility: Facility | null;
-  // # of machines to hit the target rate
+  /** # of machines to hit the target rate (placed count for grid placement) */
   facilityCount: number;
-  // When it is a leaf node
+  /** Exact fractional facility count: requiredRate / recipeRatePerFacility */
+  exactFacilityCount?: number;
+  /** Actual output rate if all placed facilities run: placedCount * recipeRatePerFacility */
+  actualOutputRate?: number;
+  /** Utilization: exactFacilityCount / placedFacilityCount (0–1, NaN if no recipe) */
+  utilization?: number;
+  /** Overproduction: actualOutputRate - targetRate (positive = excess capacity) */
+  overproductionRate?: number;
+  /** When it is a leaf node */
   isRawMaterial: boolean;
-  // When it is a production goal
+  /** When it is a production goal */
   isTarget: boolean;
   dependencies: ProductionNode[];
   /** Set when player has external materials they put in
@@ -20,6 +28,10 @@ export type ProductionNode = {
   manualRawMaterials?: Set<ItemId>;
   isCyclePlaceholder?: boolean;
   cycleItemId?: ItemId;
+  /** Marked when this node represents external/metastorage-supplied demand
+   * rather than locally produced demand.
+   */
+  isExternalSupply?: boolean;
 };
 
 export type DetectedCycle = {

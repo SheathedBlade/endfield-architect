@@ -44,7 +44,7 @@ export const RawInputOverrides = () => {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <span className="font-display text-xs text-text-secondary uppercase tracking-wider">
+        <span className="font-display text-sm text-text-secondary uppercase tracking-wider">
           Raw Input Override
         </span>
         {!showAdd && (
@@ -60,7 +60,7 @@ export const RawInputOverrides = () => {
       </div>
 
       {overrideEntries.length === 0 && !showAdd && (
-        <p className="font-display text-xs text-text-muted italic py-1">
+        <p className="font-display text-sm text-text-muted italic py-1">
           No raw input overrides
         </p>
       )}
@@ -139,7 +139,7 @@ export const RawInputOverrides = () => {
                 placeholder="Rate"
                 className="input-terminal w-20 px-2 py-1 text-sm text-right"
               />
-              <span className="text-xs text-text-muted">/min</span>
+              <span className="text-sm text-text-muted">/min</span>
             </div>
           )}
 

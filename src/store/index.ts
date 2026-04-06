@@ -15,6 +15,21 @@ import {
 import { convertToSiteProduction } from "@/utils/siteAssignment";
 import { create } from "zustand";
 
+/** Build per-minute externalInputRates map from active metastorage transfers.
+ * Converts /hr to /min and aggregates by itemId (multiple transfers of the
+ * same item are summed together).
+ */
+function buildExternalInputRates(
+  transfers: MetaStorageTransfer[],
+): Partial<Record<ItemId, number>> {
+  const map = new Map<ItemId, number>();
+  for (const t of transfers) {
+    const existing = map.get(t.itemId) ?? 0;
+    map.set(t.itemId, existing + t.amountPerHour / 60);
+  }
+  return Object.fromEntries(map) as Partial<Record<ItemId, number>>;
+}
+
 type AppState = {
   plan: ProductionPlan;
   activePatch: Patch;
@@ -41,6 +56,7 @@ type AppState = {
 
   setRegionalTransferUnlocked: (unlocked: boolean) => void;
   setTTVCap: (cap: number) => void;
+  clearMetastorageTransfers: () => void;
   addMetastorageTransfer: (transfer: MetaStorageTransfer) => void;
   removeMetastorageTransfer: (itemId: ItemId) => void;
 
@@ -61,6 +77,34 @@ const DEFAULT_PLAN: ProductionPlan = {
   nodes: [],
   detectedCycles: [],
   errors: [],
+};
+
+const doSolve = (
+  goals: Goal[],
+  state: { plan: ProductionPlan; activePatch: Patch },
+) => {
+  const activeSiteRegions = [
+    ...new Set(
+      state.plan.unlockedSites
+        .map((siteId) => SITE_MAP.get(siteId)?.regionId)
+        .filter((r) => r !== undefined),
+    ),
+  ] as RegionId[];
+
+  return solve({
+    goals,
+    patch: state.activePatch,
+    activeSiteRegions,
+    unlockedSites: state.plan.unlockedSites,
+    recipeOverrides: state.plan.recipeOverrides,
+    rawInputOverrides: state.plan.rawInputOverrides,
+    manualRawMaterials: new Set<ItemId>(
+      Object.keys(state.plan.rawInputOverrides) as ItemId[],
+    ),
+    externalInputRates: buildExternalInputRates(
+      state.plan.regionalTransfer.activeTransfers,
+    ),
+  });
 };
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -95,7 +139,17 @@ export const useAppStore = create<AppState>((set, get) => ({
       }
       return {
         activeRegion: regionId,
-        plan: { ...state.plan, unlockedSites: newUnlocked, goals: [], nodes: [], errors: [] },
+        plan: {
+          ...state.plan,
+          unlockedSites: newUnlocked,
+          goals: [],
+          nodes: [],
+          errors: [],
+          regionalTransfer: {
+            ...state.plan.regionalTransfer,
+            activeTransfers: [],
+          },
+        },
       };
     }),
 
@@ -106,25 +160,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         goal,
       ];
 
-      const activeSiteRegions = [
-        ...new Set(
-          state.plan.unlockedSites
-            .map((siteId) => SITE_MAP.get(siteId)?.regionId)
-            .filter((r) => r !== undefined),
-        ),
-      ] as RegionId[];
-
-      const result = solve({
-        goals: newGoals,
-        patch: state.activePatch,
-        activeSiteRegions,
-        unlockedSites: state.plan.unlockedSites,
-        recipeOverrides: state.plan.recipeOverrides,
-        rawInputOverrides: state.plan.rawInputOverrides,
-        manualRawMaterials: new Set<ItemId>(
-          Object.keys(state.plan.rawInputOverrides) as ItemId[],
-        ),
-      });
+      const result = doSolve(newGoals, state);
 
       const siteNodes = convertToSiteProduction(
         result.nodes,
@@ -156,25 +192,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         };
       }
 
-      const activeSiteRegions = [
-        ...new Set(
-          state.plan.unlockedSites
-            .map((siteId) => SITE_MAP.get(siteId)?.regionId)
-            .filter((r) => r !== undefined),
-        ),
-      ] as RegionId[];
-
-      const result = solve({
-        goals: remainingGoals,
-        patch: state.activePatch,
-        activeSiteRegions,
-        unlockedSites: state.plan.unlockedSites,
-        recipeOverrides: state.plan.recipeOverrides,
-        rawInputOverrides: state.plan.rawInputOverrides,
-        manualRawMaterials: new Set<ItemId>(
-          Object.keys(state.plan.rawInputOverrides) as ItemId[],
-        ),
-      });
+      const result = doSolve(remainingGoals, state);
 
       const siteNodes = convertToSiteProduction(
         result.nodes,
@@ -208,25 +226,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         g.itemId === goal.itemId ? goal : g,
       );
 
-      const activeSiteRegions = [
-        ...new Set(
-          state.plan.unlockedSites
-            .map((siteId) => SITE_MAP.get(siteId)?.regionId)
-            .filter((r) => r !== undefined),
-        ),
-      ] as RegionId[];
-
-      const result = solve({
-        goals: newGoals,
-        patch: state.activePatch,
-        activeSiteRegions,
-        unlockedSites: state.plan.unlockedSites,
-        recipeOverrides: state.plan.recipeOverrides,
-        rawInputOverrides: state.plan.rawInputOverrides,
-        manualRawMaterials: new Set<ItemId>(
-          Object.keys(state.plan.rawInputOverrides) as ItemId[],
-        ),
-      });
+      const result = doSolve(newGoals, state);
 
       const siteNodes = convertToSiteProduction(
         result.nodes,
@@ -311,25 +311,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   importPlan: (plan) => {
-    const activeSiteRegions = [
-      ...new Set(
-        plan.unlockedSites
-          .map((siteId) => SITE_MAP.get(siteId)?.regionId)
-          .filter((r) => r !== undefined),
-      ),
-    ] as RegionId[];
-
-    const result = solve({
-      goals: plan.goals,
-      patch: plan.version,
-      activeSiteRegions,
-      unlockedSites: plan.unlockedSites,
-      recipeOverrides: plan.recipeOverrides,
-      rawInputOverrides: plan.rawInputOverrides,
-      manualRawMaterials: new Set<ItemId>(
-        Object.keys(plan.rawInputOverrides) as ItemId[],
-      ),
-    });
+    const state = { plan, activePatch: plan.version as Patch };
+    const result = doSolve(plan.goals, state);
 
     const siteNodes = convertToSiteProduction(
       result.nodes,
@@ -354,6 +337,17 @@ export const useAppStore = create<AppState>((set, get) => ({
         regionalTransfer: {
           ...state.plan.regionalTransfer,
           unlocked: unlocked,
+        },
+      },
+    })),
+
+  clearMetastorageTransfers: () =>
+    set((state) => ({
+      plan: {
+        ...state.plan,
+        regionalTransfer: {
+          ...state.plan.regionalTransfer,
+          activeTransfers: [],
         },
       },
     })),
@@ -403,25 +397,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const { plan, activePatch } = state;
     if (plan.goals.length === 0) return;
 
-    const activeSiteRegions = [
-      ...new Set(
-        plan.unlockedSites
-          .map((siteId) => SITE_MAP.get(siteId)?.regionId)
-          .filter((r) => r !== undefined),
-      ),
-    ] as RegionId[];
-
-    const result = solve({
-      goals: plan.goals,
-      patch: activePatch,
-      activeSiteRegions,
-      unlockedSites: plan.unlockedSites,
-      recipeOverrides: plan.recipeOverrides,
-      rawInputOverrides: plan.rawInputOverrides,
-      manualRawMaterials: new Set<ItemId>(
-        Object.keys(plan.rawInputOverrides) as ItemId[],
-      ),
-    });
+    const result = doSolve(plan.goals, { plan, activePatch });
 
     const siteNodes = convertToSiteProduction(
       result.nodes,

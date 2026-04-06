@@ -2,6 +2,7 @@ import { REGION_MAP } from "@/data/loader";
 import { AlertCircle, AlertTriangle, Diamond } from "lucide-react";
 import { useEffect } from "react";
 import GoalInput from "../components/GoalInput";
+import MetastorageTransfer from "../components/MetastorageTransfer";
 import PlannerTools from "../components/PlannerTools";
 import RegionSwitcher from "../components/RegionSwitcher";
 import ResultsTree from "../components/ResultsTree";
@@ -89,6 +90,7 @@ const PlannerPage = () => {
           <GoalInput />
           <PlannerTools />
           <RegionSwitcher />
+          <MetastorageTransfer />
         </div>
 
         {/* Right column: results */}

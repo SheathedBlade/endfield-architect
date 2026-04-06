@@ -1,4 +1,9 @@
-import { FACILITY_MAP, ITEM_MAP, RECIPES_BY_OUTPUT, REGION_MAP } from "@/data/loader";
+import {
+  FACILITY_MAP,
+  ITEM_MAP,
+  RECIPES_BY_OUTPUT,
+  REGION_MAP,
+} from "@/data/loader";
 import {
   RAW_MATERIAL_REGIONS,
   type ItemId,
@@ -26,6 +31,8 @@ export function getProducibleItems(
     recipeOverrides,
     rawInputOverrides,
     manualRawMaterials: new Set(),
+    externalInputRates: new Map(),
+    remainingExternalInputRates: new Map(),
     visitedItems: new Set(),
     itemMap: ITEM_MAP,
     facilityMap: FACILITY_MAP,
@@ -64,7 +71,7 @@ const checkRawMaterialCaps = (
       const itemName = ITEM_MAP.get(itemId as ItemId)?.displayName ?? itemId;
       const regionName = REGION_MAP.get(region)?.name ?? region;
       errors.push(
-        `Raw material "${itemName}" required at ${rate.toFixed(1)}/min exceeds region cap of ${cap}/min in ${regionName}`,
+        `"${itemName}" (${rate}/min) exceeds ${regionName} cap (${cap}/min)`,
       );
     }
   }
@@ -79,6 +86,7 @@ export const solve = (input: SolverInput): SolverOutput => {
     recipeOverrides,
     rawInputOverrides,
     manualRawMaterials,
+    externalInputRates = {},
   } = input;
 
   if (!goals.length) return { nodes: [], detectedCycles: [], errors: [] };
@@ -89,12 +97,21 @@ export const solve = (input: SolverInput): SolverOutput => {
 
   const primaryRegion = activeSiteRegions[0] ?? "valley";
 
+  // Build mutable remaining external supply pool from input rates
+  const remainingExternalInputRates = new Map<ItemId, number>(
+    Object.entries(externalInputRates).map(([id, rate]) => [id as ItemId, rate]),
+  );
+
   const tempContext: SolverContext = {
     patch,
     unlockedSites,
     recipeOverrides,
     rawInputOverrides,
     manualRawMaterials,
+    externalInputRates: new Map<ItemId, number>(
+      Object.entries(externalInputRates).map(([id, rate]) => [id as ItemId, rate]),
+    ),
+    remainingExternalInputRates,
     visitedItems: new Set(),
     itemMap: ITEM_MAP,
     facilityMap: FACILITY_MAP,
@@ -112,6 +129,8 @@ export const solve = (input: SolverInput): SolverOutput => {
       recipeOverrides,
       rawInputOverrides,
       manualRawMaterials,
+      externalInputRates: tempContext.externalInputRates,
+      remainingExternalInputRates: tempContext.remainingExternalInputRates,
       visitedItems: new Set(),
       itemMap: ITEM_MAP,
       facilityMap: FACILITY_MAP,
@@ -141,7 +160,9 @@ export const solve = (input: SolverInput): SolverOutput => {
 
   // Strip manual materials from cap check since they're capped inline in solveNode
   const ratesWithoutManual = new Map(
-    [...rawMaterialRates.entries()].filter(([id]) => !manualRawMaterials.has(id as ItemId)),
+    [...rawMaterialRates.entries()].filter(
+      ([id]) => !manualRawMaterials.has(id as ItemId),
+    ),
   );
   checkRawMaterialCaps(ratesWithoutManual, primaryRegion, errors);
 

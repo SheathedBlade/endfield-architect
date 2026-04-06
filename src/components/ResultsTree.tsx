@@ -3,10 +3,7 @@ import type { ProductionNode } from "@/types";
 import { ChevronDown, ChevronRight, Dot } from "lucide-react";
 import { useState } from "react";
 
-interface NodeRowProps {
-  node: ProductionNode;
-  depth?: number;
-}
+const MAX_VISUAL_DEPTH = 2;
 
 const ResultsTree = ({ nodes }: { nodes: ProductionNode[] }) => {
   if (nodes.length === 0) return null;
@@ -17,7 +14,7 @@ const ResultsTree = ({ nodes }: { nodes: ProductionNode[] }) => {
       <div className="panel-body">
         <div className="space-y-0.5">
           {nodes.map((node, i) => (
-            <NodeRow key={i} node={node} />
+            <NodeRow key={i} node={node} depth={0} />
           ))}
         </div>
       </div>
@@ -25,23 +22,48 @@ const ResultsTree = ({ nodes }: { nodes: ProductionNode[] }) => {
   );
 };
 
-const NodeRow = ({ node, depth = 0 }: NodeRowProps) => {
+const NodeRow = ({
+  node,
+  depth = 0,
+}: {
+  node: ProductionNode;
+  depth?: number;
+}) => {
   const [expanded, setExpanded] = useState(true);
   const hasChildren = node.dependencies && node.dependencies.length > 0;
   const item = ITEM_MAP.get(node.item.id);
   const facility = node.facility ? FACILITY_MAP.get(node.facility.id) : null;
+  const isExternal = node.isExternalSupply;
+
+  // Cap visual indentation to prevent horizontal squeeze at deep levels
+  const visualDepth = Math.min(depth, MAX_VISUAL_DEPTH);
 
   const nodeClass = [
     "tree-node",
     node.isRawMaterial ? "raw" : "",
     node.isTarget ? "target" : "",
+    isExternal ? "external" : "",
   ]
     .filter(Boolean)
     .join(" ");
 
+  const utilPct =
+    node.utilization !== undefined && !isNaN(node.utilization)
+      ? Math.round(node.utilization * 100)
+      : null;
+  const overVal =
+    node.overproductionRate !== undefined && node.overproductionRate > 0.01
+      ? node.overproductionRate.toFixed(2)
+      : null;
+
+  const hasMetrics =
+    !node.isRawMaterial &&
+    node.exactFacilityCount !== undefined &&
+    (utilPct !== null || overVal !== null);
+
   return (
-    <div>
-      <div className={nodeClass} style={{ paddingLeft: depth * 16 + 8 }}>
+    <div className="tree-node-wrapper">
+      <div className={nodeClass} style={{ paddingLeft: visualDepth * 16 + 8 }}>
         {hasChildren ? (
           <button
             onClick={() => setExpanded(!expanded)}
@@ -60,24 +82,63 @@ const NodeRow = ({ node, depth = 0 }: NodeRowProps) => {
           </span>
         )}
 
-        <span className="item-name flex-1 truncate">
-          {item?.displayName ?? node.item.id}
-        </span>
-
-        {!node.isRawMaterial && (
-          <>
-            <span className="text-dim">→</span>
-            <span className="facility-name">
-              {facility?.displayName ?? node.facility?.id ?? "raw"}
-            </span>
-            <span className="text-dim">×</span>
-            <span className="count">{node.facilityCount.toLocaleString()}</span>
-          </>
-        )}
-
-        <span className="text-dim">@</span>
-        <span className="rate">{node.targetRate.toLocaleString()}/min</span>
+        {/* Primary row: item name */}
+        <div className="node-primary">
+          <span className="item-name">
+            {item?.displayName ?? node.item.id}
+          </span>
+          {depth > MAX_VISUAL_DEPTH && (
+            <span className="depth-badge">·{depth - MAX_VISUAL_DEPTH}·</span>
+          )}
+        </div>
       </div>
+
+      {/* Secondary row: facility / count / rate / metrics */}
+      {!node.isRawMaterial && (
+        <div
+          className="tree-node-secondary"
+          style={{ paddingLeft: visualDepth * 16 + 8 + 24 }}
+        >
+          <span className="node-facility">
+            {isExternal
+              ? `[imported]`
+              : `→ ${facility?.displayName ?? node.facility?.id ?? "?"}`}
+          </span>
+          <span className="node-count font-display text-accent">
+            ×{node.facilityCount}
+          </span>
+          <span className="node-rate">@ {node.targetRate.toFixed(2)}/min</span>
+          {hasMetrics && (
+            <div className="node-metrics">
+              <span className="metric-chip metric-exact">
+                {(node.exactFacilityCount ?? 0).toFixed(2)} exact
+              </span>
+              {utilPct !== null && (
+                <span className="metric-chip metric-util">
+                  {utilPct}% util
+                </span>
+              )}
+              {overVal !== null && (
+                <span className="metric-chip metric-over">
+                  +{overVal} over
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {node.isRawMaterial && (
+        <div
+          className="tree-node-secondary"
+          style={{ paddingLeft: visualDepth * 16 + 8 + 24 }}
+        >
+          <span className="node-rate">@ {node.targetRate.toFixed(2)}/min</span>
+          {isExternal && (
+            <span className="node-facility text-accent/60">[imported]</span>
+          )}
+        </div>
+      )}
 
       {hasChildren && (
         <div className={`tree-children ${expanded ? "expanded" : ""}`}>

@@ -3,11 +3,13 @@ import type { SolverContext } from "./types";
 import {
   actualOutputRate,
   buildSeedCycle,
-  facilitiesNeeded,
+  exactFacilitiesNeeded,
   isCycleItem,
+  placedFacilitiesNeeded,
   requiredInputRate,
   SEED_LOOP_ITEMS,
   selectRecipe,
+  utilizationRate,
 } from "./utils";
 
 export const solveNode = (
@@ -19,6 +21,146 @@ export const solveNode = (
   isTarget: boolean,
 ): ProductionNode => {
   const item = context.itemMap.get(itemId)!;
+
+  // Check if we have a metastorage external supply for this item
+  const externalRate = context.remainingExternalInputRates.get(itemId);
+  if (externalRate !== undefined && externalRate > 0) {
+    // Determine how much of the demand can be covered by external supply
+    const isFullyCovered = externalRate >= targetRate;
+    const coveredRate = isFullyCovered ? targetRate : externalRate;
+    const remainingRate = isFullyCovered ? 0 : targetRate - externalRate;
+
+    // Consume the used external supply
+    context.remainingExternalInputRates.set(
+      itemId,
+      isFullyCovered ? externalRate - targetRate : 0,
+    );
+
+    if (isFullyCovered) {
+      // Fully covered by external supply — return an imported leaf node
+      return {
+        item,
+        targetRate: coveredRate,
+        recipe: null,
+        facility: null,
+        facilityCount: 0,
+        isRawMaterial: false,
+        isTarget,
+        dependencies: [],
+        isExternalSupply: true,
+      };
+    }
+
+    // Partially covered — solve the remaining demand locally
+    // First try to satisfy remaining from raw input overrides
+    if (context.manualRawMaterials.has(itemId)) {
+      const overrideRate = context.rawInputOverrides[itemId];
+      const isCapped = overrideRate !== undefined && remainingRate > overrideRate;
+      if (isCapped) {
+        context.capErrors.push(
+          `"${item.displayName}" capped at ${overrideRate}/min (demand: ${remainingRate}/min)`,
+        );
+      }
+      const effectiveRate = isCapped ? overrideRate : remainingRate;
+      const importedNode: ProductionNode = {
+        item,
+        targetRate: coveredRate,
+        recipe: null,
+        facility: null,
+        facilityCount: 0,
+        isRawMaterial: false,
+        isTarget: false,
+        dependencies: [],
+        isExternalSupply: true,
+      };
+      const localNode: ProductionNode = {
+        item,
+        targetRate: effectiveRate,
+        recipe: null,
+        facility: null,
+        facilityCount: 0,
+        isRawMaterial: true,
+        isTarget: false,
+        dependencies: [],
+      };
+      return {
+        item,
+        targetRate,
+        recipe: null,
+        facility: null,
+        facilityCount: 0,
+        isRawMaterial: false,
+        isTarget,
+        dependencies: [importedNode, localNode],
+      };
+    }
+
+    // Remaining is raw demand — add imported leaf then local raw leaf
+    if (item.isRaw) {
+      const importedNode: ProductionNode = {
+        item,
+        targetRate: coveredRate,
+        recipe: null,
+        facility: null,
+        facilityCount: 0,
+        isRawMaterial: false,
+        isTarget: false,
+        dependencies: [],
+        isExternalSupply: true,
+      };
+      const localNode: ProductionNode = {
+        item,
+        targetRate: remainingRate,
+        recipe: null,
+        facility: null,
+        facilityCount: 0,
+        isRawMaterial: true,
+        isTarget: false,
+        dependencies: [],
+      };
+      return {
+        item,
+        targetRate,
+        recipe: null,
+        facility: null,
+        facilityCount: 0,
+        isRawMaterial: false,
+        isTarget,
+        dependencies: [importedNode, localNode],
+      };
+    }
+
+    // Remaining requires recipe — solve locally and prepend imported leaf
+    const localResult = solveNode(
+      itemId,
+      remainingRate,
+      context,
+      regionId,
+      detectedCycles,
+      false,
+    );
+    const importedNode: ProductionNode = {
+      item,
+      targetRate: coveredRate,
+      recipe: null,
+      facility: null,
+      facilityCount: 0,
+      isRawMaterial: false,
+      isTarget: false,
+      dependencies: [],
+      isExternalSupply: true,
+    };
+    return {
+      item,
+      targetRate,
+      recipe: localResult.recipe,
+      facility: localResult.facility,
+      facilityCount: localResult.facilityCount,
+      isRawMaterial: false,
+      isTarget,
+      dependencies: [importedNode, ...localResult.dependencies],
+    };
+  }
 
   // Check if we have a raw mat override
   if (context.manualRawMaterials.has(itemId)) {
@@ -111,21 +253,31 @@ export const solveNode = (
   const primaryOutput = recipe.outputs.find(
     (output) => output.itemId === itemId,
   )!;
-  const facCount = facilitiesNeeded(
+
+  // Exact fractional count for math precision
+  const exactFac = exactFacilitiesNeeded(
     targetRate,
     primaryOutput.amount,
     recipe.craftingTime,
   );
-  const producedRate = actualOutputRate(
-    facCount,
+  // Placed whole-machine count for grid/building
+  const placedFac = placedFacilitiesNeeded(exactFac);
+  // Actual output if all placed machines run
+  const actualOutput = actualOutputRate(
+    placedFac,
     primaryOutput.amount,
     recipe.craftingTime,
   );
+  // Utilization fraction
+  const util = utilizationRate(exactFac, placedFac);
+  // Overproduction vs required
+  const overprod = actualOutput - targetRate;
 
+  // Children use exact required output rate, not inflated actual output
   const dependencies: ProductionNode[] = [];
   for (const input of recipe.inputs) {
     const inputRate = requiredInputRate(
-      producedRate,
+      targetRate,
       input.amount,
       primaryOutput.amount,
     );
@@ -157,7 +309,11 @@ export const solveNode = (
     targetRate,
     recipe,
     facility,
-    facilityCount: facCount,
+    facilityCount: placedFac,
+    exactFacilityCount: exactFac,
+    actualOutputRate: actualOutput,
+    utilization: util,
+    overproductionRate: overprod,
     isRawMaterial: false,
     isTarget,
     dependencies,

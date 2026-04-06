@@ -75,7 +75,7 @@ export const RecipeOverrides = () => {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <span className="font-display text-xs text-text-secondary uppercase tracking-wider">
+        <span className="font-display text-sm text-text-secondary uppercase tracking-wider">
           Recipe Override
         </span>
         {!showAdd && (
@@ -91,7 +91,7 @@ export const RecipeOverrides = () => {
       </div>
 
       {overrideEntries.length === 0 && !showAdd && (
-        <p className="font-display text-xs text-text-muted italic py-1">
+        <p className="font-display text-sm text-text-muted italic py-1">
           No recipe overrides
         </p>
       )}
@@ -111,7 +111,7 @@ export const RecipeOverrides = () => {
                 {item?.displayName ?? itemId}
               </span>
               {recipe && facility && (
-                <span className="font-display text-xs text-text-muted truncate block">
+                <span className="font-sans text-sm text-text-muted truncate block">
                   {facility.displayName}
                 </span>
               )}
@@ -165,13 +165,13 @@ export const RecipeOverrides = () => {
           ) : !selectedRecipe ? (
             <>
               <div className="flex items-center gap-2">
-                <span className="flex-1 text-xs text-accent font-display truncate">
+                <span className="flex-1 text-sm text-accent font-display truncate">
                   {ITEM_MAP.get(selectedOutput)?.displayName}
                 </span>
                 <button
                   type="button"
                   onClick={() => setSelectedOutput(null)}
-                  className="text-text-muted hover:text-text-primary text-xs"
+                  className="text-text-muted hover:text-text-primary text-sm"
                 >
                   Change
                 </button>
@@ -211,10 +211,10 @@ export const RecipeOverrides = () => {
             </>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="flex-1 text-xs text-text-primary font-display truncate">
+              <span className="flex-1 text-sm text-text-primary font-display truncate">
                 {ITEM_MAP.get(selectedOutput)?.displayName}
               </span>
-              <span className="text-xs text-text-muted">
+              <span className="text-sm text-text-muted">
                 →{" "}
                 {(() => {
                   const found = candidateRecipes.find(

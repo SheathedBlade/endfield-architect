@@ -1,12 +1,12 @@
-import { ImportExportControls } from "./tools/ImportExportControls";
 import { RawInputOverrides } from "./overrides/RawInputOverrides";
 import { RecipeOverrides } from "./overrides/RecipeOverrides";
+import { ImportExportControls } from "./tools/ImportExportControls";
+import CollapsiblePanel from "./ui/CollapsiblePanel";
 
 const PlannerTools = () => {
   return (
-    <div className="panel">
-      <div className="panel-header">Plan Tools</div>
-      <div className="panel-body space-y-4">
+    <CollapsiblePanel title="Plan Tools">
+      <div className="space-y-4">
         <RawInputOverrides />
         <div className="border-t border-border/50 pt-4">
           <RecipeOverrides />
@@ -15,7 +15,7 @@ const PlannerTools = () => {
           <ImportExportControls />
         </div>
       </div>
-    </div>
+    </CollapsiblePanel>
   );
 };
 
