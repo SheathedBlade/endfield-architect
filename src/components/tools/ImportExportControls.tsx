@@ -14,6 +14,7 @@ export const ImportExportControls = () => {
   const [importState, setImportState] = useState<ImportState>("idle");
   const [importText, setImportText] = useState("");
   const [showImport, setShowImport] = useState(false);
+  const [showImportConfirm, setShowImportConfirm] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleCopy = async () => {
@@ -57,17 +58,33 @@ export const ImportExportControls = () => {
       return;
     }
 
+    // Show confirmation before replacing current plan
+    setShowImportConfirm(true);
+  };
+
+  const confirmImport = () => {
+    const trimmed = importText.trim();
+    let hash = trimmed;
+    try {
+      const url = new URL(trimmed);
+      hash = url.searchParams.get("plan") ?? trimmed;
+    } catch {
+      // not a URL, use as-is
+    }
+    const loaded = importPlanFromHash(hash);
+    if (!loaded) return;
     importPlan(loaded);
     setImportState("success");
     setImportText("");
     setShowImport(false);
+    setShowImportConfirm(false);
     setTimeout(() => setImportState("idle"), 2000);
   };
 
   return (
     <div className="flex flex-col gap-3">
       <span className="font-display text-xs text-text-secondary uppercase tracking-wider">
-        Import / Export
+        Share Plan
       </span>
 
       <button
@@ -95,15 +112,16 @@ export const ImportExportControls = () => {
           className="btn-tactical ghost w-full flex items-center justify-center gap-2 text-[0.65rem]"
         >
           <Download className="w-3 h-3" strokeWidth={2} />
-          Import Plan
+          Import a Plan
         </button>
-      ) : (
+      ) : !showImportConfirm ? (
         <div className="space-y-2">
           <textarea
             ref={textareaRef}
             value={importText}
             onChange={(e) => setImportText(e.target.value)}
             placeholder="Paste share URL or plan hash..."
+            aria-label="Import plan hash or URL"
             className="input-terminal w-full px-2 py-1.5 text-sm resize-none h-16"
           />
           <div className="flex gap-2">
@@ -113,7 +131,7 @@ export const ImportExportControls = () => {
               disabled={!importText.trim()}
               className="btn-tactical primary flex-1 text-[0.6rem] py-1"
             >
-              Import
+              Continue
             </button>
             <button
               type="button"
@@ -128,15 +146,42 @@ export const ImportExportControls = () => {
             </button>
           </div>
           {importState === "error" && (
-            <p className="font-display text-[0.65rem] text-status-error">
-              Invalid plan — could not parse
+            <p className="font-sans text-[0.65rem] text-status-error leading-snug">
+              Could not read this plan. Check the URL or hash and try again.
             </p>
           )}
-          {importState === "success" && (
-            <p className="font-display text-[0.65rem] text-green-400">
-              Plan imported successfully
-            </p>
-          )}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <p className="font-sans text-xs text-text-secondary leading-relaxed">
+            Import this plan? Your current{" "}
+            <strong className="text-text-primary">
+              {plan.goals.length} goal
+              {plan.goals.length !== 1 ? "s" : ""}
+            </strong>{" "}
+            will be replaced.
+          </p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={confirmImport}
+              className="btn-tactical primary flex-1 text-[0.6rem] py-1"
+            >
+              Replace plan
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowImport(false);
+                setImportText("");
+                setImportState("idle");
+                setShowImportConfirm(false);
+              }}
+              className="btn-tactical ghost flex-1 text-[0.6rem] py-1"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -68,7 +68,11 @@ const RegionSwitcher = () => {
             />
           </button>
           {showDropdown && (
-            <div className="autocomplete-dropdown">
+            <div
+              className="autocomplete-dropdown"
+              role="listbox"
+              aria-label="Select region"
+            >
               {REGION_IDS.map((regionId) => {
                 const region = REGION_MAP.get(regionId);
                 const isActive = activeRegion === regionId;
@@ -76,6 +80,8 @@ const RegionSwitcher = () => {
                   <button
                     key={regionId}
                     type="button"
+                    role="option"
+                    aria-selected={isActive}
                     className={`w-full text-left px-3 py-1.5 text-sm font-sans transition-colors flex items-center justify-between ${
                       isActive
                         ? "bg-accent/10 text-accent"
@@ -113,6 +119,9 @@ const RegionSwitcher = () => {
 
           <div className={`region-sites ${expanded ? "expanded" : ""}`}>
             <div className="region-sites-inner">
+              <p className="font-sans text-xs text-text-dim mb-2 ml-4">
+                Toggle sites to include or exclude their production in your plan.
+              </p>
               <div className="ml-4 space-y-0.5 border-l border-border pl-3">
                 {coreSite && (
                   <div className="flex items-center gap-2 py-1.5 font-display text-xs">

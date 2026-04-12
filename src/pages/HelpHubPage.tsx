@@ -38,12 +38,11 @@ const HelpHubPage = () => {
       <div className="about-section">
         <h3 className="about-title">About Endfield Architect</h3>
         <p className="about-body text-text-secondary">
-          Endfield Architect is a fan-made AIC production planning tool for
-          Arknights: Endfield. If you want to find the most optimal way to set
-          up your base, and don't want to set up your base on your own, then
-          this tool is for you. The tool simulates all your machines, recipes,
-          belts, and items onto a grid, using A* pathfinding to find the best
-          configuration of your base based on your production goals.
+          Endfield Architect is a fan-made production planning tool for
+          Arknights: Endfield. If you want to find the most efficient way to
+          meet your production goals, and don't want to work it out by hand,
+          this tool is for you. It uses a solver engine to compute the optimal
+          set of facilities and recipes based on your goals and current region.
         </p>
         <p className="about-body text-text-muted">
           All game content, including but not limited to facility names, item

@@ -21,6 +21,7 @@ export default function CollapsiblePanel({
         className="panel-header w-full text-left cursor-pointer"
         onClick={() => setCollapsed((c) => !c)}
         aria-expanded={!collapsed}
+        aria-controls={`panel-content-${title.replace(/\s+/g, "-").toLowerCase()}`}
       >
         <span>{title}</span>
         <ChevronDown
@@ -32,7 +33,12 @@ export default function CollapsiblePanel({
       </button>
       <div className="panel-body">
         <div className="panel-body-inner">
-          <div className="panel-content">{children}</div>
+          <div
+            id={`panel-content-${title.replace(/\s+/g, "-").toLowerCase()}`}
+            className="panel-content"
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>

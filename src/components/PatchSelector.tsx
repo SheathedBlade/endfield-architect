@@ -25,7 +25,7 @@ const PatchSelector = () => {
   };
 
   return (
-    <div ref={ref} className="relative z-10000">
+    <div ref={ref} className="relative z-dropdown">
       <button
         type="button"
         className="flex items-center gap-1.5 text-xs font-display text-text-muted hover:text-accent transition-colors"
@@ -40,7 +40,7 @@ const PatchSelector = () => {
       </button>
 
       {open && (
-        <div className="autocomplete-dropdown w-max min-w-max top-full mt-2 right-0 z-10000">
+        <div className="autocomplete-dropdown w-max min-w-max top-full mt-2 right-0">
           {[...PATCHES].reverse().map((patch) => {
             const isActive = activePatch === patch;
             return (

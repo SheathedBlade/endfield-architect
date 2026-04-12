@@ -1,5 +1,4 @@
 import { SITE_MAP } from "@/data/loader";
-import { solve } from "@/solver";
 import {
   LATEST_PATCH,
   SiteId,
@@ -14,21 +13,8 @@ import {
 } from "@/types";
 import { convertToSiteProduction } from "@/utils/siteAssignment";
 import { create } from "zustand";
-
-/** Build per-minute externalInputRates map from active metastorage transfers.
- * Converts /hr to /min and aggregates by itemId (multiple transfers of the
- * same item are summed together).
- */
-function buildExternalInputRates(
-  transfers: MetaStorageTransfer[],
-): Partial<Record<ItemId, number>> {
-  const map = new Map<ItemId, number>();
-  for (const t of transfers) {
-    const existing = map.get(t.itemId) ?? 0;
-    map.set(t.itemId, existing + t.amountPerHour / 60);
-  }
-  return Object.fromEntries(map) as Partial<Record<ItemId, number>>;
-}
+import { DEFAULT_PLAN } from "./defaultPlan";
+import { doSolve } from "./recomputePlan";
 
 type AppState = {
   plan: ProductionPlan;
@@ -61,50 +47,6 @@ type AppState = {
   removeMetastorageTransfer: (itemId: ItemId) => void;
 
   calculate: () => void;
-};
-
-const DEFAULT_PLAN: ProductionPlan = {
-  version: LATEST_PATCH,
-  goals: [],
-  regionalTransfer: {
-    unlocked: false,
-    ttvCapPerHour: 0,
-    activeTransfers: [],
-  },
-  unlockedSites: [SiteId.VALLEY_CORE],
-  rawInputOverrides: {},
-  recipeOverrides: {},
-  nodes: [],
-  detectedCycles: [],
-  errors: [],
-};
-
-const doSolve = (
-  goals: Goal[],
-  state: { plan: ProductionPlan; activePatch: Patch },
-) => {
-  const activeSiteRegions = [
-    ...new Set(
-      state.plan.unlockedSites
-        .map((siteId) => SITE_MAP.get(siteId)?.regionId)
-        .filter((r) => r !== undefined),
-    ),
-  ] as RegionId[];
-
-  return solve({
-    goals,
-    patch: state.activePatch,
-    activeSiteRegions,
-    unlockedSites: state.plan.unlockedSites,
-    recipeOverrides: state.plan.recipeOverrides,
-    rawInputOverrides: state.plan.rawInputOverrides,
-    manualRawMaterials: new Set<ItemId>(
-      Object.keys(state.plan.rawInputOverrides) as ItemId[],
-    ),
-    externalInputRates: buildExternalInputRates(
-      state.plan.regionalTransfer.activeTransfers,
-    ),
-  });
 };
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -326,7 +268,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         detectedCycles: result.detectedCycles,
         errors: result.errors,
       },
-      activePatch: plan.version,
+      activePatch: plan.version as Patch,
     });
   },
 
@@ -336,7 +278,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         ...state.plan,
         regionalTransfer: {
           ...state.plan.regionalTransfer,
-          unlocked: unlocked,
+          unlocked,
         },
       },
     })),

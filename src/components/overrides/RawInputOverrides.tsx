@@ -58,6 +58,9 @@ export const RawInputOverrides = () => {
           </button>
         )}
       </div>
+      <p className="font-sans text-xs text-text-muted">
+        Adjust raw material supply rates beyond the region default. Use this to model manual sourcing.
+      </p>
 
       {overrideEntries.length === 0 && !showAdd && (
         <p className="font-display text-xs text-center text-text-muted py-1">
@@ -68,10 +71,7 @@ export const RawInputOverrides = () => {
       {overrideEntries.map(([itemId, ratePerMin]) => {
         const item = ITEM_MAP.get(itemId);
         return (
-          <div
-            key={itemId}
-            className="flex items-center gap-2 px-3 py-2 bg-bg-deep border border-border"
-          >
+          <div key={itemId} className="data-row">
             <span className="flex-1 font-display text-sm text-text-primary truncate">
               {item?.displayName ?? itemId}
             </span>

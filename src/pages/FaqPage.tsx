@@ -1,5 +1,4 @@
-import { REGION_MAP } from "@/data/loader";
-import { PATCHES, type RegionId } from "@/types";
+import { PATCHES } from "@/types";
 import { ChevronDown, ChevronRight, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -30,25 +29,11 @@ const faqCategories = [
       },
       {
         q: "What raw materials are available in each region?",
-        a: () => {
-          const lines = [];
-          for (const [regionId, caps] of Object.entries(
-            {} as Record<string, Record<string, number>>,
-          )) {
-            const regionName =
-              REGION_MAP.get(regionId as RegionId)?.name ?? regionId;
-            const mats = Object.entries(caps)
-              .filter(([, v]) => v !== Infinity)
-              .map(([k, v]) => `${k} (${v}/min)`)
-              .join(", ");
-            lines.push(`${regionName}: ${mats || "none"}`);
-          }
-          return lines.join("\n");
-        },
+        a: "Valley: Originium Ore (560/min), Amethyst Ore (240/min), Ferrium Ore (1080/min). Wuling: Originium Ore (480/min), Ferrium Ore (90/min), Cuprium Ore (120/min), Clean Water (unlimited). Raw material caps vary by region and patch.",
       },
       {
         q: "How do I unlock sites in a region?",
-        a: "Use the Region & Site Control panel to lock or unlock sites. Core sites are always active. Unlock sub-sites to include their production in your plan. This is only applicable to the Production Grid Simulator.",
+        a: "Use the Region & Site Control panel to lock or unlock sites. Core sites are always active. Unlock sub-sites to include their production in your plan.",
       },
     ],
   },
@@ -100,8 +85,10 @@ const FaqPage = () => {
         ...cat,
         items: cat.items.filter((item) => {
           const question = item.q.toLowerCase();
-          const answer =
-            typeof item.a === "function" ? "" : item.a.toLowerCase();
+          const answer: string =
+            typeof item.a === "function"
+              ? ""
+              : item.a.toLowerCase();
           const category = cat.title.toLowerCase();
           return (
             question.includes(q) || answer.includes(q) || category.includes(q)
@@ -148,6 +135,7 @@ const FaqPage = () => {
           type="text"
           className="faq-search-input"
           placeholder="Search FAQ..."
+          aria-label="Search FAQ"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -163,36 +151,30 @@ const FaqPage = () => {
                 {cat.items.map((item, itemIndex) => {
                   const key = catIndex * 100 + itemIndex;
                   const isOpen = openItems.has(key);
-                  const answer =
-                    typeof item.a === "function" ? item.a() : item.a;
+                  const answer: string =
+                    typeof item.a === "function"
+                      ? (item.a as () => string)()
+                      : item.a;
                   return (
-                    <div key={item.q} className="faq-item">
-                      <div
-                        role="button"
-                        className="faq-question"
+                    <div key={`${catIndex}-${itemIndex}`} className="faq-item">
+                      <button
+                        type="button"
+                        className="faq-question w-full"
                         onClick={() => toggle(catIndex, itemIndex)}
                         aria-expanded={isOpen}
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            toggle(catIndex, itemIndex);
-                          }
-                        }}
                       >
-                        <button
-                          type="button"
-                          className="text-text-muted hover:text-text-primary focus:outline-none w-6"
-                          aria-label={isOpen ? "Collapse" : "Expand"}
+                        <span
+                          className="text-text-muted hover:text-text-primary transition-colors w-6 shrink-0 flex items-center justify-center"
+                          aria-hidden="true"
                         >
                           {isOpen ? (
                             <ChevronDown className="w-4 h-4" strokeWidth={2} />
                           ) : (
                             <ChevronRight className="w-4 h-4" strokeWidth={2} />
                           )}
-                        </button>
-                        <span>{item.q}</span>
-                      </div>
+                        </span>
+                        <span className="flex-1 text-left">{item.q}</span>
+                      </button>
                       <div className={`faq-answer${isOpen ? " expanded" : ""}`}>
                         <div>
                           <p>{answer}</p>

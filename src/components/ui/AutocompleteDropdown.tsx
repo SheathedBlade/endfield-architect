@@ -1,5 +1,5 @@
 import { Search, type LucideIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 export interface AutocompleteOption<T> {
   value: T;
@@ -32,6 +32,7 @@ export default function AutocompleteDropdown<T>({
   const [showDropdown, setShowDropdown] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const listboxId = useId();
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -86,15 +87,33 @@ export default function AutocompleteDropdown<T>({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           disabled={disabled}
+          role="combobox"
+          aria-expanded={showDropdown && options.length > 0}
+          aria-controls={listboxId}
+          aria-activedescendant={
+            showDropdown && options[highlightedIndex]
+              ? `${listboxId}-option-${highlightedIndex}`
+              : undefined
+          }
+          aria-haspopup="listbox"
+          autoComplete="off"
           style={disabled ? { opacity: 0.5, cursor: "not-allowed" } : {}}
         />
       </div>
       {showDropdown && options.length > 0 && (
-        <div className="autocomplete-dropdown">
+        <div
+          id={listboxId}
+          className="autocomplete-dropdown"
+          role="listbox"
+          aria-label={placeholder}
+        >
           {options.map((opt, i) => (
             <button
               key={String(opt.value)}
+              id={`${listboxId}-option-${i}`}
               type="button"
+              role="option"
+              aria-selected={i === highlightedIndex}
               className={`w-full text-left px-3 py-1.5 text-sm font-sans transition-colors ${
                 i === highlightedIndex
                   ? "bg-accent/10 text-accent"
@@ -113,8 +132,8 @@ export default function AutocompleteDropdown<T>({
         </div>
       )}
       {showDropdown && options.length === 0 && (
-        <div className="autocomplete-dropdown dropdown-empty">
-          No items match "{searchQuery}"
+        <div className="autocomplete-dropdown dropdown-empty" role="status">
+          No items match &ldquo;{searchQuery}&rdquo;
         </div>
       )}
     </div>
