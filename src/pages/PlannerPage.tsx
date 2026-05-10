@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppStore } from "../store";
 import { loadPlanFromURL } from "../utils/persistence";
 import { PlannerSurface } from "../components/canvas/PlannerSurface";
@@ -12,6 +12,7 @@ const PlannerPage = () => {
   const layout = useAppStore((s) => s.plan.layout);
 
   const [rightCollapsed, setRightCollapsed] = useState(true);
+  const fitRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     const loaded = loadPlanFromURL();
@@ -21,25 +22,27 @@ const PlannerPage = () => {
   return (
     <div className="planner-workspace">
       {/* Top HUD */}
-      <PlannerHud />
+      <PlannerHud onResetView={fitRef.current ? () => fitRef.current!() : undefined} />
 
       {/* Main stage */}
       <div className="planner-stage">
         {/* Canvas — always mounted so Pixi stays ready */}
-        <PlannerSurface layout={layout} />
+        <PlannerSurface layout={layout} fitRef={fitRef} />
 
         {/* Floating controls island */}
         <PlannerLeftTabs />
 
         {/* Right floating help sidebar */}
-        <PlannerSidebar
-          side="right"
-          collapsed={rightCollapsed}
-          onToggle={() => setRightCollapsed((c) => !c)}
-          title="Help"
-        >
-          <PlannerHelpSidebar />
-        </PlannerSidebar>
+        {!rightCollapsed && (
+          <PlannerSidebar
+            side="right"
+            collapsed={rightCollapsed}
+            onToggle={() => setRightCollapsed((c) => !c)}
+            title="Help"
+          >
+            <PlannerHelpSidebar />
+          </PlannerSidebar>
+        )}
       </div>
     </div>
   );

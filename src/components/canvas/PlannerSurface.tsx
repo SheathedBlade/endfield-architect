@@ -4,7 +4,6 @@ import { usePlannerSceneModel } from "./usePlannerSceneModel";
 import { useCanvasViewport } from "./useCanvasViewport";
 import { BoardLayer } from "./BoardLayer";
 import { LogisticsLayer } from "./LogisticsLayer";
-import { CanvasHud } from "./CanvasHud";
 import { pathToSegments } from "./belts";
 import type { PlannerMachine, PlannerBelt } from "./usePlannerSceneModel";
 import { getFacilityVisual } from "./facilityVisuals";
@@ -12,22 +11,25 @@ import { ROLE_COLORS } from "./facilityVisuals";
 
 interface PlannerSurfaceProps {
   layout: ProductionLayoutResult | null;
+  /** Forwards the fit() function to PlannerPage so PlannerHud can call it */
+  fitRef?: React.MutableRefObject<(() => void) | null>;
 }
 
-export function PlannerSurface({ layout }: PlannerSurfaceProps) {
+export function PlannerSurface({ layout, fitRef }: PlannerSurfaceProps) {
   const model = usePlannerSceneModel(layout);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const {
     viewport,
     fit,
-    zoomIn,
-    zoomOut,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp,
     handleWheel,
   } = useCanvasViewport(containerRef, model.hasLayout ? model.worldBounds : null);
+
+  // Expose fit to parent via ref
+  if (fitRef) fitRef.current = fit;
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -65,17 +67,7 @@ export function PlannerSurface({ layout }: PlannerSurfaceProps) {
       onPointerLeave={handlePointerUp}
       onWheel={handleWheel}
     >
-      {!model.isFeasible && model.failures.length > 0 && (
-        <div className="infeasibility-banner">
-          {model.failures.map((f, i) => (
-            <span key={i}>
-              {f.message}
-              {f.suggestion ? ` → ${f.suggestion}` : ""}
-              {"  ·  "}
-            </span>
-          ))}
-        </div>
-      )}
+
 
       <div className="planner-surface__viewport">
         <div
@@ -93,12 +85,6 @@ export function PlannerSurface({ layout }: PlannerSurfaceProps) {
         </div>
       </div>
 
-      <CanvasHud
-        zoom={viewport.zoom}
-        onFit={fit}
-        onZoomIn={zoomIn}
-        onZoomOut={zoomOut}
-      />
     </div>
   );
 }

@@ -39,7 +39,6 @@ const RegionSwitcher = () => {
   };
 
   const currentSites = SITES_BY_REGION.get(activeRegion) ?? [];
-  const coreSite = currentSites.find((s) => s.isCore);
   const subSites = currentSites.filter((s) => !s.isCore);
   const activeRegionName = REGION_MAP.get(activeRegion)?.name ?? activeRegion;
 
@@ -114,7 +113,7 @@ const RegionSwitcher = () => {
             ) : (
               <ChevronRight className="w-3 h-3" strokeWidth={2} />
             )}
-            <span>Sites</span>
+            <span>Outposts</span>
           </button>
 
           <div className={`region-sites ${expanded ? "expanded" : ""}`}>
@@ -123,19 +122,6 @@ const RegionSwitcher = () => {
                 Toggle sites to include or exclude their production in your plan.
               </p>
               <div className="ml-4 space-y-0.5 border-l border-border pl-3">
-                {coreSite && (
-                  <div className="flex items-center gap-2 py-1.5 font-display text-xs">
-                    <Check
-                      className="w-3.5 h-3.5 text-accent shrink-0"
-                      strokeWidth={2}
-                    />
-                    <span className="text-text-primary">{coreSite.name}</span>
-                    <span className="text-text-dim text-xs uppercase tracking-wider">
-                      core
-                    </span>
-                  </div>
-                )}
-
                 {subSites.map((site) => {
                   const isActive = plan.unlockedSites.includes(
                     site.id as SiteId,
