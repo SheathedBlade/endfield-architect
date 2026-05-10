@@ -5,37 +5,36 @@ interface CollapsiblePanelProps {
   title: string;
   defaultCollapsed?: boolean;
   children: ReactNode;
+  variant?: "panel" | "sidebar";
 }
 
 export default function CollapsiblePanel({
   title,
   defaultCollapsed = false,
   children,
+  variant = "panel",
 }: CollapsiblePanelProps) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
-
   return (
-    <div className={`panel ${collapsed ? "collapsed" : ""}`}>
+    <div className={`collapsible-panel collapsible-panel--${variant} ${collapsed ? "collapsed" : ""}`}>
       <button
         type="button"
-        className="panel-header w-full text-left cursor-pointer"
+        className="collapsible-panel__header"
         onClick={() => setCollapsed((c) => !c)}
         aria-expanded={!collapsed}
         aria-controls={`panel-content-${title.replace(/\s+/g, "-").toLowerCase()}`}
       >
         <span>{title}</span>
         <ChevronDown
-          className={`text-text-secondary w-4 h-4 ml-auto transition-transform duration-200 ${
-            collapsed ? "rotate-90" : ""
-          }`}
+          className={`collapsible-panel__chevron ${collapsed ? "collapsed" : ""}`}
           strokeWidth={2}
         />
       </button>
-      <div className="panel-body">
-        <div className="panel-body-inner">
+      <div className="collapsible-panel__body">
+        <div className="collapsible-panel__body-inner">
           <div
             id={`panel-content-${title.replace(/\s+/g, "-").toLowerCase()}`}
-            className="panel-content"
+            className="collapsible-panel__content"
           >
             {children}
           </div>

@@ -19,14 +19,14 @@ export function TransferRow({ transfer, onRemove }: TransferRowProps) {
   return (
     <div className="data-row">
       <div className="flex-1 min-w-0">
-        <div className="text-sm text-text-primary font-display truncate">
+        <div className="goal-item-name">
           {itemName}
         </div>
-        <div className="text-sm text-text-muted font-sans">
+        <div className="goal-rate">
           {fromName} → {toName}
         </div>
       </div>
-      <div className="text-sm text-accent font-mono shrink-0">
+      <div className="goal-rate shrink-0">
         {transfer.amountPerHour}/hr
       </div>
       <button

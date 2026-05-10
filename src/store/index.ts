@@ -15,6 +15,7 @@ import { convertToSiteProduction } from "@/utils/siteAssignment";
 import { create } from "zustand";
 import { DEFAULT_PLAN } from "./defaultPlan";
 import { doSolve } from "./recomputePlan";
+import { recomputePlan } from "./recomputePlan";
 
 type AppState = {
   plan: ProductionPlan;
@@ -49,6 +50,24 @@ type AppState = {
   calculate: () => void;
 };
 
+function recomputeSync(state: { plan: ProductionPlan; activePatch: Patch }): Pick<ProductionPlan, "nodes" | "detectedCycles" | "errors" | "layout"> {
+  const { plan } = state;
+  if (plan.goals.length === 0) {
+    return { nodes: [], detectedCycles: [], errors: [], layout: null };
+  }
+  const result = doSolve(plan.goals, state);
+  const siteNodes = convertToSiteProduction(
+    result.nodes,
+    plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
+  );
+  return {
+    nodes: siteNodes,
+    detectedCycles: result.detectedCycles,
+    errors: result.errors,
+    layout: null,
+  };
+}
+
 export const useAppStore = create<AppState>((set, get) => ({
   plan: DEFAULT_PLAN,
   activePatch: LATEST_PATCH,
@@ -58,7 +77,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     get().clearGoals();
     set((state) => ({
       activePatch: patch,
-      plan: { ...state.plan, version: patch },
+      plan: { ...state.plan, version: patch, layout: null },
     }));
   },
 
@@ -87,6 +106,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           goals: [],
           nodes: [],
           errors: [],
+          layout: null,
           regionalTransfer: {
             ...state.plan.regionalTransfer,
             activeTransfers: [],
@@ -102,20 +122,21 @@ export const useAppStore = create<AppState>((set, get) => ({
         goal,
       ];
 
-      const result = doSolve(newGoals, state);
+      const syncResult = recomputeSync({ plan: { ...state.plan, goals: newGoals }, activePatch: state.activePatch });
 
-      const siteNodes = convertToSiteProduction(
-        result.nodes,
-        state.plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
-      );
+      void recomputePlan(newGoals, { plan: state.plan, activePatch: state.activePatch }).then((result) => {
+        set((s) => ({ plan: { ...s.plan, layout: result.layout } }));
+      }).catch((err) => {
+        console.error("[store] addGoal layout recompute failed:", err);
+      });
 
       return {
         plan: {
           ...state.plan,
           goals: newGoals,
-          nodes: siteNodes,
-          detectedCycles: result.detectedCycles,
-          errors: result.errors,
+          nodes: syncResult.nodes,
+          detectedCycles: syncResult.detectedCycles,
+          errors: syncResult.errors,
         },
       };
     }),
@@ -130,24 +151,26 @@ export const useAppStore = create<AppState>((set, get) => ({
             goals: [],
             nodes: [],
             errors: [],
+            layout: null,
           },
         };
       }
 
-      const result = doSolve(remainingGoals, state);
+      const syncResult = recomputeSync({ plan: { ...state.plan, goals: remainingGoals }, activePatch: state.activePatch });
 
-      const siteNodes = convertToSiteProduction(
-        result.nodes,
-        state.plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
-      );
+      void recomputePlan(remainingGoals, { plan: state.plan, activePatch: state.activePatch }).then((result) => {
+        set((s) => ({ plan: { ...s.plan, layout: result.layout } }));
+      }).catch((err) => {
+        console.error("[store] removeGoal layout recompute failed:", err);
+      });
 
       return {
         plan: {
           ...state.plan,
           goals: remainingGoals,
-          nodes: siteNodes,
-          detectedCycles: result.detectedCycles,
-          errors: result.errors,
+          nodes: syncResult.nodes,
+          detectedCycles: syncResult.detectedCycles,
+          errors: syncResult.errors,
         },
       };
     }),
@@ -159,6 +182,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         goals: [],
         nodes: [],
         errors: [],
+        layout: null,
       },
     })),
 
@@ -168,25 +192,26 @@ export const useAppStore = create<AppState>((set, get) => ({
         g.itemId === goal.itemId ? goal : g,
       );
 
-      const result = doSolve(newGoals, state);
+      const syncResult = recomputeSync({ plan: { ...state.plan, goals: newGoals }, activePatch: state.activePatch });
 
-      const siteNodes = convertToSiteProduction(
-        result.nodes,
-        state.plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
-      );
+      void recomputePlan(newGoals, { plan: state.plan, activePatch: state.activePatch }).then((result) => {
+        set((s) => ({ plan: { ...s.plan, layout: result.layout } }));
+      }).catch((err) => {
+        console.error("[store] updateGoal layout recompute failed:", err);
+      });
 
       return {
         plan: {
           ...state.plan,
           goals: newGoals,
-          nodes: siteNodes,
-          detectedCycles: result.detectedCycles,
-          errors: result.errors,
+          nodes: syncResult.nodes,
+          detectedCycles: syncResult.detectedCycles,
+          errors: syncResult.errors,
         },
       };
     }),
 
-  unlockSite: (siteId) =>
+  unlockSite: (siteId) => {
     set((state) => ({
       plan: {
         ...state.plan,
@@ -194,9 +219,11 @@ export const useAppStore = create<AppState>((set, get) => ({
           ? state.plan.unlockedSites
           : [...state.plan.unlockedSites, siteId],
       },
-    })),
+    }));
+    get().calculate();
+  },
 
-  lockSite: (siteId) =>
+  lockSite: (siteId) => {
     set((state) => {
       const site = SITE_MAP.get(siteId);
       if (site?.isCore) return state;
@@ -206,7 +233,9 @@ export const useAppStore = create<AppState>((set, get) => ({
           unlockedSites: state.plan.unlockedSites.filter((s) => s !== siteId),
         },
       };
-    }),
+    });
+    get().calculate();
+  },
 
   setRawInputOverride: (itemId, ratePerMin) => {
     set((state) => ({
@@ -253,20 +282,21 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   importPlan: (plan) => {
-    const state = { plan, activePatch: plan.version as Patch };
-    const result = doSolve(plan.goals, state);
+    const syncResult = recomputeSync({ plan, activePatch: plan.version as Patch });
 
-    const siteNodes = convertToSiteProduction(
-      result.nodes,
-      plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
-    );
+    void recomputePlan(plan.goals, { plan, activePatch: plan.version as Patch }).then((result) => {
+      set((s) => ({ plan: { ...s.plan, layout: result.layout } }));
+    }).catch((err) => {
+      console.error("[store] importPlan layout recompute failed:", err);
+    });
 
     set({
       plan: {
         ...plan,
-        nodes: siteNodes,
-        detectedCycles: result.detectedCycles,
-        errors: result.errors,
+        nodes: syncResult.nodes,
+        detectedCycles: syncResult.detectedCycles,
+        errors: syncResult.errors,
+        layout: syncResult.layout,
       },
       activePatch: plan.version as Patch,
     });
@@ -336,22 +366,20 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   calculate: () => {
     const state = get();
-    const { plan, activePatch } = state;
-    if (plan.goals.length === 0) return;
+    const syncResult = recomputeSync({ plan: state.plan, activePatch: state.activePatch });
 
-    const result = doSolve(plan.goals, { plan, activePatch });
+    void recomputePlan(state.plan.goals, { plan: state.plan, activePatch: state.activePatch }).then((result) => {
+      set((s) => ({ plan: { ...s.plan, layout: result.layout } }));
+    }).catch((err) => {
+      console.error("[store] calculate layout recompute failed:", err);
+    });
 
-    const siteNodes = convertToSiteProduction(
-      result.nodes,
-      plan.unlockedSites[0] ?? SiteId.VALLEY_CORE,
-    );
-
-    set((state) => ({
+    set((s) => ({
       plan: {
-        ...state.plan,
-        nodes: siteNodes,
-        detectedCycles: result.detectedCycles,
-        errors: result.errors,
+        ...s.plan,
+        nodes: syncResult.nodes,
+        detectedCycles: syncResult.detectedCycles,
+        errors: syncResult.errors,
       },
     }));
   },

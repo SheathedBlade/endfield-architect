@@ -17,6 +17,7 @@ const MOCK_PLAN: ProductionPlan = {
   nodes: [],
   detectedCycles: [],
   errors: [],
+  layout: null,
 };
 
 describe("store actions", () => {
@@ -105,6 +106,7 @@ describe("store actions", () => {
         nodes: [],
         detectedCycles: [],
         errors: [],
+        layout: null,
       };
 
       useAppStore.getState().importPlan(fullPlan);
@@ -234,6 +236,7 @@ describe("store actions", () => {
         nodes: [],
         detectedCycles: [],
         errors: [],
+        layout: null,
       };
 
       useAppStore.getState().importPlan(plan);
@@ -263,6 +266,7 @@ describe("store actions", () => {
         nodes: [],
         detectedCycles: [],
         errors: [],
+        layout: null,
       };
 
       useAppStore.getState().importPlan(emptyPlan);

@@ -2,12 +2,14 @@ import { useState, useMemo } from "react";
 import type { ProductionNode } from "@/types";
 import { GoalGroup } from "./results/GoalGroup";
 import { ResultsSummaryStrip } from "./results/ResultsSummaryStrip";
-import { DependencyTree } from "./results/DependencyTree";
+import { ProductionCanvas } from "./canvas/PixiProductionCanvas";
+import { useAppStore } from "@/store";
 
-type ViewMode = "summary" | "detailed";
+type ViewMode = "summary" | "canvas";
 
 const ResultsTree = ({ nodes }: { nodes: ProductionNode[] }) => {
   const [viewMode, setViewMode] = useState<ViewMode>("summary");
+  const layout = useAppStore((s) => s.plan.layout);
 
   const goalNodes = useMemo(
     () => nodes.filter((n) => n.isTarget),
@@ -30,10 +32,10 @@ const ResultsTree = ({ nodes }: { nodes: ProductionNode[] }) => {
           </button>
           <button
             type="button"
-            className={`view-toggle-btn ${viewMode === "detailed" ? "active" : ""}`}
-            onClick={() => setViewMode("detailed")}
+            className={`view-toggle-btn ${viewMode === "canvas" ? "active" : ""}`}
+            onClick={() => setViewMode("canvas")}
           >
-            Detailed
+            Canvas
           </button>
         </div>
       </div>
@@ -49,18 +51,7 @@ const ResultsTree = ({ nodes }: { nodes: ProductionNode[] }) => {
             </div>
           </div>
         ) : (
-          <div className="results-detailed-view">
-            <div className="tree-root-list">
-              {nodes.map((node, i) => (
-                <DependencyTree
-                  key={i}
-                  node={node}
-                  depth={0}
-                  compact={false}
-                />
-              ))}
-            </div>
-          </div>
+          <ProductionCanvas layout={layout} />
         )}
       </div>
     </div>

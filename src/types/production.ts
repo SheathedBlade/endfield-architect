@@ -1,5 +1,6 @@
 import type { ItemId, Patch, RecipeId, RegionId, SiteId } from "./constants";
 import type { Facility, Item, Recipe } from "./core";
+import type { ProductionLayoutResult } from "@/layout/types";
 
 export type ProductionNode = {
   item: Item;
@@ -75,4 +76,8 @@ export type ProductionPlan = {
   nodes: SiteProductionNode[];
   detectedCycles: DetectedCycle[];
   errors: string[];
+  /** Derived layout result from Phase 2 pipeline.
+   * Never persisted — always recomputed from planner intent.
+   * Exists as null when no goals are set or layout has not been computed. */
+  layout: ProductionLayoutResult | null;
 };

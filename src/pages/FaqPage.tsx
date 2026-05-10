@@ -114,11 +114,11 @@ const FaqPage = () => {
   return (
     <div>
       <div className="flex items-center gap-2 mb-4">
-        <span className="font-display text-[0.6rem] uppercase tracking-widest text-text-muted">
+        <span className="font-display text-xs uppercase tracking-widest text-text-muted">
           Help
         </span>
         <span className="text-text-dim text-xs">/</span>
-        <span className="font-display text-[0.6rem] uppercase tracking-widest text-accent">
+        <span className="font-display text-xs uppercase tracking-widest text-accent">
           FAQ
         </span>
       </div>

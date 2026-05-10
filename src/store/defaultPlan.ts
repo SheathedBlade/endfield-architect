@@ -15,4 +15,5 @@ export const DEFAULT_PLAN: ProductionPlan = {
   nodes: [],
   detectedCycles: [],
   errors: [],
+  layout: null,
 };

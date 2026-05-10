@@ -19,6 +19,7 @@ const MINIMAL_PLAN: ProductionPlan = {
   nodes: [],
   detectedCycles: [],
   errors: [],
+  layout: null,
 };
 
 describe("persistence", () => {
@@ -29,16 +30,18 @@ describe("persistence", () => {
       expect(hash.length).toBeGreaterThan(0);
     });
 
-    it("sets nodes and detectedCycles to empty arrays in exported data", () => {
+    it("sets nodes, detectedCycles, and layout to empty/null in exported data", () => {
       const planWithData: ProductionPlan = {
         ...MINIMAL_PLAN,
         nodes: [{ itemId: "test" }] as never,
         detectedCycles: [{ cycleId: "c1" }] as never,
+        layout: { graph: { nodes: [], edges: [], rootIds: [] } } as never,
       };
       const hash = exportPlan(planWithData);
       const decoded = importPlan(hash);
       expect(decoded?.nodes).toEqual([]);
       expect(decoded?.detectedCycles).toEqual([]);
+      expect(decoded?.layout).toBeNull();
     });
 
     it("produces consistent output for the same plan", () => {

@@ -8,6 +8,7 @@ export const exportPlan = (plan: ProductionPlan): string => {
     ...plan,
     nodes: [],
     detectedCycles: [],
+    layout: null,
   };
   const json = JSON.stringify(exportData);
   return LZString.compressToEncodedURIComponent(json);

@@ -38,10 +38,10 @@ export function TransferForm({ activeRegion, onAdd, onCancel }: TransferFormProp
   };
 
   return (
-    <div className="border border-border rounded p-3 space-y-2 mb-3 bg-bg-deep/30">
+    <div className="meta-transfer__body">
       {/* Item selector */}
       <div>
-        <label className="block font-sans text-sm uppercase text-text-muted mb-1">
+        <label className="meta-transfer__label">
           Item
         </label>
         <AutocompleteDropdown
@@ -61,7 +61,7 @@ export function TransferForm({ activeRegion, onAdd, onCancel }: TransferFormProp
       <div className="grid grid-cols-2 gap-3 items-end">
         {/* From */}
         <div>
-          <label className="block font-sans text-sm text-text-muted mb-1.5 uppercase tracking-wider">
+          <label className="meta-transfer__label">
             From
           </label>
           <SourceRegionSelector
@@ -86,7 +86,7 @@ export function TransferForm({ activeRegion, onAdd, onCancel }: TransferFormProp
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="text-[0.65rem] uppercase tracking-wider font-display">
+            <span className="meta-transfer__label">
               To
             </span>
           </div>
@@ -98,7 +98,7 @@ export function TransferForm({ activeRegion, onAdd, onCancel }: TransferFormProp
 
       {/* Rate input */}
       <div>
-        <label className="block font-sans text-sm uppercase text-text-muted mb-1">
+        <label className="meta-transfer__label">
           Rate (per hour)
         </label>
         <input
@@ -114,7 +114,7 @@ export function TransferForm({ activeRegion, onAdd, onCancel }: TransferFormProp
       <button
         type="button"
         onClick={handleAdd}
-        className="btn-tactical primary w-full text-[0.65rem] py-1.5"
+        className="btn-tactical primary w-full py-1.5"
       >
         Add Transfer
       </button>

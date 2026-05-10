@@ -101,7 +101,7 @@ export function GoalEditor({
             className="w-4 h-4 text-accent shrink-0"
             strokeWidth={2}
           />
-          <span className="font-display text-sm text-text-primary flex-1">
+          <span className="goal-item-name">
             {ITEM_MAP.get(draftItem)?.displayName ?? draftItem}
           </span>
           <button
@@ -120,7 +120,7 @@ export function GoalEditor({
       )}
 
       <div className="flex items-center justify-between">
-        <span className="font-display text-xs text-text-muted uppercase tracking-wider">
+        <span className="type-label">
           Rate
         </span>
         <div className="flex items-center gap-2">

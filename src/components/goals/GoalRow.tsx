@@ -28,10 +28,10 @@ export function GoalRow({ goal, isEntering, isExiting, onEdit, onRemove }: GoalR
           strokeWidth={2}
         />
         <div className="flex flex-col">
-          <span className="font-display text-sm">
+          <span className="goal-item-name">
             {item?.displayName ?? goal.itemId}
           </span>
-          <span className="font-display text-xs text-accent font-bold">
+          <span className="goal-rate">
             {goal.targetRate.toLocaleString()}/min
           </span>
         </div>
@@ -40,14 +40,14 @@ export function GoalRow({ goal, isEntering, isExiting, onEdit, onRemove }: GoalR
         <button
           type="button"
           onClick={() => onEdit(goal)}
-          className="btn-tactical ghost px-2 py-1 text-[0.7rem]"
+          className="btn-tactical ghost px-2 py-1"
         >
           <Pencil className="w-3 h-3" strokeWidth={2.5} />
         </button>
         <button
           type="button"
           onClick={() => onRemove(goal.itemId)}
-          className="btn-tactical danger px-2 py-1 text-[0.7rem]"
+          className="btn-tactical danger px-2 py-1"
         >
           <X className="w-3 h-3" strokeWidth={2.5} />
         </button>

@@ -51,7 +51,7 @@ export const RawInputOverrides = () => {
           <button
             type="button"
             onClick={() => setShowAdd(true)}
-            className="btn-tactical ghost text-[0.6rem] px-2 py-0.5 flex items-center gap-1"
+            className="btn-tactical ghost px-2 py-0.5 flex items-center gap-1"
           >
             <Plus className="w-3 h-3" strokeWidth={2.5} />
             Add
@@ -148,7 +148,7 @@ export const RawInputOverrides = () => {
               type="button"
               onClick={handleAdd}
               disabled={!selectedItem || rate <= 0}
-              className="btn-tactical primary flex-1 text-[0.6rem] py-1"
+              className="btn-tactical primary flex-1 py-1"
             >
               Apply
             </button>
@@ -160,7 +160,7 @@ export const RawInputOverrides = () => {
                 setRate(0);
                 setSearch("");
               }}
-              className="btn-tactical ghost flex-1 text-[0.6rem] py-1"
+              className="btn-tactical ghost flex-1 py-1"
             >
               Cancel
             </button>

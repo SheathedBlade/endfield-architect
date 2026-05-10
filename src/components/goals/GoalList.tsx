@@ -13,30 +13,26 @@ interface GoalListProps {
 export function GoalList({ exiting, entering, onRemove, onEdit }: GoalListProps) {
   const { goals } = useAppStore((s) => s.plan);
 
+  if (goals.length === 0) {
+    return (
+      <p className="goal-list-empty">
+        No production goals defined
+      </p>
+    );
+  }
+
   return (
-    <>
-      {goals.length > 0 && (
-        <>
-          <div className="divider mt-4 mb-3" />
-          <div className="goal-list space-y-1">
-            {goals.map((goal: Goal) => (
-              <GoalRow
-                key={goal.itemId}
-                goal={goal}
-                isEntering={entering.has(goal.itemId)}
-                isExiting={exiting.has(goal.itemId)}
-                onEdit={onEdit}
-                onRemove={onRemove}
-              />
-            ))}
-          </div>
-        </>
-      )}
-      {goals.length === 0 && (
-        <p className="font-display text-xs text-text-muted tracking-wider text-center py-2">
-          No production goals defined
-        </p>
-      )}
-    </>
+    <div className="goal-list">
+      {goals.map((goal: Goal) => (
+        <GoalRow
+          key={goal.itemId}
+          goal={goal}
+          isEntering={entering.has(goal.itemId)}
+          isExiting={exiting.has(goal.itemId)}
+          onEdit={onEdit}
+          onRemove={onRemove}
+        />
+      ))}
+    </div>
   );
 }

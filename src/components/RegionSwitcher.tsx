@@ -107,7 +107,7 @@ const RegionSwitcher = () => {
           <button
             type="button"
             onClick={() => setExpanded((p) => !p)}
-            className="flex items-center gap-2 w-full py-1 font-display text-[0.65rem] text-text-muted uppercase tracking-wider hover:text-text-secondary transition-colors"
+            className="flex items-center gap-2 w-full py-1 font-display text-xs text-text-muted uppercase tracking-wider hover:text-text-secondary transition-colors"
           >
             {expanded ? (
               <ChevronDown className="w-3 h-3" strokeWidth={2} />
@@ -130,7 +130,7 @@ const RegionSwitcher = () => {
                       strokeWidth={2}
                     />
                     <span className="text-text-primary">{coreSite.name}</span>
-                    <span className="text-text-dim text-[0.6rem] uppercase tracking-wider">
+                    <span className="text-text-dim text-xs uppercase tracking-wider">
                       core
                     </span>
                   </div>

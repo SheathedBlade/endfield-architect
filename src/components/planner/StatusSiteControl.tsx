@@ -46,7 +46,7 @@ export function StatusSiteControl() {
         aria-label={`Sites: ${activeCount} unlocked`}
       >
         <span className="font-mono text-sm text-accent font-bold">{activeCount}</span>
-        <span className="font-display text-[0.65rem] uppercase tracking-widest text-text-muted">
+        <span className="type-label">
           Sites
         </span>
         <ChevronIcon open={open} />

@@ -25,13 +25,13 @@ const PatchSelector = () => {
   };
 
   return (
-    <div ref={ref} className="relative z-dropdown">
+    <div ref={ref} className="relative" style={{ zIndex: 9999 }}>
       <button
         type="button"
         className="flex items-center gap-1.5 text-xs font-display text-text-muted hover:text-accent transition-colors"
         onClick={() => setOpen((o) => !o)}
       >
-        <span className="text-[0.65rem] uppercase tracking-widest">Patch</span>
+        <span className="text-sm uppercase tracking-widest">Patch</span>
         <span className="font-mono text-accent">{activePatch}</span>
         <ChevronDown
           className={`w-3 h-3 text-text-muted transition-transform ${open ? "rotate-180" : ""}`}
@@ -56,7 +56,7 @@ const PatchSelector = () => {
               >
                 <span>Patch {patch}</span>
                 {isActive && (
-                  <span className="text-[0.6rem] uppercase tracking-widest text-accent/50 shrink-0">
+                  <span className="text-xs uppercase tracking-widest text-accent/50 shrink-0">
                     active
                   </span>
                 )}

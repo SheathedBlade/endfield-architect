@@ -29,7 +29,7 @@ export const RecipeOverrides = () => {
           <button
             type="button"
             onClick={() => setShowAdd(true)}
-            className="btn-tactical ghost text-[0.6rem] px-2 py-0.5 flex items-center gap-1"
+            className="btn-tactical ghost px-2 py-0.5 flex items-center gap-1"
           >
             <Plus className="w-3 h-3" strokeWidth={2.5} />
             Add

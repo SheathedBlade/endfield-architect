@@ -146,14 +146,14 @@ export function RecipeOverrideWizard({
           type="button"
           onClick={handleApply}
           disabled={!selectedOutput || !selectedRecipe}
-          className="btn-tactical primary flex-1 text-[0.6rem] py-1"
+          className="btn-tactical primary flex-1 py-1"
         >
           Apply
         </button>
         <button
           type="button"
           onClick={handleCancel}
-          className="btn-tactical ghost flex-1 text-[0.6rem] py-1"
+          className="btn-tactical ghost flex-1 py-1"
         >
           Cancel
         </button>
