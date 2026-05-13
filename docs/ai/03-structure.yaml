@@ -1,0 +1,251 @@
+# Repo Structure — Folders, Modules, and Ownership
+
+top_level_folders:
+  - name: docs/
+    contents: "AI context docs (docs/ai/) — THIS IS THE SOURCE OF TRUTH"
+  - name: src/
+    note: Main application code
+  - name: index.html
+  - name: package.json
+  - name: vite.config.ts
+  - name: tsconfig.json
+  - name: vitest.config.ts
+  - name: eslint.config.js
+  - name: README.md
+
+src_modules:
+
+  types:
+    path: "src/types/"
+    files:
+      - name: "constants.ts"
+        description: "ItemId, FacilityId, RecipeId, SiteId, RegionId, Patch, FacilityCategory enums; PATCHES, REGION_IDS, FACILITY_CATEGORIES, LATEST_PATCH, RAW_MATERIAL_REGIONS"
+      - name: "core.ts"
+        description: "Item, Facility, Recipe, RecipeItem, Site, Region"
+      - name: "production.ts"
+        description: "ProductionNode, ProductionPlan, Goal, DetectedCycle, MetastorageTransfer"
+      - name: "index.ts"
+        description: "re-exports all types"
+    ownership_rule: "Update here first; loader.ts validates"
+
+  data:
+    path: "src/data/"
+    files:
+      - "items.json"
+      - "facilities.json"
+      - "recipes.json"
+      - "sites.json"
+      - "regions.json"
+      - name: "loader.ts"
+        description: "Zod validation, lookup maps, validateDataIntegrity()"
+        note: "Update Zod schema when adding/removing type fields"
+    lookup_maps:
+      - "ITEM_MAP"
+      - "FACILITY_MAP"
+      - "RECIPE_MAP"
+      - "SITE_MAP"
+      - "REGION_MAP"
+      - "RECIPES_BY_OUTPUT"
+      - "RECIPES_BY_FACILITY"
+      - "SITES_BY_REGION"
+    ownership_rule: "Do not edit JSON directly; update loader.ts Zod schema when adding/removing fields"
+
+  solver:
+    path: "src/solver/"
+    files:
+      - name: "index.ts"
+        description: "solve, getProducibleItems, checkRawMaterialCaps, sumRawMaterialRates"
+      - name: "solve.ts"
+        description: "recursive DFS — solveNode; uses nodeFactories.ts helpers"
+      - name: "types.ts"
+        description: "SolverContext, SolverInput, SolverOutput"
+      - name: "nodeFactories.ts"
+        description: "makeRawNode, makeExternalLeaf, makeCyclePlaceholder, makeUnresolvableNode"
+      - name: "utils.ts"
+        description: "Re-exports from utils/ subdirectory"
+      - name: "utils/"
+        subdirectory: true
+        files:
+          - "math.ts — calculateRate, exactFacilitiesNeeded, placedFacilitiesNeeded, facilitiesNeeded, actualOutputRate, utilizationRate, overproductionRate, requiredInputRate"
+          - "availability.ts — isRecipeAvailable, isRawMaterialAvailable"
+          - "producibility.ts — computeProducibleItems (fixed-point iteration)"
+          - "recipeSelection.ts — selectRecipe"
+          - "cycles.ts — SEED_LOOP_ITEMS, PLANT_LOOP_ITEMS, SEED_NET_OUTPUT, PLANT_NET_OUTPUT, SEED_TO_PLANT, PLANT_TO_SEED, isCycleItem, isSeed, isPlant, buildSeedCycle"
+      - name: "index.test.ts"
+    description: "Pure TypeScript, no React/Zustand"
+    ownership_rule: "Never put React code here"
+
+  store:
+    path: "src/store/"
+    files:
+      - name: "index.ts"
+        description: "Zustand store — useAppStore with all state and actions"
+      - name: "defaultPlan.ts"
+        description: "DEFAULT_PLAN constant — extracted from index.ts"
+      - name: "recomputePlan.ts"
+        description: "buildExternalInputRates, doSolve, recomputePlan — solver orchestration helpers"
+      - name: "index.test.ts"
+    description: "All override setters auto-call calculate(). recomputePlan extracted to reduce action code duplication."
+
+  layout:
+    path: "src/layout/"
+    description: "Phase 2 generated layout pipeline. Pure TypeScript, no React."
+    files:
+      - name: "gridToCanvas.ts"
+        description: "Centralized coordinate conversion: grid cells to pixels, site board sizing and offsets, footprint-to-pixel conversion, rotation-aware sizing, multi-site board layout"
+      - name: "logisticsConstants.ts"
+        description: "Hardcoded logistics geometry constants (depot bus port 4x4, bus 4x8, loader/unloader 3x1, Valley perimeter slot rules, Wuling bus placement rules)"
+      - name: "types.ts"
+        description: "Layout domain types: NormalizedGraph, ChainClassification, SiteAssignment, PlacementFootprint, LogisticsPlacement, LayoutFeasibilityResult, LayoutResult"
+      - name: "normalizeProductionGraph.ts"
+        description: "Converts recursive ProductionNode[] into instance-level graph nodes/edges"
+      - name: "classifyChains.ts"
+        description: "Classifies chains by function (final_assembly, intermediate, raw_processing, seed_loop, import_fed) with placement hints"
+      - name: "assignSites.ts"
+        description: "Goal-chain-first, core-first site assignment with outpost spill logic"
+      - name: "buildElkGraph.ts"
+        description: "Builds ELK input graph from assigned production graph"
+      - name: "runElkLayout.ts"
+        description: "Central ELK wrapper with fallback positions on failure"
+      - name: "placeFacilities.ts"
+        description: "Chain-aware row/shelf packing with soft density ceiling, module grouping, upstream-depth sorting, corridor spacing"
+      - name: "placePerimeterLogistics.ts"
+        description: "Valley Core-specific: discrete interior perimeter attachment slots for external buses"
+      - name: "placeInternalLogistics.ts"
+        description: "Wuling Core-specific: depot bus port/bus/loader-unloader placement with attachment rules"
+      - name: "routeBelts.ts"
+        description: "A* belt routing using pathfinding.js — computes collision-free belt paths between connected facilities within each site"
+      - name: "buildReactFlowElements.ts"
+        description: "Converts final LayoutResult into React Flow nodes/edges/site overlays using footprint-first coordinates"
+      - name: "gridToCanvas.test.ts"
+
+  utils:
+    path: "src/utils/"
+    files:
+      - name: "persistence.ts"
+        description: "exportPlan, importPlan, loadPlanFromURL"
+      - name: "persistence.test.ts"
+      - name: "siteAssignment.ts"
+        description: "convertToSiteProduction (ProductionNode[] to SiteProductionNode[])"
+
+  components:
+    path: "src/components/"
+    files:
+      - name: "GoalInput.tsx"
+        description: "Composition root — GoalList + GoalEditor using useGoalEditorState"
+      - name: "goals/"
+        description: "GoalInput sub-components (modularized from GoalInput.tsx)"
+        files:
+          - "GoalList.tsx — goal list rendering with animations"
+          - "GoalRow.tsx — single goal row with edit/remove"
+          - "GoalEditor.tsx — item picker, rate stepper, confirm/cancel"
+          - "useGoalEditorState.ts — all editor state, handlers, effects, derived values"
+      - "PatchSelector.tsx"
+      - "ResultsTree.tsx"
+      - "PlannerTools.tsx"
+      - "transfers/MetastorageTransfer.tsx — composition root"
+      - "transfers/TransferForm.tsx — add transfer form"
+      - "transfers/TransferRow.tsx — single transfer row"
+      - "transfers/transferRules.ts — TRANSFERABLE_RAW_ORES, buildTransferableItems, buildSourceRegions"
+      - "overrides/RawInputOverrides.tsx"
+      - "overrides/RecipeOverrides.tsx — composition root"
+      - "overrides/useRecipeOverrideOptions.ts — available outputs and candidate recipe filtering"
+      - "overrides/RecipeOverrideList.tsx — current override list rendering"
+      - "overrides/RecipeOverrideWizard.tsx — multi-step add flow"
+      - "tools/ImportExportControls.tsx"
+      - "layout/AppShell.tsx"
+      - "layout/HelpLayout.tsx"
+      - "navigation/MainNav.tsx"
+      - "navigation/HelpNav.tsx"
+      - "ui/CollapsiblePanel.tsx"
+      - "ui/AutocompleteDropdown.tsx"
+      - name: "planner/"
+        description: "Status bar interactive controls"
+        files:
+          - "StatusRegionControl.tsx — region dropdown in status bar"
+          - "StatusSiteControl.tsx — site toggles dropdown in status bar"
+      - name: "results/"
+        description: "Results tree sub-components (Summary view)"
+        files:
+          - "GoalGroup.tsx — goal summary card with full-chain expander"
+          - "DependencyTree.tsx — recursive dependency tree renderer (kept as debug/fallback)"
+          - "ResultsSummaryStrip.tsx — targets/facilities/raw stats"
+      - name: "canvas/"
+        description: "Phase 2 React Flow canvas components"
+        files:
+          - "ProductionCanvas.tsx — main canvas wrapper, merges site overlay nodes with facility/logistics nodes"
+          - "BeltLayer.tsx — SVG overlay rendering A* belt routes as polyline paths between facilities"
+          - "nodes/FacilityNode.tsx — facility node sized from actual footprint dimensions"
+          - "nodes/RawNode.tsx — raw/import leaf node with footprint sizing"
+          - "nodes/LogisticsNode.tsx — depot/bus/loader/unloader node with footprint sizing and type-based styling"
+          - "nodes/SiteOverlayNode.tsx — site board with visible grid, header label, occupancy badge"
+          - "CanvasLegend.tsx — canvas semantics legend"
+          - "useProductionCanvasModel.ts — memoized adapter from store layout to canvas props"
+    deprecated:
+      - name: "RegionSwitcher.tsx"
+        description: "Replaced by StatusRegionControl + StatusSiteControl; kept for reference"
+
+  pages:
+    path: "src/pages/"
+    files:
+      - name: "PlannerPage.tsx"
+        route: "/"
+      - name: "HelpHubPage.tsx"
+        route: "/help"
+      - name: "FaqPage.tsx"
+        route: "/help/faq"
+      - name: "HowToUsePage.tsx"
+        route: "/help/how-to"
+      - name: "ChangelogPage.tsx"
+        route: "/help/changelog"
+
+  styles:
+    path: "src/styles/"
+    files:
+      - name: "globals.css"
+        description: "Tailwind v4 + CSS custom properties + Endfield dark theme"
+
+  routing:
+    path: "src/router.tsx"
+    description: "React Router v7 route definitions"
+
+  entry:
+    path: "src/main.tsx"
+    description: "Entry point — validateData() + RouterProvider"
+
+where_to_put_new_files:
+  new_type: "src/types/ (constants.ts if enum, core.ts/production.ts otherwise)"
+  new_data: "src/data/ JSON plus update loader.ts Zod schema"
+  new_solver_logic: "src/solver/ (pure TS only)"
+  new_store_state: "src/store/index.ts"
+  new_ui_planner: "src/components/"
+  new_ui_help: "src/components/ or src/pages/"
+  new_page: "src/pages/ plus add route to src/router.tsx"
+  new_utility: "src/utils/"
+  new_test: "src/**/*.test.{ts,tsx} matching the module under test"
+  new_ai_doc_note: "docs/ai/04-memory.yaml or 05-update-tracker.md"
+
+what_not_to_do:
+  - "Do not edit data JSON files directly without updating loader.ts Zod schema"
+  - "Do not put React code in src/solver/ (solver must remain pure TS)"
+  - "Do not create src/layout/ or src/components/canvas/ — Phase 2 structure superseded"
+
+tests:
+  location: "src/**/*.test.{ts,tsx}"
+  runner: "Vitest (npm test for watch, npm run test:run for CI)"
+  config: "vitest.config.ts (environment: node, globals: true)"
+  current_count: 64 passing
+  breakdown:
+    - "persistence: 10"
+    - "store: 22"
+    - "metastorage transfer store: 14"
+    - "solver: 13"
+    - "store metastorage tests: 5"
+
+scripts:
+  dev: "npm run dev — start dev server"
+  build: "npm run build — TypeScript check plus Vite build"
+  lint: "npm run lint — ESLint"
+  test_watch: "npm test — Vitest watch mode"
+  test_ci: "npm run test:run — Vitest CI mode"
+  preview: "npm run preview — preview production build"

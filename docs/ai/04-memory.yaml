@@ -1,0 +1,118 @@
+# Working Memory — Active Issues, Risks, Debt, and Lessons
+
+active_risks:
+
+  - id: doc_drift
+    severity: Medium
+    description: "docs/ENDFIELD_ARCHITECT.md documents Phase 2 layout structure (src/layout/, src/components/canvas/) that does not yet exist in the repo."
+    status: Known
+    mitigation: "03-structure.yaml reflects actual repo. Old architecture doc is deprecated and will be removed."
+    action: "When Phase 2 implementation begins, ensure new layout files are created before updating 03-structure.yaml"
+
+  - id: solver_sync
+    severity: Medium
+    description: "Solver runs synchronously; no web worker yet"
+    status: Known
+    mitigation: "Phase 2 design documents this as a known gap"
+    action: "Consider web worker migration when Phase 2 layout work is complete"
+
+known_debt:
+
+    phase_2_implementation:
+        description: "src/layout/ directory not yet created; ELK.js integration pending; physical placement feasibility checking not built; physical infeasibility as user-facing error not implemented"
+        status: "Design approved, not started"
+
+    phase_3_belt_routing:
+        description: "pathfinding.js is installed but not integrated; A* pathfinding for belt routes is future work"
+        status: Future
+
+    missing_ui:
+        - "Light/dark mode toggle — CSS supports both but has no toggle"
+        - "Known issues / troubleshooting help page not built"
+
+    missing_tests:
+        - "Solver regression tests for cycle detection and seed/plant net output"
+        - "UI integration tests for PlannerTools, import validation, override CRUD flows"
+
+lessons_preserved:
+
+  - rule: "Never modify data/type files without updating loader/validator"
+    reason: "Data files and type files are coupled to loader.ts Zod schemas; breaking this causes validateData() to throw at startup"
+
+  - rule: "Override setters auto-recalculate"
+    reason: "setRawInputOverride, removeRawInputOverride, setRecipeOverride, removeRecipeOverride all call calculate() after state update. Do not manually call calculate() after these."
+
+  - rule: "Manual materials capped inline, excluded from cap checks"
+    reason: "Items with raw input overrides are capped at the override rate in the solver and excluded from checkRawMaterialCaps() to avoid double-counting"
+
+  - rule: "setPatch clears goals; setActiveRegion resets everything"
+    reason: "Switching patches clears all production goals (prevents cross-patch contamination). Switching regions auto-unlocks core sites and clears goals/nodes/transfers."
+
+  - rule: "selectRecipe uses O(1) producibleItems lookup"
+    reason: "Do not change computeProducibleItems() iteration logic without verifying the O(1) contract in selectRecipe()"
+
+  - rule: "visitedItems.delete() after recursion is intentional"
+    reason: "Allows the same item to appear in multiple solution branches. Do not remove this delete call."
+
+open_issues:
+
+  - issue: "MetastorageTransfer wired and in production use"
+    detail: "After modularization (Batch 3) and import-path cleanup, the composition root at src/components/transfers/MetastorageTransfer.tsx is the active version used by PlannerPage. Old duplicate at src/components/MetastorageTransfer.tsx was deleted."
+
+  - issue: "Phase 2 design is approved but implementation not started"
+    detail: "5-stage pipeline design exists; when Phase 2 starts, src/layout/ and src/components/canvas/ will be created"
+
+  near_term_follow_ups:
+    - "Patch 1.2 prep: when new patch data is available, review and update facilities, items, recipes, regions/sites constants; update loader.ts Zod schema if needed; verify solver availability logic and override flows; refresh help/FAQ copy for any new content"
+    - "Web worker migration (consider moving solver off-main-thread before Phase 2 layout complexity increases)"
+    - "Light/dark mode toggle — CSS supports both but has no toggle"
+    - "RegionSwitcher.tsx cleanup: confirm deletion is safe once status bar controls are stable"
+
+  completed_deliverables:
+    - id: deliverable_a
+      name: "Workspace redesign + canvas fix"
+      date: "2026-04-26"
+      summary: "Converted planner from page-with-panels to desktop-first workspace (canvas dominant, floating tabbed sidebars, compact HUD, right help drawer). Fixed critical bug where canvas never displayed — recomputePlan was async with null layout returned synchronously; now properly awaits layout computation before returning."
+    - id: deliverable_b
+      name: "Belt routing"
+      date: "2026-04-26"
+      summary: "Implemented A* belt routing using pathfinding.js. routeBelts.ts computes collision-free belt paths between connected facilities within each site. BeltLayer.tsx renders paths as SVG polylines. BeltRoute type added to LayoutResult. Belt routes are computed per-site and layered over the canvas."
+
+
+cleanup_done:
+  date: "2026-04-11"
+  fixes:
+    - "Fixed PlannerPage import to use modularized src/components/transfers/MetastorageTransfer.tsx; deleted stale duplicate at src/components/MetastorageTransfer.tsx"
+    - "Fixed FaqPage: replaced broken empty Object.entries({}) region-materials answer with real data from RAW_MATERIAL_REGIONS; removed stale 'Production Grid Simulator' reference from unlock-sites answer"
+    - "Refreshed HelpHubPage stale copy that referenced A* pathfinding and grid simulation (not yet implemented); updated to accurately describe solver-centric planning tool"
+    - "Fixed ImportExportControls inline style — replaced with text-status-success CSS class"
+
+modularization_progress:
+  completed_batch_1:
+    date: "2026-04-11"
+    store:
+      - "src/store/defaultPlan.ts — extracted DEFAULT_PLAN constant"
+      - "src/store/recomputePlan.ts — extracted buildExternalInputRates, doSolve, recomputePlan"
+      - "Note: per-domain action modules (goals.ts, sites.ts, overrides.ts, transfers.ts) were started but reverted due to TypeScript strict-mode type inference friction with Zustand create() spread pattern; actions remain inline in index.ts"
+    goal_input:
+      - "src/components/goals/ — new subdirectory"
+      - "src/components/goals/useGoalEditorState.ts — all editor state, handlers, effects"
+      - "src/components/goals/GoalRow.tsx — single goal row"
+      - "src/components/goals/GoalList.tsx — list rendering with animations"
+      - "src/components/goals/GoalEditor.tsx — item picker, rate stepper, confirm/cancel"
+      - "src/components/GoalInput.tsx — refactored to compose GoalList + GoalEditor"
+  completed_batch_3:
+    date: "2026-04-11"
+    overrides:
+      - "src/components/overrides/useRecipeOverrideOptions.ts — available outputs and candidate recipe filtering"
+      - "src/components/overrides/RecipeOverrideList.tsx — current override list rendering"
+      - "src/components/overrides/RecipeOverrideWizard.tsx — multi-step add flow"
+      - "src/components/overrides/RecipeOverrides.tsx — refactored to composition root"
+    transfers:
+      - "src/components/transfers/transferRules.ts — TRANSFERABLE_RAW_ORES, buildTransferableItems, buildSourceRegions"
+      - "src/components/transfers/TransferRow.tsx — single transfer row"
+      - "src/components/transfers/TransferForm.tsx — add transfer form"
+      - "src/components/transfers/MetastorageTransfer.tsx — refactored to composition root"
+  remaining_candidates:
+    - "src/types/constants.ts — large but mostly static; split by constants domain"
+    - "src/styles/globals.css — large blast-radius stylesheet; split by theme/components"

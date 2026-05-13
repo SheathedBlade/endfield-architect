@@ -1,0 +1,204 @@
+# System Map — What This Project Is and How It Behaves
+
+what:
+  description: "A multi-site AIC factory production planner for Arknights Endfield. Enter production goals, solver calculates facility counts and raw material requirements, results tree with expand/collapse. Fills the gap between EndField Calc (math only) and EndfieldTools (layout only)."
+
+  phase_1:
+    status: Complete
+    features:
+      - "Goals in, results tree out"
+      - "Override UI (raw material rates, recipe selection)"
+      - "Import/export via URL (lz-string)"
+      - "Solver cap enforcement"
+    pending_update:
+      - "Patch 1.2 — new facilities and possibly other content coming; review data, constants, loader, solver, and help copy when available"
+
+  phase_2:
+    status: "Implementation in progress — board-based canvas"
+    description: "Generated layout pipeline: solver output → site assignment → ELK skeleton → custom site placement → physical infeasibility errors. Canvas renders footprint-first site boards with facility footprints, logistics infrastructure, and grid overlays. Layout is derived and not persisted. ELK drives ordering hints only, not visual placement."
+
+  phase_3:
+    status: Future
+    description: "Belt routing with pathfinding.js (A* pathfinding)"
+
+  tech_stack:
+    - "React 19 + TypeScript + Vite 7"
+    - "Zustand (global state)"
+    - "Zod (runtime JSON validation)"
+    - "Tailwind CSS v4 (CSS-first config, no tailwind.config.ts)"
+    - "xyflow-react (React Flow, Phase 2 canvas)"
+    - "elkjs (network layout, Phase 2 skeleton)"
+    - "pathfinding (A* routing, Phase 3)"
+    - "lz-string (URL plan persistence)"
+    - "Vitest (unit testing)"
+
+  runtime_flow:
+    entry: "main.tsx"
+    steps:
+      - "validateData() — Zod check all JSON"
+      - "RouterProvider to AppShell"
+      - "Route / to PlannerPage"
+      - "useEffect: loadPlanFromURL() to importPlan() on mount"
+      - "Status bar: Goals count | Region dropdown | Sites dropdown"
+      - "Left col: GoalInput, PlannerTools, MetastorageTransfer"
+      - "Right col: ResultsTree (Summary/Detailed toggle) or empty state"
+
+  user_adds_goal:
+    - "addGoal(goal) in store"
+    - "doSolve(goals, state) — solver runs"
+    - "convertToSiteProduction() — site assignment"
+    - "update plan with nodes, cycles, errors"
+
+  override_actions:
+    - "setRawInputOverride / setRecipeOverride"
+    - "update plan state, auto-call calculate()"
+
+  import_export:
+    - "exportPlan() to lz-string URL"
+    - "loadPlanFromURL() to importPlan() to full re-solve"
+
+major_subsystems:
+
+  data:
+    path: "src/data/"
+    files:
+      - "items.json"
+      - "facilities.json"
+      - "recipes.json"
+      - "sites.json"
+      - "regions.json"
+      - "loader.ts"
+    description: "Zod validation, lookup maps (ITEM_MAP, FACILITY_MAP, RECIPE_MAP, SITE_MAP), validateDataIntegrity(). All data loaded once at startup."
+
+  types:
+    path: "src/types/"
+    files:
+      - "constants.ts (enums: ItemId, FacilityId, RecipeId, SiteId, RegionId, Patch, FacilityCategory; constants: PATCHES, REGION_IDS, FACILITY_CATEGORIES, LATEST_PATCH, RAW_MATERIAL_REGIONS)"
+      - "core.ts (Item, Facility, Recipe, RecipeItem, Site, Region)"
+      - "production.ts (ProductionNode, ProductionPlan, Goal, DetectedCycle, MetastorageTransfer)"
+      - "index.ts (re-exports all types)"
+
+  solver:
+    path: "src/solver/"
+    files:
+      - "index.ts (solve, getProducibleItems, checkRawMaterialCaps)"
+      - "solve.ts (recursive DFS — solveNode)"
+      - "types.ts (SolverContext, SolverInput, SolverOutput)"
+      - "utils.ts (computeProducibleItems, selectRecipe, isRecipeAvailable, buildSeedCycle)"
+      - "index.test.ts"
+    description: "Pure TypeScript, no React/Zustand. Never put React code here."
+
+  store:
+    path: "src/store/"
+    files:
+      - "index.ts (Zustand store — useAppStore with all state and actions)"
+      - "index.test.ts"
+    description: "All override setters auto-call calculate()."
+
+  persistence:
+    path: "src/utils/"
+    files:
+      - "persistence.ts (exportPlan, importPlan, loadPlanFromURL)"
+      - "persistence.test.ts"
+      - "siteAssignment.ts (convertToSiteProduction)"
+    description: "convertToSiteProduction() assigns nodes to sites."
+
+  components:
+    path: "src/components/"
+    files:
+      - "GoalInput.tsx"
+      - "PatchSelector.tsx"
+      - "ResultsTree.tsx"
+      - "PlannerTools.tsx"
+      - "MetastorageTransfer.tsx"
+      - "overrides/RawInputOverrides.tsx"
+      - "overrides/RecipeOverrides.tsx"
+      - "tools/ImportExportControls.tsx"
+      - "layout/AppShell.tsx"
+      - "layout/HelpLayout.tsx"
+      - "navigation/MainNav.tsx"
+      - "navigation/HelpNav.tsx"
+      - "ui/CollapsiblePanel.tsx"
+      - "ui/AutocompleteDropdown.tsx"
+      - "planner/StatusRegionControl.tsx"
+      - "planner/StatusSiteControl.tsx"
+      - "results/GoalGroup.tsx"
+      - "results/DependencyTree.tsx"
+      - "results/ResultsSummaryStrip.tsx"
+    deprecated:
+      - "RegionSwitcher.tsx — replaced by StatusRegionControl + StatusSiteControl in status bar; kept for reference"
+
+  pages:
+    path: "src/pages/"
+    files:
+      - "PlannerPage.tsx (route: /)"
+      - "HelpHubPage.tsx (route: /help)"
+      - "FaqPage.tsx (route: /help/faq)"
+      - "HowToUsePage.tsx (route: /help/how-to)"
+      - "ChangelogPage.tsx (route: /help/changelog)"
+
+  routing:
+    path: "src/router.tsx"
+    description: "React Router v7. Routes: / (PlannerPage), /help (HelpLayout with nested routes)."
+
+key_rules:
+
+  type_system:
+    - "Never hardcode patch strings — use Patch type, PATCHES, LATEST_PATCH"
+    - "Never hardcode region strings — use RegionId, REGION_IDS"
+    - "Never hardcode category strings — use FacilityCategory, FACILITY_CATEGORIES"
+    - "Do not modify data/type files without updating loader/validator"
+
+  solver:
+    - "Solver is pure TypeScript — no React, no Zustand, no side effects"
+    - "Only real cycle: seed/plant loop — handled in utils.ts"
+    - "Non-seed cycles silently absorbed as placeholders"
+    - "computeProducibleItems(): fixed-point iteration — seeds raw mats plus cycle items plus override item IDs upfront"
+    - "selectRecipe(): player override first, then first available recipe; checks producibleItems O(1)"
+    - "manualRawMaterials (raw input overrides): capped inline at override rate with capErrors warning; excluded from checkRawMaterialCaps()"
+    - "checkRawMaterialCaps(): post-solve regional rate cap enforcement; produces human-readable errors"
+
+  store:
+    - "setPatch: clears all goals to prevent cross-patch contamination"
+    - "setActiveRegion: auto-unlocks core sites, clears goals/nodes/transfers"
+    - "Override setters auto-recalculate"
+
+  raw_materials:
+    - "RAW_MATERIAL_REGIONS in constants.ts"
+    - "Valley: originium_ore 560/min, amethyst_ore 240/min, ferrium_ore 1080/min"
+    - "Wuling: originium_ore 480/min, ferrium_ore 90/min, cuprium_ore 120/min, clean_water unlimited"
+    - "carbon is NOT raw (isRaw: false) — produced from plants via refining"
+    - "clean_water NOT available in Valley — fluid-mode bottle recipes excluded there"
+
+  game_cycles:
+    - "Seed/plant loop is the only real production cycle"
+    - "Buckflower/Citrome/Sandleaf/Aketine: 1 plant to 2 seeds (seed surplus)"
+    - "Jincao/Yazhen: 1 plant to 1 seed (break-even)"
+    - "fluidMode: true recipes restricted to Wuling currently"
+
+  phase_2_design:
+    - "Generated layout, not manually editable"
+    - "ELK is skeleton-only (dependency ordering), not physical placement"
+    - "Custom site placer owns exact geometry (Site.gridSize, Facility.gridSize, no-overlap, spacing, logistics corridors)"
+    - "Physical infeasibility is first-class error result, not silent degradation"
+    - "Multi-site distribution: optimization-biased (all sites considered, compact solutions allowed)"
+
+raw_material_availability:
+  valley:
+    originium_ore: 560
+    amethyst_ore: 240
+    ferrium_ore: 1080
+  wuling:
+    originium_ore: 480
+    ferrium_ore: 90
+    cuprium_ore: 120
+    clean_water: "unlimited"
+
+site_geometry:
+  valley_iv_core_aic: "70x70"
+  wuling_core_aic: "70x70"
+  refugee_camp: "50x50"
+  infra_station: "50x50"
+  reconstruction_hq: "50x50"
+  sky_king_flats: "50x50"
+  all_sites_depot_ports: "14 inputs, 6 outputs"

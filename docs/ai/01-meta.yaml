@@ -1,0 +1,56 @@
+# AI Context — Project Metadata
+
+project:
+  name: Endfield Architect
+  type: Client-side web application (production planner)
+  domain: Arknights Endfield multi-site AIC factory production planning
+
+operating_mode:
+  mode: Build (implementation assistant)
+  primary_model: MiniMax M2.7
+  docs_root: docs/ai/
+  required_read_order:
+    - docs/ai/01-meta.yaml
+    - docs/ai/02-system.yaml
+    - docs/ai/03-structure.yaml
+    - docs/ai/04-memory.yaml
+  update_tracker: docs/ai/05-update-tracker.md
+
+coordination:
+
+  ai_context_rules:
+    - Read docs/ai/*.yaml before any repo work
+    - Treat docs/ai/* as the authoritative project context
+    - Keep docs accurate and aligned with code after every file-changing task
+    - Update 05-update-tracker.md for meaningful changes only
+    - Keep YAML files short, factual, and easy to maintain
+
+  source_of_truth:
+    codebase: File layout and behavior
+    docs_ai: AI-facing project context
+    deprecated_docs:
+      - docs/ENDFIELD_ARCHITECT.md (migrated to docs/ai/)
+
+  file_purposes:
+    "01-meta.yaml": Project identity, operating rules, coordination
+    "02-system.yaml": What the system is, how it behaves, key rules
+    "03-structure.yaml": Repo map, folder ownership, placement guidance
+    "04-memory.yaml": Active risks, debt, open issues, lessons learned
+    "05-update-tracker.md": Meaningful change log (date, summary, files touched)
+
+  when_to_update:
+    - After any task that changes code, types, data, or behavior
+    - After any task that changes file layout or ownership
+    - After discovering new risks or open debt
+    - After meaningful product or architectural decisions
+
+  what_not_to_put_in_docs_ai:
+    - Verbose code examples
+    - Full game data or item lists (those live in data files)
+    - Aspirational structure not yet implemented in repo
+    - Temporary debug notes (clean them up or move to 04-memory.yaml)
+
+active:
+  status: Phase 2 implementation in progress — ELK.js + React Flow canvas pipeline active
+  current_build: Vite + React 19 + TypeScript + Zustand + Zod + Tailwind CSS v4 + @xyflow/react + elkjs
+  tests: 64 passing (Vitest)
